@@ -2,6 +2,16 @@
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.1.
 
+## Node version
+
+The current version used for the project is v22.14.0
+
+If you are using nvm, run:
+
+```bash
+nvm use
+```
+
 ## Development server
 
 To start a local development server, run:
