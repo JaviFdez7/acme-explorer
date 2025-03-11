@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Trip } from '../../../models/trip.model';
 
 @Component({
   selector: 'app-trip-display',
@@ -6,6 +7,9 @@ import { Component } from '@angular/core';
   templateUrl: './trip-display.component.html',
   styleUrl: './trip-display.component.css'
 })
-export class TripDisplayComponent {
+export class TripDisplayComponent implements OnInit {
+  constructor() { }
 
+  ngOnInit() {
+  }
 }

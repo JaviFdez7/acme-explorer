@@ -1,7 +1,7 @@
 export class Entity {
   private _id!: string;
   private _version!: number;
-  private _available!: boolean;
+  private _deleted!: boolean;
 
   constructor() {
     this._id = '';
@@ -16,7 +16,11 @@ export class Entity {
     return this._version;
   }
 
-  public get available(): boolean {
-    return this._available;
+  public get deleted(): boolean {
+    return this._deleted;
+  }
+
+  public set deleted(value: boolean) {
+    this._deleted = value;
   }
 }
