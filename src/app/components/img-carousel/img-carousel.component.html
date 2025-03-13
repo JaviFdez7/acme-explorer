@@ -1,0 +1,23 @@
+<div class="slider">
+  <div>
+    <div (click)="goToPrevious()" class="leftArrow">
+      <lucide-angular name="chevron-left"></lucide-angular>
+    </div>
+    <div (click)="goToNext()" class="rightArrow">
+      <lucide-angular name="chevron-right"></lucide-angular>
+    </div>
+  </div>
+  <img
+    class="slide"
+    [src]="images[currentIndex]"
+  >
+  <div class="dotsContainer">
+    <div
+      *ngFor="let slide of images; let slideIndex = index"
+      class="dot"
+      (click)="goToSlide(slideIndex)"
+    >
+      ●
+    </div>
+  </div>
+</div>

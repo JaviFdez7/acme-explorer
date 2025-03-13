@@ -87,4 +87,3 @@ export class Trip extends Entity{
     this._cancelation = value;
   }
 }
-
