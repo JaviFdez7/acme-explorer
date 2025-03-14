@@ -1,3 +1,46 @@
-<div class="card mx-auto mt-4" style="width: 18 rem">
-  <app-img-carousel [images]="getPictures()"></app-img-carousel>
-</div>
+<div class="relative flex flex-col my-6 bg-white shadow-sm border border-slate-200 rounded-lg w-96">
+  <div class="relative h-56 m-2.5 overflow-hidden text-black rounded-md p-3">
+    <app-img-carousel [images]="getPictures()"></app-img-carousel>
+  </div>
+  <div class="p-4">
+    <div class="flex flex-row flex-wrap gap-2 mb-4">
+      <div *ngFor="let requirement of getRequirements()"
+        class="rounded-full bg-cyan-600 py-0.5 px-2.5 border border-transparent text-xs text-white transition-all shadow-sm w-20 text-center">
+        {{requirement}}
+      </div>
+    </div>
+    <div class="flex flex-row justify-between">
+      <h6 class="mb-2 text-slate-800 text-xl font-semibold">
+        {{trip.title}}
+      </h6>
+      <div>
+        <span class="text-lg font-medium text-gray-900 line-through">{{trip.price}} €</span><span class="ms-3 text-lg font-medium text-gray-900">{{trip.price}} €</span>
+      </div>
+    </div>
+    <hr class="border border-slate-200">
+    <p class="text-slate-600 leading-normal font-light mb-2 line-clamp-3">
+      {{trip.description}}
+    </p>
+    
+    <hr class="border border-slate-200 mt-4">
+    <p class="text-slate-800 text-left text-[14px] font-light font-normal">
+      From {{getStartDate('en')}} to {{getEndDate('en')}}
+    </p>
+  </div>
+
+  <div class="flex items-center justify-between p-4">
+    <div class="flex items-center">
+      <img alt="Tania Andrew"
+        src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1480&amp;q=80"
+        class="relative inline-block h-8 w-8 rounded-full" />
+      <div class="flex flex-col ml-3 text-sm">
+        <span class="text-slate-800 font-semibold">Lewis Daniel</span>
+        <span class="text-slate-600">
+          January 10, 2024
+        </span>
+      </div>
+    </div>
+    <div>
+      {{trip.ticker}}
+    </div>
+  </div>

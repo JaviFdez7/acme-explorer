@@ -1,10 +1,14 @@
 <div class="slider">
   <div>
-    <div (click)="goToPrevious()" class="leftArrow">
-      <lucide-angular name="chevron-left"></lucide-angular>
+    <div class="arrow-container left" (click)="goToPrevious()">
+      <div class="leftArrow">
+        <lucide-angular name="chevron-left"></lucide-angular>
+      </div>
     </div>
-    <div (click)="goToNext()" class="rightArrow">
-      <lucide-angular name="chevron-right"></lucide-angular>
+    <div class="arrow-container right" (click)="goToNext()">
+      <div class="rightArrow">
+        <lucide-angular name="chevron-right"></lucide-angular>
+      </div>
     </div>
   </div>
   <img
@@ -12,12 +16,11 @@
     [src]="images[currentIndex]"
   >
   <div class="dotsContainer">
-    <div
+    <div 
       *ngFor="let slide of images; let slideIndex = index"
       class="dot"
-      (click)="goToSlide(slideIndex)"
-    >
-      ●
+      [ngClass]="{ 'active-dot': slideIndex === currentIndex }"
+      (click)="goToSlide(slideIndex)">
     </div>
   </div>
 </div>
