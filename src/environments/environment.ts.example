@@ -1,4 +1,4 @@
-export const environment: any = {
+export const environment = {
   firebaseConfig: {
     apiKey: "TU_API_KEY",
     authDomain: "TU_PROYECTO.firebaseapp.com",

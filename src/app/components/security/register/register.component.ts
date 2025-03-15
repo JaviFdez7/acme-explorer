@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-register',
-  imports: [],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  styleUrl: './register.component.css',
 })
 export class RegisterComponent {
-
   registrationForm!: FormGroup;
   roleList: string[];
 
@@ -27,10 +27,10 @@ export class RegisterComponent {
       email: [''],
       phone: [''],
       address: [''],
-      validated: [ 'true'],
+      validated: ['true'],
     });
   }
-    onRegister() {
-      this.authService.signUp(this.registrationForm.value);
+  onRegister() {
+    this.authService.signUp(this.registrationForm.value);
   }
 }

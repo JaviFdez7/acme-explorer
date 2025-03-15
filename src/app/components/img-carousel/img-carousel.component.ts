@@ -1,4 +1,4 @@
-import { Component, Input} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
 
@@ -8,10 +8,10 @@ import { LucideAngularModule } from 'lucide-angular';
   templateUrl: './img-carousel.component.html',
   styleUrls: ['./img-carousel.component.css'],
 })
-export class ImageCarouselComponent{
+export class ImageCarouselComponent {
   @Input() images: string[] = [];
 
-  currentIndex: number = 0;
+  currentIndex = 0;
   timeoutId?: number;
 
   goToPrevious(): void {
@@ -37,5 +37,4 @@ export class ImageCarouselComponent{
   getCurrentSlideUrl(): string {
     return `url('${this.images[this.currentIndex]}')`;
   }
-
 }
