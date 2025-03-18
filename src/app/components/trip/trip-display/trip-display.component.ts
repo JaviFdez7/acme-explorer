@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Trip } from '../../../models/trip.model';
 import { ImageCarouselComponent } from "../../img-carousel/img-carousel.component";
 import { CommonModule } from '@angular/common';
@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './trip-display.component.html',
   styleUrl: './trip-display.component.css'
 })
-export class TripDisplayComponent implements OnInit {
+export class TripDisplayComponent  {
   protected trip: Trip;
 
   constructor() { 
@@ -41,8 +41,5 @@ export class TripDisplayComponent implements OnInit {
   getEndDate(lan: string) {
     const formatter = new Intl.DateTimeFormat(lan, { day: 'numeric', month: 'long', year: 'numeric' });
     return formatter.format(this.trip.endDate);
-  }
-
-  ngOnInit(): void {
   }
 }
