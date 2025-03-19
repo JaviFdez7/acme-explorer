@@ -8,7 +8,7 @@ export class Trip extends Entity{
   private _requirements!: string[];
   private _startDate!: Date;
   private _endDate!: Date;
-  private _pictures?: string[];
+  private _pictures?: { itemImageSrc: string; alt?: string }[];
   private _cancelation?: string;
 
   constructor() {
@@ -71,11 +71,11 @@ export class Trip extends Entity{
     this._endDate = value;
   }
 
-  public get pictures(): string[] {
+  public get pictures(): { itemImageSrc: string; alt?: string }[] {
     return this._pictures || [];
   }
 
-  public set pictures(value: string[]) {
+  public set pictures(value: { itemImageSrc: string; alt?: string }[]) {
     this._pictures = value;
   }
 

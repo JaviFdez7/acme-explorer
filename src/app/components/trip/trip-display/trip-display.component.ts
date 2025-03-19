@@ -21,7 +21,10 @@ export class TripDisplayComponent  {
     this.trip.requirements = ['18+', 'Passport', 'Vaccination', 'Insurance', 'Space suit'];
     this.trip.startDate = new Date();
     this.trip.endDate = new Date();
-    this.trip.pictures = [`https://placehold.co/600x400?text=${this.trip.title.split(' ').join('+')}+1`, `https://placehold.co/600x400?text=${this.trip.title.split(' ').join('+')}+2`];
+    this.trip.pictures = [
+      { itemImageSrc: `https://placehold.co/600x400?text=${this.trip.title.split(' ').join('+')}+1`, alt: 'Image 1' },
+      { itemImageSrc: `https://placehold.co/600x400?text=${this.trip.title.split(' ').join('+')}+2`, alt: 'Image 2' }
+    ];
     this.trip.deleted = false;
   }
 

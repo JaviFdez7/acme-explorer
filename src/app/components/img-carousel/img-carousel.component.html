@@ -1,21 +1,10 @@
-<!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
-<div class="slider">
-  <div>
-    <div class="arrow-container left" (click)="goToPrevious()" tabindex="0">
-      <div class="leftArrow text-white">
-        <lucide-angular name="chevron-left"></lucide-angular>
-      </div>
-    </div>
-    <div class="arrow-container right" (click)="goToNext()" tabindex="0">
-      <div class="rightArrow text-white">
-        <lucide-angular name="chevron-right"></lucide-angular>
-      </div>
-    </div>
-  </div>
-  <img class="slide" [src]="images[currentIndex]" [alt]="'Image ' + (currentIndex + 1)">
-  <div class="dotsContainer">
-    <div *ngFor="let slide of images; let slideIndex = index" class="dot bg-gray-500"
-      [ngClass]="{ 'active-dot': slideIndex === currentIndex }" (click)="goToSlide(slideIndex)" tabindex="0">
-    </div>
-  </div>
+<div>
+  <p-galleria [value]="images" [showItemNavigators]="true" [showThumbnails]="false" [showIndicators]="true" [showItemNavigatorsOnHover]="true" [circular]="true" [responsiveOptions]="responsiveOptions" [containerStyle]="{ 'max-width': '640px' }">
+      <ng-template #item let-item>
+          <img [src]="item.itemImageSrc" />
+      </ng-template>
+      <ng-template #thumbnail let-item style="width: 10px;">
+          <img [src]="item.thumbnailImageSrc" />
+      </ng-template>
+  </p-galleria>
 </div>

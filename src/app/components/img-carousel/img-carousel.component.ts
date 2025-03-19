@@ -1,40 +1,28 @@
 import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { LucideAngularModule } from 'lucide-angular';
+import { GalleriaModule } from 'primeng/galleria';
 
 @Component({
   selector: 'app-img-carousel',
-  imports: [CommonModule, LucideAngularModule],
   templateUrl: './img-carousel.component.html',
   styleUrls: ['./img-carousel.component.css'],
+  standalone: true,
+  imports: [GalleriaModule]
 })
-export class ImageCarouselComponent {
-  @Input() images: string[] = [];
+export class ImageCarouselComponent{
+    @Input() images: { itemImageSrc: string; alt?: string }[] = [];
 
-  currentIndex = 0;
-  timeoutId?: number;
-
-  goToPrevious(): void {
-    const isFirstSlide = this.currentIndex === 0;
-    const newIndex = isFirstSlide
-      ? this.images.length - 1
-      : this.currentIndex - 1;
-
-    this.currentIndex = newIndex;
-  }
-
-  goToNext(): void {
-    const isLastSlide = this.currentIndex === this.images.length - 1;
-    const newIndex = isLastSlide ? 0 : this.currentIndex + 1;
-
-    this.currentIndex = newIndex;
-  }
-
-  goToSlide(slideIndex: number): void {
-    this.currentIndex = slideIndex;
-  }
-
-  getCurrentSlideUrl(): string {
-    return `url('${this.images[this.currentIndex]}')`;
-  }
+    responsiveOptions: any[] = [
+        {
+            breakpoint: '991px',
+            numVisible: 4
+        },
+        {
+            breakpoint: '767px',
+            numVisible: 3
+        },
+        {
+            breakpoint: '575px',
+            numVisible: 1
+        }
+    ];
 }
