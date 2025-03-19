@@ -5,8 +5,9 @@ import { CommonModule } from '@angular/common';
 import { CardModule } from 'primeng/card';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
-import { DropdownModule } from 'primeng/dropdown';
 import { ButtonModule } from 'primeng/button';
+import { Select } from 'primeng/select';
+
 
 
 @Component({
@@ -18,8 +19,8 @@ import { ButtonModule } from 'primeng/button';
     CardModule,
     FloatLabelModule,
     InputTextModule,
-    DropdownModule,
-    ButtonModule
+    ButtonModule,
+    Select
   ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],

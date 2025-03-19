@@ -3,14 +3,16 @@
         <fieldset>
             <legend class="text-xl font-semibold mb-4">Register new user</legend>
 
-            <div class="mb-4">
-                <p-dropdown
+            <p-floatlabel variant="on" class="mb-4">
+                <p-select
                     [options]="roleList"
                     formControlName="role"
+                    styleClass="w-full"
+                    inputId="role"
                     placeholder="Select a Role"
-                    class="w-full md:w-full"
-                    ></p-dropdown>
-            </div>
+                ></p-select>
+                <label for="role">Role</label>
+            </p-floatlabel>
 
             <p-floatlabel variant="on" class="mb-4">
                 <label for="name">Name</label>
