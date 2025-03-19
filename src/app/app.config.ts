@@ -10,6 +10,10 @@ import {
 } from '@angular/platform-browser';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { LucideAngularModule, ChevronLeft, ChevronRight } from 'lucide-angular';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { providePrimeNG } from 'primeng/config';
+import Aura from '@primeng/themes/aura';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,6 +23,16 @@ export const appConfig: ApplicationConfig = {
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideAuth(() => getAuth()),
     provideHttpClient(withFetch()),
+    providePrimeNG({
+        theme: {
+            preset: Aura,
+            options: {
+              darkModeSelector: false // Desactiva el modo oscuro
+            }
+        }
+    }),
+    provideAnimationsAsync(),
+    provideAnimations(),  
     importProvidersFrom(LucideAngularModule.pick({ ChevronLeft, ChevronRight }))
   ],
 };
