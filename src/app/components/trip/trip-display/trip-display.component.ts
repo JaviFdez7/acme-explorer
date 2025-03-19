@@ -23,7 +23,10 @@ export class TripDisplayComponent  {
     this.trip.endDate = new Date();
     this.trip.pictures = [
       { itemImageSrc: `https://placehold.co/600x400?text=${this.trip.title.split(' ').join('+')}+1`, alt: 'Image 1' },
-      { itemImageSrc: `https://placehold.co/600x400?text=${this.trip.title.split(' ').join('+')}+2`, alt: 'Image 2' }
+      { itemImageSrc: `https://placehold.co/600x400?text=${this.trip.title.split(' ').join('+')}+2`, alt: 'Image 2' },
+      { itemImageSrc: `https://placehold.co/600x400?text=${this.trip.title.split(' ').join('+')}+3`, alt: 'Image 3' },
+      { itemImageSrc: `https://placehold.co/600x400?text=${this.trip.title.split(' ').join('+')}+4`, alt: 'Image 4' },
+
     ];
     this.trip.deleted = false;
   }
