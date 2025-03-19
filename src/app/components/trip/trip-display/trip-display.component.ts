@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { Trip } from '../../../models/trip.model';
 import { ImageCarouselComponent } from "../../img-carousel/img-carousel.component";
 import { CommonModule } from '@angular/common';
-
+import { CardModule } from 'primeng/card';
 @Component({
   selector: 'app-trip-display',
-  imports: [ImageCarouselComponent, CommonModule],
+  imports: [ImageCarouselComponent, CommonModule, CardModule],
   templateUrl: './trip-display.component.html',
   styleUrl: './trip-display.component.css'
 })

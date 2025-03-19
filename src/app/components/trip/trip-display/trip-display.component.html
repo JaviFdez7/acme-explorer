@@ -1,4 +1,4 @@
-<div class="relative flex flex-col my-6 card w-96">
+<p-card class="relative flex flex-col my-6 w-96 card">
   <div class="relative h-75 m-2.5 overflow-hidden text-black rounded-md p-2">
     <app-img-carousel [images]="getPictures()"></app-img-carousel>
   </div>
@@ -10,21 +10,21 @@
       </span>
     </div>
     <div class="flex flex-row justify-between">
-      <h6 class="mb-2 text-slate-800 text-xl font-semibold">
+      <h6 class="mb-2 text-xl font-semibold">
         {{trip.title}}
       </h6>
       <div>
-        <span class="text-lg font-medium text-gray-900 line-through">{{trip.price}} €</span><span
-          class="ms-3 text-lg font-medium text-gray-900">{{trip.price}} €</span>
+        <span class="text-lg font-medium line-through">{{trip.price}} €</span><span
+          class="ms-3 text-lg font-medium">{{trip.price}} €</span>
       </div>
     </div>
-    <hr class="border border-slate-200">
-    <p class="text-slate-600 leading-normal font-light mb-2 line-clamp-3">
+    <hr class="border">
+    <p class="leading-normal font-light mb-2 line-clamp-3">
       {{trip.description}}
     </p>
 
-    <hr class="border border-slate-200 mt-4">
-    <p class="text-slate-800 text-left text-[14px] font-normal">
+    <hr class="border mt-4">
+    <p class="text-left text-[14px] font-normal">
       From {{getStartDate('en')}} to {{getEndDate('en')}}
     </p>
   </div>
@@ -35,8 +35,8 @@
         src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1480&amp;q=80"
         class="relative inline-block h-8 w-8 rounded-full" />
       <div class="flex flex-col ml-3 text-sm">
-        <span class="text-slate-800 font-semibold">Lewis Daniel</span>
-        <span class="text-slate-600">
+        <span class="font-semibold">Lewis Daniel</span>
+        <span>
           January 10, 2024
         </span>
       </div>
@@ -45,3 +45,4 @@
       {{trip.ticker}}
     </div>
   </div>
+</p-card>
