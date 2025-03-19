@@ -1,57 +1,56 @@
-<p-card class="max-w-lg mx-auto p-6 card">
+<p-card styleClass="max-w-lg mx-auto p-6 card">
     <form [formGroup]="registrationForm" (ngSubmit)="onRegister()">
         <fieldset>
             <legend class="text-xl font-semibold mb-4">Register new user</legend>
 
             <div class="mb-4">
-                <label for="role" class="block text-sm font-medium">Role:</label>
-                <select id="role"
-                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                    formControlName="role">
-                    <option *ngFor="let role of roleList" [value]="role">{{role}}</option>
-                </select>
+                <p-dropdown
+                    [options]="roleList"
+                    formControlName="role"
+                    placeholder="Select a Role"
+                    class="w-full md:w-full"
+                    ></p-dropdown>
             </div>
 
-            <div class="mb-4">
-                <label for="name" class="block text-sm font-medium">Name:</label>
-                <input id="name" type="text" formControlName="name"
-                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-            </div>
+            <p-floatlabel variant="on" class="mb-4">
+                <label for="name">Name</label>
+                <input pInputText id="name" type="text" formControlName="name"
+                    class="mt-1 block w-full">
+            </p-floatlabel>
 
-            <div class="mb-4">
-                <label for="surname" class="block text-sm font-medium">Surname:</label>
-                <input id="surname" type="text" formControlName="surname"
-                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-            </div>
+            <p-floatlabel variant="on" class="mb-4">
+                <label for="surname">Surname</label>
+                <input pInputText id="surname" type="text" formControlName="surname"
+                    class="mt-1 block w-full">
+            </p-floatlabel>
 
-            <div class="mb-4">
-                <label for="phone" class="block text-sm font-medium">Phone:</label>
-                <input id="phone" type="text" formControlName="phone"
-                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-            </div>
+            <p-floatlabel variant="on" class="mb-4">
+                <label for="phone">Phone</label>
+                <input pInputText id="phone" type="text" formControlName="phone"
+                    class="mt-1 block w-full">
+            </p-floatlabel>
 
-            <div class="mb-4">
-                <label for="address" class="block text-sm font-medium">Address:</label>
-                <input id="address" type="text" formControlName="address"
-                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-            </div>
+            <p-floatlabel variant="on" class="mb-4">
+                <label for="address">Address</label>
+                <input pInputText id="address" type="text" formControlName="address"
+                    class="mt-1 block w-full">
+            </p-floatlabel>
 
-            <div class="mb-4">
-                <label for="email" class="block text-sm font-medium">Email:</label>
-                <input id="email" type="email" formControlName="email"
-                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-            </div>
+            <p-floatlabel variant="on" class="mb-4">
+                <label for="email">Email</label>
+                <input pInputText id="email" type="email" formControlName="email"
+                    class="mt-1 block w-full">
+            </p-floatlabel>
 
-            <div class="mb-4">
-                <label for="password" class="block text-sm font-medium">Password:</label>
-                <input id="password" type="password" formControlName="password"
-                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-            </div>
+            <p-floatlabel variant="on"  class="mb-4">
+                <label for="password">Password</label>
+                <input pInputText id="password" type="password" formControlName="password"
+                    class="mt-1 block w-full">
+            </p-floatlabel>
 
-            <button type="submit"
-                class="cursor-pointer w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md shadow">
+            <p-button type="submit" styleClass="w-full">
                 Register
-            </button>
+            </p-button>
         </fieldset>
     </form>
 
