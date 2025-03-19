@@ -2,7 +2,7 @@
 @import "tailwindcss";
 
 .card {
-  @apply bg-white shadow-sm border border-slate-200 rounded-lg;
+  @apply rounded-lg;
 }
 
 /* On mouse-over, add a deeper shadow */

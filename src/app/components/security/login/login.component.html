@@ -1,0 +1,46 @@
+
+  <p-button (click)="showDialog()" icon="pi pi-sign-in" label="Login" />
+  <p-dialog maskStyleClass="backdrop-blur-sm" [(visible)]="visible" styleClass="!border-0 !bg-transparent">
+    <ng-template #headless>
+      <div
+        class="card flex flex-col px-8 py-8 gap-6"
+        style="border-radius: 12px; "
+      >
+        <i class="pi pi-user text-4xl block mx-auto"></i>
+        
+        <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="flex flex-col gap-4">
+          <div class="inline-flex flex-col gap-2">
+            <label for="email" class="font-semibold">Email</label>
+            <input
+              pInputText
+              id="email"
+              formControlName="email"
+              class="!p-4 w-80 border"
+              [ngClass]="{ 'border-red-500': loginForm.controls['email'].invalid && loginForm.controls['email'].touched }"
+            />
+            <small *ngIf="loginForm.controls['email'].invalid && loginForm.controls['email'].touched" class="text-red-500">Email is required</small>
+          </div>
+          
+          <div class="inline-flex flex-col gap-2">
+            <label for="password" class=" font-semibold">Password</label>
+            <input
+              pInputText
+              id="password"
+              type="password"
+              formControlName="password"
+              class=" !p-4  w-80 border"
+              [ngClass]="{ 'border-red-500': loginForm.controls['password'].invalid && loginForm.controls['password'].touched }"
+            />
+            <small *ngIf="loginForm.controls['password'].invalid && loginForm.controls['password'].touched" class="text-red-500">Password is required</small>
+          </div>
+          
+          <div class="flex items-center gap-4 mt-4">
+            <p-button label="Cancel" (click)="closeDialog()" [text]="true" styleClass="!p-4 w-full" class="w-full"/>
+            <p-button label="Sign-In" type="submit" [text]="true" styleClass="!p-4 w-full" class="!w-full"/>
+          </div>
+          
+          <small *ngIf="loginError" class="text-red-500 text-center mt-2">Incorrect password or email</small>
+        </form>
+      </div>
+    </ng-template>
+  </p-dialog>
