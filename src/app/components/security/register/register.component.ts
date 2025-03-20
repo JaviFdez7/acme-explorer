@@ -1,29 +1,46 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { CardModule } from 'primeng/card';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { Select } from 'primeng/select';
+
+
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [
+    ReactiveFormsModule,
+    FormsModule, 
+    CommonModule,
+    CardModule,
+    FloatLabelModule,
+    InputTextModule,
+    ButtonModule,
+    Select
+  ],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css',
+  styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent {
   registrationForm!: FormGroup;
-  roleList: string[];
+  roleList: { label: string, value: string }[] = [];
 
-  constructor(private authService: AuthService, private fb: FormBuilder) {
-    this.roleList = this.authService.getRoles();
-    this.createForm();
-  }
+constructor(private authService: AuthService, private fb: FormBuilder) {
+  const roles = this.authService.getRoles();
+  this.roleList = roles.map(role => ({ label: role, value: role }));
+  this.createForm();
+}
 
   createForm() {
     this.registrationForm = this.fb.group({
       name: [''],
       surname: [''],
       password: [''],
-      role: [''],
+      role: [''], // Inicializar con null o un valor por defecto
       email: [''],
       phone: [''],
       address: [''],

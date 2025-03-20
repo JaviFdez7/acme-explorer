@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { Trip } from '../../../models/trip.model';
 import { ImageCarouselComponent } from "../../img-carousel/img-carousel.component";
 import { CommonModule } from '@angular/common';
-
+import { CardModule } from 'primeng/card';
 @Component({
   selector: 'app-trip-display',
-  imports: [ImageCarouselComponent, CommonModule],
+  imports: [ImageCarouselComponent, CommonModule, CardModule],
   templateUrl: './trip-display.component.html',
   styleUrl: './trip-display.component.css'
 })
@@ -23,7 +23,10 @@ export class TripDisplayComponent  {
     this.trip.endDate = new Date();
     this.trip.pictures = [
       { itemImageSrc: `https://placehold.co/600x400?text=${this.trip.title.split(' ').join('+')}+1`, alt: 'Image 1' },
-      { itemImageSrc: `https://placehold.co/600x400?text=${this.trip.title.split(' ').join('+')}+2`, alt: 'Image 2' }
+      { itemImageSrc: `https://placehold.co/600x400?text=${this.trip.title.split(' ').join('+')}+2`, alt: 'Image 2' },
+      { itemImageSrc: `https://placehold.co/600x400?text=${this.trip.title.split(' ').join('+')}+3`, alt: 'Image 3' },
+      { itemImageSrc: `https://placehold.co/600x400?text=${this.trip.title.split(' ').join('+')}+4`, alt: 'Image 4' },
+
     ];
     this.trip.deleted = false;
   }

@@ -1,10 +1,10 @@
 <div>
-  <p-galleria [value]="images" [showItemNavigators]="true" [showThumbnails]="false" [showIndicators]="true" [showItemNavigatorsOnHover]="true" [circular]="true" [responsiveOptions]="responsiveOptions" [containerStyle]="{ 'max-width': '640px' }">
+  <p-galleria [value]="images" [showItemNavigators]="true" [changeItemOnIndicatorHover]="true" [showThumbnails]="false" [showIndicators]="true" [showItemNavigatorsOnHover]="true" [circular]="true" [responsiveOptions]="responsiveOptions" [containerStyle]="{ 'max-width': '640px' }">
       <ng-template #item let-item>
           <img [src]="item.itemImageSrc" />
       </ng-template>
-      <ng-template #thumbnail let-item style="width: 10px;">
-          <img [src]="item.thumbnailImageSrc" />
+      <ng-template #thumbnail let-item>
+          <img [src]="item.thumbnailImageSrc"/>
       </ng-template>
   </p-galleria>
 </div>
