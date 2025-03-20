@@ -64,7 +64,12 @@
         </ng-template>
         <ng-template #end>
             <div class="flex items-center gap-2">
-                <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" shape="circle" />
+                <ng-container *ngIf="loggedIn(); else notLoggedIn">
+                    <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" shape="circle" />
+                </ng-container>
+                <ng-template #notLoggedIn>
+                    <app-login></app-login>
+                </ng-template>
             </div>
         </ng-template>
     </p-menubar>

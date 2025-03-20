@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, User, onAuthStateChanged } from '@angular/fire/auth';
 import { Actor } from '../models/actor.model';
-import { environment } from '../../environments/environment';
-import { firstValueFrom } from 'rxjs';
+import { Firestore, doc, getDoc } from '@angular/fire/firestore';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -13,8 +13,14 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthService {
-
-  constructor(private auth: Auth, private http: HttpClient) { }
+  private userSubject = new BehaviorSubject<User | null>(null);
+  user$: Observable<User | null> = this.userSubject.asObservable();
+  
+  constructor(private auth: Auth, private http: HttpClient, private firestore: Firestore) {
+    onAuthStateChanged(this.auth, (user) => {
+      this.userSubject.next(user);
+    });
+   }
 
   signUp(actor: Actor) {
     createUserWithEmailAndPassword(this.auth, actor.email, actor.password)
@@ -35,6 +41,35 @@ export class AuthService {
           reject(err);
         });
     });
+  }
+
+  logout() {
+    return new Promise<any>((resolve, reject) => {
+      signOut(this.auth)
+        .then(res => {
+          resolve(res);
+        }, err => {
+          reject(err);
+        });
+    });
+  }
+
+  isLoggedIn(): boolean {
+    return this.auth.currentUser !== null;
+  }
+
+  async getUserRole(): Promise<string | null> {
+    const user = this.auth.currentUser;
+    if (!user) return null;
+
+    const userRef = doc(this.firestore, `users/${user.uid}`);
+    const userSnap = await getDoc(userRef);
+
+    if (userSnap.exists()) {
+      return userSnap.data()['role'] || null;
+    }
+
+    return null;
   }
 
   getRoles(): string[] {
