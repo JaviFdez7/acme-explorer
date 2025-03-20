@@ -1,58 +1,133 @@
 <p-card styleClass="max-w-lg mx-auto p-6 card">
-    <form [formGroup]="registrationForm" (ngSubmit)="onRegister()">
-        <fieldset>
-            <legend class="text-xl font-semibold mb-4">Register new user</legend>
+  <form [formGroup]="registrationForm" (ngSubmit)="onRegister()">
+    <fieldset>
+      <legend class="text-xl font-semibold">Register new user</legend>
+      <p-floatlabel variant="on" class="mt-4">
+        <label for="email">Email *</label>
+        <input
+          pInputText
+          id="email"
+          type="email"
+          formControlName="email"
+          class="mt-1 block w-full"
+        />
+      </p-floatlabel>
+      <small
+        *ngIf="
+          registrationForm.controls['email'].invalid &&
+          registrationForm.controls['email'].touched
+        "
+        class="text-red-500"
+        >Email is required</small
+      >
 
-            <p-floatlabel variant="on" class="mb-4">
-                <p-select [options]="roleList" formControlName="role" styleClass="w-full" inputId="role"
-                    placeholder="Select a Role"></p-select>
-                <label for="role">Role</label>
-            </p-floatlabel>
+      <p-floatlabel variant="on" class="mt-4">
+        <label for="password">Password *</label>
+        <input
+          pInputText
+          id="password"
+          type="password"
+          formControlName="password"
+          class="mt-1 block w-full"
+        />
+      </p-floatlabel>
+      <small
+        *ngIf="
+          registrationForm.controls['password'].invalid &&
+          registrationForm.controls['password'].touched
+        "
+        class="text-red-500"
+        >Password is required</small
+      >
+      <p-floatlabel class="mt-4" variant="on">
+        <p-select
+          [options]="roleList"
+          formControlName="role"
+          styleClass="w-full"
+          inputId="role"
+          placeholder="Select a Role"
+        >
+        </p-select>
+        <label for="role">Role *</label>
+      </p-floatlabel>
+      <small
+        *ngIf="
+          registrationForm.controls['role'].invalid &&
+          registrationForm.controls['role'].touched
+        "
+        class="text-red-500"
+        >Select a role</small
+      >
 
-            <p-floatlabel variant="on" class="mb-4">
-                <label for="name">Name</label>
-                <input pInputText id="name" type="text" formControlName="name"
-                    class="mt-1 block w-full">
-            </p-floatlabel>
+      <p-floatlabel variant="on" class="mt-4">
+        <label for="name">Name *</label>
+        <input
+          class="ng-invalid ng-dirty"
+          pInputText
+          id="name"
+          type="text"
+          formControlName="name"
+          class="mt-1 block w-full"
+        />
+      </p-floatlabel>
+      <small
+        *ngIf="
+          registrationForm.controls['name'].invalid &&
+          registrationForm.controls['name'].touched
+        "
+        class="text-red-500"
+        >Name is required</small
+      >
 
-            <p-floatlabel variant="on" class="mb-4">
-                <label for="surname">Surname</label>
-                <input pInputText id="surname" type="text" formControlName="surname"
-                    class="mt-1 block w-full">
-            </p-floatlabel>
+      <p-floatlabel variant="on" class="mt-4">
+        <label for="surname">Surname *</label>
+        <input
+          pInputText
+          id="surname"
+          type="text"
+          formControlName="surname"
+          class="mt-1 block w-full"
+        />
+      </p-floatlabel>
+      <small
+        *ngIf="
+          registrationForm.controls['surname'].invalid &&
+          registrationForm.controls['surname'].touched
+        "
+        class="text-red-500"
+        >Surname is required</small
+      >
 
-            <p-floatlabel variant="on" class="mb-4">
-                <label for="phone">Phone</label>
-                <input pInputText id="phone" type="text" formControlName="phone"
-                    class="mt-1 block w-full">
-            </p-floatlabel>
+      <p-floatlabel variant="on" class="mt-4">
+        <label for="phone">Phone</label>
+        <input
+          pInputText
+          id="phone"
+          type="text"
+          formControlName="phone"
+          class="mt-1 block w-full"
+        />
+      </p-floatlabel>
 
-            <p-floatlabel variant="on" class="mb-4">
-                <label for="address">Address</label>
-                <input pInputText id="address" type="text" formControlName="address"
-                    class="mt-1 block w-full">
-            </p-floatlabel>
+      <p-floatlabel variant="on" class="mt-4">
+        <label for="address">Address</label>
+        <input
+          pInputText
+          id="address"
+          type="text"
+          formControlName="address"
+          class="mt-1 block w-full"
+        />
+      </p-floatlabel>
 
-            <p-floatlabel variant="on" class="mb-4">
-                <label for="email">Email</label>
-                <input pInputText id="email" type="email" formControlName="email"
-                    class="mt-1 block w-full">
-            </p-floatlabel>
+      <p-button type="submit" styleClass="w-full mt-4"> Register </p-button>
+    </fieldset>
+  </form>
 
-            <p-floatlabel variant="on"  class="mb-4">
-                <label for="password">Password</label>
-                <input pInputText id="password" type="password" formControlName="password"
-                    class="mt-1 block w-full">
-            </p-floatlabel>
-
-            <p-button type="submit" styleClass="w-full">
-                Register
-            </p-button>
-        </fieldset>
-    </form>
-
-    <div class="mt-4 text-center">
-        <p class="text-sm">Already registered? <a href="/login"
-                class="text-blue-500 hover:underline">Login</a></p>
-    </div>
+  <div class="mt-4 text-center">
+    <p class="text-sm">
+      Already registered?
+      <a href="/login" class="text-blue-500 hover:underline">Login</a>
+    </p>
+  </div>
 </p-card>
