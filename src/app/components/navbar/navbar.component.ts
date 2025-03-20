@@ -5,31 +5,35 @@ import { BadgeModule } from 'primeng/badge';
 import { AvatarModule } from 'primeng/avatar';
 import { InputTextModule } from 'primeng/inputtext';
 import { CommonModule } from '@angular/common';
-import { Ripple } from 'primeng/ripple';
+import { Router } from '@angular/router';
+
 
 @Component({
     selector: 'app-navbar',
     templateUrl: './navbar.component.html',
     standalone: true,
-    imports: [Menubar, BadgeModule, AvatarModule, InputTextModule, Ripple, CommonModule]
+    imports: [Menubar, BadgeModule, AvatarModule, InputTextModule, CommonModule]
 })
 export class Navbar implements OnInit {
     items: MenuItem[] | undefined;
 
+    constructor(private router: Router) {}
+
+    
+
     ngOnInit() {
         this.items = [
             {
-                label: 'Mamelungas',
-                icon: 'pi pi-home',
+                label: 'Home',
+                command: () => this.router.navigate(['/'])
             },
             {
                 label: 'Projects',
-                icon: 'pi pi-search',
-                badge: '3',
                 items: [
                     {
                         label: 'Core',
                         icon: 'pi pi-bolt',
+                        command: () => this.router.navigate(['/register'])
                     },
                     {
                         label: 'Blocks',
@@ -43,6 +47,11 @@ export class Navbar implements OnInit {
                         icon: 'pi pi-pencil',
                     },
                 ],
+            },
+            {
+                label: 'About',
+                icon: 'pi pi-list',
+                command: () => this.router.navigate(['/'])
             },
         ];
     }

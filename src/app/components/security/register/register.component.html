@@ -4,13 +4,8 @@
             <legend class="text-xl font-semibold mb-4">Register new user</legend>
 
             <p-floatlabel variant="on" class="mb-4">
-                <p-select
-                    [options]="roleList"
-                    formControlName="role"
-                    styleClass="w-full"
-                    inputId="role"
-                    placeholder="Select a Role"
-                ></p-select>
+                <p-select [options]="roleList" formControlName="role" styleClass="w-full" inputId="role"
+                    placeholder="Select a Role"></p-select>
                 <label for="role">Role</label>
             </p-floatlabel>
 
