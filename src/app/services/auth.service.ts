@@ -16,8 +16,8 @@ export class AuthService {
 
   constructor(private auth: Auth, private http: HttpClient) { }
 
-  signUp(actor: Actor) {
-    createUserWithEmailAndPassword(this.auth, actor.email, actor.password)
+  async signUp(actor: Actor) {
+    await createUserWithEmailAndPassword(this.auth, actor.email, actor.password)
       .then(async res => {
         console.log('User signed up successfully', res);
         const url = `${environment.backendApiUrlBase}/actors`;
