@@ -57,7 +57,7 @@ constructor(private authService: AuthService, private fb: FormBuilder, private r
         this.loading = false;
         this.success = 'Registration successful!';
         setTimeout(() => {
-          this.router.navigate(['/login']);
+          this.router.navigate(['/']);
         }, 2000);
       })
       .catch((error) => {
