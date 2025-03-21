@@ -9,7 +9,6 @@ import {
   withEventReplay,
 } from '@angular/platform-browser';
 import { provideHttpClient, withFetch } from '@angular/common/http';
-import { LucideAngularModule, ChevronLeft, ChevronRight } from 'lucide-angular';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { providePrimeNG } from 'primeng/config';
@@ -29,12 +28,11 @@ export const appConfig: ApplicationConfig = {
         theme: {
             preset: Aura,
             options: {
-              darkModeSelector: false // Desactiva el modo oscuro
+              darkModeSelector: true // Desactiva el modo oscuro
             }
         }
     }),
     provideAnimationsAsync(),
     provideAnimations(),  
-    importProvidersFrom(LucideAngularModule.pick({ ChevronLeft, ChevronRight }))
   ],
 };

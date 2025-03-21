@@ -1,0 +1,31 @@
+<div>
+    <p-menubar [model]="leftItems">
+        <ng-template pTemplate="end">
+            <p-menubar [model]="rightItems">
+                <ng-template pTemplate="item" let-item let-root="root">
+                    <a pRipple class="flex items-center p-menubar-item-link" (click)="item.command?.()">
+                        <i *ngIf="item.icon" [ngClass]="item.icon + ' mr-2'"></i>
+                        <span>{{ item.label }}</span>
+                        <p-badge *ngIf="item.badge" [ngClass]="{ 'ml-auto': !root, 'ml-2': root }"
+                            [value]="item.badge" />
+                        <span *ngIf="item.shortcut"
+                            class="ml-auto border border-surface rounded bg-emphasis text-muted-color text-xs p-1">{{
+                            item.shortcut }}</span>
+                        <i *ngIf="item.items" [ngClass]="['ml-auto pi', root ? 'pi-angle-down' : 'pi-angle-right']"></i>
+                    </a>
+                </ng-template>
+                <ng-template pTemplate="end">
+                    <div class="flex items-center gap-2">
+                        <ng-container *ngIf="loggedIn(); else notLoggedIn">
+                            <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
+                                shape="circle" />
+                        </ng-container>
+                        <ng-template #notLoggedIn>
+                            <app-login></app-login>
+                        </ng-template>
+                    </div>
+                </ng-template>
+            </p-menubar>
+        </ng-template>
+    </p-menubar>
+</div>
