@@ -1,33 +1,39 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, User, onAuthStateChanged } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, User, user, onAuthStateChanged } from '@angular/fire/auth';
 import { Actor } from '../models/actor.model';
-import { Firestore, doc, getDoc } from '@angular/fire/firestore';
+import { Firestore, doc, getDoc, setDoc } from '@angular/fire/firestore';
 import { BehaviorSubject, Observable } from 'rxjs';
-
-const httpOptions = {
-  headers: new HttpHeaders({'Content-Type': 'application/json'})
-}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private userSubject = new BehaviorSubject<User | null>(null);
-  user$: Observable<User | null> = this.userSubject.asObservable();
+  user$: Observable<User | null>;
   
   constructor(private auth: Auth, private http: HttpClient, private firestore: Firestore) {
-    onAuthStateChanged(this.auth, (user) => {
-      this.userSubject.next(user);
-    });
-   }
+    this.user$ = user(this.auth);
+  }
 
-  async signUp(actor: Actor) {
-    await createUserWithEmailAndPassword(this.auth, actor.email, actor.password)
-      .then(async res => {
-        console.log('User signed up successfully', res);
-        return
-      })
+   async signUp(actor: Actor) {
+    try {
+      const res = await createUserWithEmailAndPassword(this.auth, actor.email, actor.password);
+      console.log('User signed up successfully', res);
+      const actorData = {
+        ...actor,
+        id: res.user.uid,
+      }
+
+      const actorRef = doc(this.firestore, 'actors', actorData.id);
+      await setDoc(actorRef, {
+        ...actorData,
+        createdAt: new Date()
+      });
+      console.log('Actor data saved in Firestore successfully');
+    } catch (error) {
+      console.error('Error during sign up:', error);
+    }
   }
 
   login(email: string, password: string) {
