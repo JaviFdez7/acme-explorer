@@ -27,7 +27,7 @@ import { Router } from '@angular/router';
 export class RegisterComponent {
   registrationForm!: FormGroup;
   roleList: { label: string, value: string }[] = [];
-  loading: boolean = false;
+  loading = false;
   error: string | null = null;
   success: string | null = null;
 
@@ -44,7 +44,7 @@ constructor(private authService: AuthService, private fb: FormBuilder, private r
       password: ['', [Validators.required]],
       role: ['', [Validators.required]], // Inicializar con null o un valor por defecto
       email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.pattern('^d*$')]],
+      phone: ['', [Validators.pattern('^\\d*$')]],
       address: [''],
       validated: ['true'],
     });
