@@ -6,8 +6,8 @@ import { AvatarModule } from 'primeng/avatar';
 import { InputTextModule } from 'primeng/inputtext';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
-import { LoginComponent } from '../security/login/login.component';
+import { AuthService } from '../../../services/auth.service';
+import { LoginComponent } from '../../security/login/login.component';
 
 @Component({
     selector: 'app-navbar',
@@ -42,7 +42,7 @@ export class Navbar implements OnInit {
             {
                 label: 'Trips',
                 icon: 'pi pi-map',
-                command: () => this.router.navigate(['/trips'])
+                command: () => this.router.navigate(['/trip'])
             },
             {
                 label: 'Finder',
@@ -65,7 +65,8 @@ export class Navbar implements OnInit {
                 ];
                 return;
             }
-            switch (await this.getLoggedUserRole()) {
+            let role = "explorer";
+            switch (role) {
                 case 'explorer':
                     baseRight.push({
                         label: 'Explorer',
@@ -97,7 +98,6 @@ export class Navbar implements OnInit {
                         ]
                     });
                     break;
-
                 case 'manager':
                     baseRight.push({
                         label: 'Manager',
