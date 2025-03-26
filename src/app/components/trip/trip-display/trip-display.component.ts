@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Trip } from '../../../models/trip.model';
 import { ImageCarouselComponent } from "../../img-carousel/img-carousel.component";
 import { CommonModule } from '@angular/common';
@@ -10,7 +10,7 @@ import { CardModule } from 'primeng/card';
   styleUrl: './trip-display.component.css'
 })
 export class TripDisplayComponent  {
-  protected trip: Trip;
+  @Input() trip: Trip;
 
   constructor() { 
     this.trip = new Trip();

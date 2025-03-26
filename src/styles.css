@@ -13,6 +13,6 @@
   @apply shadow-lg;
 }
 
-@theme {
-  /* Add a custom theme eg: --color-blue-600: */
+:root {
+  --p-dataview-content-background: transparent !important;
 }
