@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, User, user, onAuthStateChanged } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, User, user } from '@angular/fire/auth';
 import { Actor } from '../models/actor.model';
 import { Firestore, doc, getDoc, setDoc } from '@angular/fire/firestore';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -11,6 +11,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class AuthService {
   private userSubject = new BehaviorSubject<User | null>(null);
   user$: Observable<User | null>;
+  currentActor: Actor | null = null;
   
   constructor(private auth: Auth, private http: HttpClient, private firestore: Firestore) {
     this.user$ = user(this.auth);
@@ -37,22 +38,43 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    return new Promise<any>((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       signInWithEmailAndPassword(this.auth, email, password)
-        .then(res => {
-          console.log('User logged in successfully', res);
-          resolve(res);
-        }, err => {
+        .then(async res => {
+          const actorRef = doc(this.firestore, `actors/${res.user.uid}`);
+          try {
+            const actorSnap = await getDoc(actorRef);
+            if (actorSnap.exists()) {
+              this.currentActor = actorSnap.data() as Actor; 
+              console.log('User logged in successfully');
+              resolve(this.currentActor);
+            } else {
+              console.warn('Actor not found in Firestore');
+              this.currentActor = null;
+              resolve(null);
+            }
+          } catch (error) {
+            console.error('Error fetching actor data', error);
+            reject(error);
+          }
+        })
+        .catch(err => {
           console.log('Error logging in user', err);
           reject(err);
         });
     });
   }
 
+  getCurrentActor(): Actor | null{
+    return this.currentActor;
+  }
+  
+
   logout() {
-    return new Promise<any>((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       signOut(this.auth)
         .then(res => {
+          this.currentActor = null;
           resolve(res);
         }, err => {
           reject(err);
