@@ -7,6 +7,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
+import { Actor } from '../../../models/actor.model';
 
 @Component({
     selector: 'app-navbar',
@@ -18,16 +19,14 @@ import { AuthService } from '../../../services/auth.service';
 })
 export class Navbar implements OnInit {
     leftItems: MenuItem[] | undefined;    
-    rightItems: MenuItem[] | undefined;    
+    rightItems: MenuItem[] | undefined;
+    currentActor: Actor | null = null;
+    activeRole: string | null = 'anonymous';
 
-    constructor(private authService: AuthService, private router: Router) {}
+    constructor(public authService: AuthService, private router: Router) {}
 
     loggedIn() {
         return this.authService.isLoggedIn();
-    }
-
-    async getLoggedUserRole() {
-        return await this.authService.getUserRole();
     }
 
     ngOnInit() {
@@ -41,7 +40,7 @@ export class Navbar implements OnInit {
             {
                 label: 'Trips',
                 icon: 'pi pi-map',
-                command: () => this.router.navigate(['/trip'])
+                command: () => this.router.navigate(['/trips'])
             },
             {
                 label: 'Finder',
@@ -51,9 +50,23 @@ export class Navbar implements OnInit {
         ];
 
         // Menú contextual por rol
-        this.authService.user$.subscribe(async user => {
+        this.authService.getStatus().subscribe(async (loggedIn: boolean) => {
             const baseRight: MenuItem[] = [];
-            if (!user) {
+
+            if(loggedIn){
+                this.currentActor = this.authService.getCurrentActor();
+                const role = this.currentActor?.role;
+                if (role){ 
+                    this.activeRole = role.toString().toLowerCase();
+                } else {
+                    this.activeRole = 'anonymous'
+                    this.currentActor = null
+                }
+            } else {
+                this.activeRole = 'anonymous'
+                this.currentActor = null
+            }
+            if (this.activeRole === 'anonymous') {
                 // Visitante
                 this.rightItems = [
                     {
@@ -69,8 +82,8 @@ export class Navbar implements OnInit {
                 ];
                 return;
             }
-            let role = "explorer";
-            switch (role) {
+            
+            switch (this.activeRole) {
                 case 'explorer':
                     baseRight.push({
                         label: 'Explorer',
