@@ -6,6 +6,7 @@ import { TripListComponent } from './components/trip/trip-list/trip-list.compone
 import { HomeComponent } from './components/shared/home/home.component';
 import { ActorRoleGuard } from './guards/actor-role.guard';
 import { LoginComponent } from './components/security/login/login.component';
+import { DeniedAccessComponent } from './components/shared/denied-access/denied-access.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -13,6 +14,7 @@ export const routes: Routes = [
   { path: 'trips', component: TripListComponent },
   { path: 'register', component: RegisterComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'anonymous' } },
   { path: 'login',component: LoginComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'anonymous' }},
+  { path: 'denied-access', component: DeniedAccessComponent },
   { path: '**', component: NotFoundComponent }
 ]
 
