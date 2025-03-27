@@ -1,36 +1,26 @@
-import { Component } from '@angular/core';
-import { Dialog } from 'primeng/dialog';
+import { Component, OnInit } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { AuthService } from '../../../services/auth.service';
+import { CardModule } from 'primeng/card';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  imports: [Dialog, ButtonModule, InputTextModule, ReactiveFormsModule, CommonModule, ProgressSpinnerModule],
+  imports: [CardModule, ButtonModule, InputTextModule, ReactiveFormsModule, CommonModule, FloatLabelModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   loginForm!: FormGroup;
-  visible: boolean = false;
-  loginError: boolean = false;
-  loading: boolean = false;
+  loginError = false;
+  private returnUrl!: string;
 
-  constructor(private authService: AuthService, private fb: FormBuilder) {
+  constructor(private authService: AuthService, private fb: FormBuilder, private route: ActivatedRoute, private router: Router) {
     this.createForm();
-  }
-
-  showDialog() {
-    this.visible = true;
-  }
-
-  closeDialog() {
-    this.visible = false;
-    this.loginForm.reset();
-    this.loginError = false;
   }
 
   createForm() {
@@ -42,19 +32,19 @@ export class LoginComponent {
 
   onLogin() {
     if (this.loginForm.valid) {
-      this.loading = true;
-      
         this.authService.login(this.loginForm.value.email, this.loginForm.value.password).then(() => {
-            this.visible = false;
             this.loginForm.reset();
             this.loginError = false;
-            this.loading = false;
+            this.router.navigateByUrl(this.returnUrl);
         }).catch(() => {
           this.loginError = true;
-          this.loading = false;
         });
     } else {
       this.loginForm.markAllAsTouched();
     }
+  }
+
+  ngOnInit(): void {
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 }

@@ -7,14 +7,13 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
-import { LoginComponent } from '../../security/login/login.component';
 
 @Component({
     selector: 'app-navbar',
     templateUrl: './navbar.component.html',
     styleUrls: ['./navbar.component.css'],
     standalone: true,
-    imports: [Menubar, BadgeModule, AvatarModule, InputTextModule, CommonModule, LoginComponent],
+    imports: [Menubar, BadgeModule, AvatarModule, InputTextModule, CommonModule],
     changeDetection: ChangeDetectionStrategy.Default
 })
 export class Navbar implements OnInit {
@@ -61,6 +60,11 @@ export class Navbar implements OnInit {
                         label: 'Register',
                         icon: 'pi pi-user-plus',
                         command: () => this.router.navigate(['/register'])
+                    },
+                    {
+                        label: 'Login',
+                        icon: 'pi pi-sign-in',
+                        command: () => this.router.navigate(['/login'])
                     }
                 ];
                 return;
