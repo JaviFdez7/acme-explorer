@@ -8,8 +8,7 @@ import { usePreset } from '@primeng/themes';
     providedIn: 'root'
 })
 export class ThemeService {
-    currentColor: string = 'indigo';
-    private isDarkMode = false;
+    currentColor: string = '#3F51B5';
 
     setDarkModeSelector = () => {
         const element = document.querySelector('html');
@@ -22,8 +21,11 @@ export class ThemeService {
         return this.currentColor;
     }
 
-    setPreset = (color: string) => {
+    setCurrentColor(color: string) {
         this.currentColor = color;
+    }
+
+    setPreset = (color: string) => {
         const newPreset = definePreset(Aura, {
             semantic: {
                 colorScheme: {

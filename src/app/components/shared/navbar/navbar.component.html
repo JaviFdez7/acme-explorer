@@ -1,8 +1,8 @@
 <p-menubar [model]="items">    
     <ng-template #item let-item let-root="root">
         <a pRipple class="flex items-center p-menubar-item-link">
-            <i *ngIf="item.icon" [ngClass]="['pi', item.icon]" [ngStyle]="item.palette ? { color: selectedColor } : {}"
-          ></i>            <span>{{ item.label }}</span>
+            <i *ngIf="item.icon" [ngClass]="['pi', item.icon]" [ngStyle]="item.palette ? { color: selectedColor } : {}"></i>            
+            <span>{{ item.label }}</span>
             <p-badge *ngIf="item.badge" [ngClass]="{ 'ml-auto': !root, 'ml-2': root }" [value]="item.badge" />
             <span *ngIf="item.color" class="ml-auto flex items-center">
                 <span class="w-4 h-4 rounded-full border border-surface" [ngStyle]="{ 'background-color': item.color }"></span>
