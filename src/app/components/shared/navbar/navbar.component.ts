@@ -36,6 +36,19 @@ export class Navbar implements OnInit {
         this.selectedColor = this.themeService.getCurrentColor();
         // Menú contextual por rol
         this.authService.getStatus().subscribe(async (loggedIn: boolean) => {
+            if(loggedIn){
+                this.currentActor = this.authService.getCurrentActor();
+                const role = this.currentActor?.role;
+                if (role){ 
+                    this.activeRole = role.toString().toLowerCase();
+                } else {
+                    this.activeRole = 'anonymous'
+                    this.currentActor = null
+                }
+            } else {
+                this.activeRole = 'anonymous'
+                this.currentActor = null
+            }
             // Menú común
             let commonNavbar = [
                 {
@@ -95,20 +108,6 @@ export class Navbar implements OnInit {
                     icon: 'pi pi-flag',
                 },
             ];
-
-            if(loggedIn){
-                this.currentActor = this.authService.getCurrentActor();
-                const role = this.currentActor?.role;
-                if (role){ 
-                    this.activeRole = role.toString().toLowerCase();
-                } else {
-                    this.activeRole = 'anonymous'
-                    this.currentActor = null
-                }
-            } else {
-                this.activeRole = 'anonymous'
-                this.currentActor = null
-            }
             
             if (this.activeRole === 'anonymous') {
                 let registerNavbar = [

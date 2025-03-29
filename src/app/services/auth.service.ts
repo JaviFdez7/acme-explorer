@@ -51,7 +51,7 @@ export class AuthService {
       const res = await signInWithEmailAndPassword(this.auth, email, password);
       await this.loadUserData(res.user.uid);
       this.loginStatus.next(true);
-      console.log('User logged in successfully');
+      console.log('User logged in successfully with role:', this.currentActor?.role);
       return this.currentActor;
     } catch (error) {
       console.error('Error during login:', error);

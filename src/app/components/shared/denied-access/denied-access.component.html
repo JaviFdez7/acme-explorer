@@ -1,6 +1,8 @@
 <div class="flex flex-col items-center justify-center">
-  <h1 class="text-4xl font-bold text-red-600">403 Forbidden</h1>
-  <p class="text-lg text-gray-700 mt-2">
-    Restricted access to resource: {{ this.url }}
-  </p>
+  <h1 class="text-9xl font-extrabold text-primary-600">403</h1>
+  <p class="text-2xl font-semibold mt-4">Forbidden</p>
+  <p class="mt-2">Restricted access to resource: {{ this.url }}</p>
+  <p-button (click)="goHome()" class="mt-4">
+    Go Back Home
+  </p-button>
 </div>
