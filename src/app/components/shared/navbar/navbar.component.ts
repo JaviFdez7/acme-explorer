@@ -24,6 +24,7 @@ export class Navbar implements OnInit {
     currentActor: Actor | null = null;
     activeRole: string | null = 'anonymous';
     selectedColor: string = '';
+    themeToggleItem: MenuItem | undefined;
     
 
     constructor(public authService: AuthService, private router: Router, public themeService: ThemeService) {}
@@ -67,6 +68,13 @@ export class Navbar implements OnInit {
                     command: () => this.router.navigate(['/finder'])
                 },
             ];
+
+            this.themeToggleItem = {
+                icon: 'pi pi-sun',
+                command: () => {
+                  this.themeService.setDarkModeSelector();
+                }
+              };
     
             let configNavbar = [
                 {
@@ -97,10 +105,7 @@ export class Navbar implements OnInit {
                         { label: 'Stone', icon: 'pi pi-palette', command: () => { this.themeService.setPreset('stone'); this.selectedColor = '#78716C'; this.themeService.setCurrentColor(this.selectedColor); }, color: '#78716C' }
                     ]                    
                 },
-                {
-                    icon: 'pi pi-sun',
-                    command: () => this.themeService.setDarkModeSelector(),
-                },
+                this.themeToggleItem,
                 {
                     icon: 'pi pi-flag',
                 },
@@ -108,6 +113,12 @@ export class Navbar implements OnInit {
                     icon: 'pi pi-flag',
                 },
             ];
+
+            this.themeService.isDarkModeEnabled().subscribe((darkMode: boolean) => {
+                if (this.themeToggleItem) {
+                    this.themeToggleItem.icon = darkMode ? 'pi pi-moon' : 'pi pi-sun';
+                }
+            });
             
             if (this.activeRole === 'anonymous') {
                 let registerNavbar = [

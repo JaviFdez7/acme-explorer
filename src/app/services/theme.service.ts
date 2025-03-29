@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { definePreset } from '@primeng/themes'
 import Aura from '@primeng/themes/aura';
 import { usePreset } from '@primeng/themes';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 
 @Injectable({
@@ -9,13 +10,19 @@ import { usePreset } from '@primeng/themes';
 })
 export class ThemeService {
     currentColor: string = '#3F51B5';
+    private darkMode = new BehaviorSubject<boolean>(false);
 
     setDarkModeSelector = () => {
         const element = document.querySelector('html');
         if (element !== null) {
             element.classList.toggle('my-app-dark');
+            this.darkMode.next(!this.darkMode.getValue());
         }
     };
+
+    isDarkModeEnabled(): Observable<boolean> {
+        return this.darkMode.asObservable();
+    }
 
     getCurrentColor() {
         return this.currentColor;
