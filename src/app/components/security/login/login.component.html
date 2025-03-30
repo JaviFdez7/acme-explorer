@@ -1,7 +1,7 @@
 <p-card styleClass="max-w-lg mx-auto p-6 card">
   <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
     <fieldset>
-      <legend class="text-xl font-semibold">Register new user</legend>
+      <legend class="text-xl font-semibold">Log in</legend>
       <p-floatlabel variant="on" class="mt-4">
         <label for="email">Email *</label>
         <input
@@ -40,7 +40,7 @@
         >Password is required</small
       >
 
-      <p-button type="submit" styleClass="w-full mt-4"> Login </p-button>
+      <p-button type="submit" styleClass="w-full mt-4"> Log in </p-button>
     </fieldset>
   </form>
 
