@@ -8,6 +8,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { Select } from 'primeng/select';
 import { Router } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -19,7 +20,8 @@ import { Router } from '@angular/router';
     FloatLabelModule,
     InputTextModule,
     ButtonModule,
-    Select
+    Select,
+    RouterModule
   ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],

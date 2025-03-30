@@ -7,10 +7,11 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CommonModule } from '@angular/common';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { ActivatedRoute, Router } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  imports: [CardModule, ButtonModule, InputTextModule, ReactiveFormsModule, CommonModule, FloatLabelModule],
+  imports: [CardModule, ButtonModule, InputTextModule, ReactiveFormsModule, CommonModule, FloatLabelModule, RouterModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
