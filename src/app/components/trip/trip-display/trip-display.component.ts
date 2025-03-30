@@ -12,23 +12,8 @@ import { CardModule } from 'primeng/card';
 export class TripDisplayComponent  {
   @Input() trip: Trip;
 
-  constructor() { 
-    this.trip = new Trip();
-    this.trip.ticker = '57-AB32';
-    this.trip.title = 'Trip to the moon';
-    this.trip.description = 'A trip to the moon to see the stars. A once in a lifetime opportunity!';
-    this.trip.price = 1000;
-    this.trip.requirements = ['18+', 'Passport', 'Vaccination', 'Insurance', 'Space suit'];
-    this.trip.startDate = new Date();
-    this.trip.endDate = new Date();
-    this.trip.pictures = [
-      { itemImageSrc: `https://placehold.co/600x400?text=${this.trip.title.split(' ').join('+')}+1`, alt: 'Image 1' },
-      { itemImageSrc: `https://placehold.co/600x400?text=${this.trip.title.split(' ').join('+')}+2`, alt: 'Image 2' },
-      { itemImageSrc: `https://placehold.co/600x400?text=${this.trip.title.split(' ').join('+')}+3`, alt: 'Image 3' },
-      { itemImageSrc: `https://placehold.co/600x400?text=${this.trip.title.split(' ').join('+')}+4`, alt: 'Image 4' },
-
-    ];
-    this.trip.deleted = false;
+  constructor() {
+    this.trip = new Trip("", "", "", 0, new Date(), new Date(), [], []);
   }
 
   getRequirements() {

@@ -1,10 +1,20 @@
 <div>
-  <p-galleria [value]="images" [showItemNavigators]="true" [changeItemOnIndicatorHover]="true" [showThumbnails]="false" [showIndicators]="true" [showItemNavigatorsOnHover]="true" [circular]="true" [responsiveOptions]="responsiveOptions" [containerStyle]="{ 'max-width': '640px' }">
-      <ng-template #item let-item>
-          <img [src]="item.itemImageSrc" />
-      </ng-template>
-      <ng-template #thumbnail let-item>
-          <img [src]="item.thumbnailImageSrc"/>
-      </ng-template>
+  <p-galleria
+    [value]="images"
+    [showItemNavigators]="true"
+    [changeItemOnIndicatorHover]="true"
+    [showThumbnails]="false"
+    [showIndicators]="true"
+    [showItemNavigatorsOnHover]="true"
+    [circular]="true"
+    [responsiveOptions]="responsiveOptions"
+    [containerStyle]="{ 'max-width': '640px' }"
+  >
+    <ng-template #item let-item>
+      <img [src]="item" />
+    </ng-template>
+    <ng-template #thumbnail let-item>
+      <img [src]="item" />
+    </ng-template>
   </p-galleria>
 </div>

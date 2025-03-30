@@ -8,11 +8,21 @@ export class Trip extends Entity{
   private _requirements!: string[];
   private _startDate!: Date;
   private _endDate!: Date;
-  private _pictures?: { itemImageSrc: string; alt?: string }[];
+  private _pictures?: string[];
   private _cancelation?: string;
 
-  constructor() {
+
+  constructor(ticker: string, title: string, description: string, price: number, startDate: Date, endDate: Date, requirements: string[], pictures?: string[], cancelation?: string) {
     super();
+    this._ticker = ticker;
+    this._title = title;
+    this._description = description;
+    this._price = price;
+    this._startDate = startDate;
+    this._endDate = endDate;
+    this._requirements = requirements;
+    this._pictures = pictures;
+    this._cancelation = cancelation;
   }
 
   public get ticker(): string {
@@ -71,11 +81,11 @@ export class Trip extends Entity{
     this._endDate = value;
   }
 
-  public get pictures(): { itemImageSrc: string; alt?: string }[] {
+  public get pictures(): string[] {
     return this._pictures || [];
   }
 
-  public set pictures(value: { itemImageSrc: string; alt?: string }[]) {
+  public set pictures(value: string[]) {
     this._pictures = value;
   }
 
@@ -85,5 +95,21 @@ export class Trip extends Entity{
 
   public set cancelation(value: string) {
     this._cancelation = value;
+  }
+
+  public get object(): any {
+    return {
+      version: this.version,
+      deleted: this.deleted,
+      ticker: this.ticker,
+      title: this.title,
+      description: this.description,
+      price: this.price,
+      requirements: this.requirements,
+      startDate: this.startDate,
+      endDate: this.endDate,
+      pictures: this.pictures,
+      cancelation: this.cancelation
+    };
   }
 }

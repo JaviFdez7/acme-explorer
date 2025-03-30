@@ -9,7 +9,7 @@ import { GalleriaModule } from 'primeng/galleria';
   imports: [GalleriaModule]
 })
 export class ImageCarouselComponent{
-    @Input() images: { itemImageSrc: string; alt?: string }[] = [];
+    @Input() images: string[] = [];
 
     responsiveOptions: any[] = [
         {
