@@ -35,7 +35,6 @@ export class Navbar implements OnInit {
 
     ngOnInit() {
         this.selectedColor = this.themeService.getCurrentColor();
-        // Menú contextual por rol
         this.authService.getStatus().subscribe(async (loggedIn: boolean) => {
             if(loggedIn){
                 this.currentActor = this.authService.getCurrentActor();
@@ -61,14 +60,10 @@ export class Navbar implements OnInit {
                     label: 'Trips',
                     icon: 'pi pi-map',
                     command: () => this.router.navigate(['/trips'])
-                },
-                {
-                    label: 'Finder',
-                    icon: 'pi pi-search',
-                    command: () => this.router.navigate(['/finder'])
-                },
+                }
             ];
 
+            // Menú de configuración (temas e idioma)
             this.themeToggleItem = {
                 icon: 'pi pi-sun',
                 command: () => {
@@ -107,9 +102,11 @@ export class Navbar implements OnInit {
                 },
                 this.themeToggleItem,
                 {
+                    label: 'ESP',
                     icon: 'pi pi-flag',
                 },
                 {
+                    label: 'ENG',
                     icon: 'pi pi-flag',
                 },
             ];
@@ -120,6 +117,7 @@ export class Navbar implements OnInit {
                 }
             });
             
+            // Si no está logueado, mostrar el menú de registro y login
             if (this.activeRole === 'anonymous') {
                 let registerNavbar = [
                     {
@@ -138,6 +136,7 @@ export class Navbar implements OnInit {
                 return;
             }
 
+            // Si está logueado, mostrar el menú del rol activo
             let profileNavbar = [
                 {
                     label: 'Profile',
@@ -146,15 +145,12 @@ export class Navbar implements OnInit {
                         {
                             label: 'My Profile',
                             icon: 'pi pi-user-edit',
-                            command: () => this.router.navigate(['/profile'])
-                        },
-                        {
-                            separator: true
+                            command: () => this.router.navigate([`/user/${this.currentActor?.id}/profile`])
                         },
                         {
                             label: 'Logout',
                             icon: 'pi pi-sign-out',
-                            command: () => this.authService.logout()
+                            command: () => { this.authService.logout(); this.router.navigate(['/']); },
                         }
                     ]
                 }
@@ -165,18 +161,18 @@ export class Navbar implements OnInit {
                     let explorerNavbar = [
                         {
                             label: 'Explorer',
-                            icon: 'pi pi-user',
+                            icon: 'pi pi-compass',
                             style: {'margin-left': 'auto'},
                             items: [
                                 {
                                     label: 'My Applications',
                                     icon: 'pi pi-file',
-                                    command: () => this.router.navigate(['/applications'])
+                                    command: () => this.router.navigate([`/explorer/${this.currentActor?.id}/applications`])
                                 },
                                 {
-                                    label: 'Favourites',
-                                    icon: 'pi pi-star',
-                                    command: () => this.router.navigate(['/favourites'])
+                                    label: 'My Favorites',
+                                    icon: 'pi pi-heart',
+                                    command: () => this.router.navigate([`/explorer/${this.currentActor?.id}/favorites`])
                                 }
                             ]
                         }
@@ -186,89 +182,79 @@ export class Navbar implements OnInit {
 
                     break;
                 case 'manager':
-                    this.items?.push({
+                    let managerNavbar = [{
                         label: 'Manager',
                         icon: 'pi pi-briefcase',
+                        style: {'margin-left': 'auto'},
                         items: [
                             {
                                 label: 'My Trips',
-                                icon: 'pi pi-sitemap',
-                                command: () => this.router.navigate(['/my-trips'])
-                            },
-                            {
-                                label: 'Trip Applications',
-                                icon: 'pi pi-inbox',
-                                command: () => this.router.navigate(['/trip-applications'])
-                            },
-                            {
-                                separator: true
-                            },
-                            {
-                                label: 'Logout',
-                                icon: 'pi pi-sign-out',
-                                command: () => this.authService.logout()
+                                icon: 'pi pi-map',
+                                command: () => this.router.navigate([`/manager/${this.currentActor?.id}/trips`])
                             }
                         ]
-                    });
+                    }];
+
+                    this.items = [...commonNavbar, ...managerNavbar, ...profileNavbar, ...configNavbar];
                     break;
 
                 case 'admin':
-                    this.items?.push({
+                    let adminNavbar = [{
                         label: 'Admin',
                         icon: 'pi pi-cog',
+                        style: {'margin-left': 'auto'},
                         items: [
-                            {
-                                label: 'Dashboard',
-                                icon: 'pi pi-chart-bar',
-                                command: () => this.router.navigate(['/admin/dashboard'])
-                            },
                             {
                                 label: 'Create Manager',
                                 icon: 'pi pi-user-plus',
-                                command: () => this.router.navigate(['/admin/new-manager'])
+                                command: () => this.router.navigate(['/admin/create-manager'])
                             },
                             {
-                                label: 'Sponsorship Config',
-                                icon: 'pi pi-sliders-h',
-                                command: () => this.router.navigate(['/admin/sponsorship-settings'])
+                                label: 'Create Sponsor',
+                                icon: 'pi pi-user-plus',
+                                command: () => this.router.navigate(['/admin/create-sponsor'])
                             },
                             {
-                                separator: true
+                                label: 'Dashboard',
+                                icon: 'pi pi-chart-line',
+                                command: () => this.router.navigate(['/admin/dashboard'])
                             },
                             {
-                                label: 'Logout',
-                                icon: 'pi pi-sign-out',
-                                command: () => this.authService.logout()
+                                label: 'Sponsorship Configuration',
+                                icon: 'pi pi-cog',
+                                command: () => this.router.navigate(['/admin/sponsor-configuration'])
+                            },
+                            {
+                                label: 'Explorer Analysis',
+                                icon: 'pi pi-chart-bar',
+                                command: () => this.router.navigate(['/admin/explorer-analysis'])
                             }
                         ]
-                    });
-                    break;
+                    }];
 
+                    this.items = [...commonNavbar, ...adminNavbar, ...profileNavbar, ...configNavbar];
+                    break;
+            
                 case 'sponsor':
-                    this.items?.push({
+                    let sponsorNavbar = [{
                         label: 'Sponsor',
-                        icon: 'pi pi-dollar',
+                        icon: 'pi pi-wallet',
+                        style: {'margin-left': 'auto'},
                         items: [
-                            {
-                                label: 'My Sponsorships',
-                                icon: 'pi pi-tag',
-                                command: () => this.router.navigate(['/sponsorships'])
-                            },
                             {
                                 label: 'Create Sponsorship',
                                 icon: 'pi pi-plus',
-                                command: () => this.router.navigate(['/sponsorships/new'])
+                                command: () => this.router.navigate(['/sponsorships/create'])
                             },
                             {
-                                separator: true
-                            },
-                            {
-                                label: 'Logout',
-                                icon: 'pi pi-sign-out',
-                                command: () => this.authService.logout()
+                                label: 'My Sponsorships',
+                                icon: 'pi pi-money-bill',
+                                command: () => this.router.navigate(['/sponsor/${this.currentActor?.id}/sponsorships'])
                             }
                         ]
-                    });
+                    }];
+
+                    this.items = [...commonNavbar, ...sponsorNavbar, ...profileNavbar, ...configNavbar];
                     break;
             }
         });
