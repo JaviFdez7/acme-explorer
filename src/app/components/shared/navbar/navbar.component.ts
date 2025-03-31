@@ -102,9 +102,11 @@ export class Navbar implements OnInit {
                 },
                 this.themeToggleItem,
                 {
+                    label: 'ESP',
                     icon: 'pi pi-flag',
                 },
                 {
+                    label: 'ENG',
                     icon: 'pi pi-flag',
                 },
             ];
