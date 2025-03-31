@@ -12,7 +12,6 @@ import { DeniedAccessComponent } from './components/shared/denied-access/denied-
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'trips', component: TripListComponent },
-  { path: 'trip', component: TripDisplayComponent },
   { path: 'trip/:id', component: TripDisplayComponent },
   { path: 'trip/:id/applications', component: TripDisplayComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'manager' } },
   { path: 'trip/create', component: TripDisplayComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'manager' } },

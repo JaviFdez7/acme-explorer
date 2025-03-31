@@ -20,7 +20,6 @@ import { RouterModule } from '@angular/router';
     FloatLabelModule,
     InputTextModule,
     ButtonModule,
-    Select,
     RouterModule
   ],
   templateUrl: './register-explorer.component.html',
@@ -28,14 +27,11 @@ import { RouterModule } from '@angular/router';
 })
 export class RegisterExplorerComponent {
   registrationForm!: FormGroup;
-  roleList: { label: string, value: string }[] = [];
   loading = false;
   error: string | null = null;
   success: string | null = null;
 
 constructor(private authService: AuthService, private fb: FormBuilder, private router: Router) {
-  const roles = this.authService.getRoles();
-  this.roleList = roles.map(role => ({ label: role, value: role }));
   this.createForm();
 }
 
