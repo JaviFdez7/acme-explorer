@@ -1,7 +1,7 @@
 <p-card styleClass="max-w-lg mx-auto p-6 card">
   <form [formGroup]="registrationForm" (ngSubmit)="onRegister()">
     <fieldset>
-      <legend class="text-xl font-semibold">Register new user</legend>
+      <legend class="text-xl font-semibold">Register as explorer</legend>
       <p-floatlabel variant="on" class="mt-4">
         <label for="email">Email *</label>
         <input
@@ -38,25 +38,6 @@
         "
         class="text-red-500"
         >Password is required</small
-      >
-      <p-floatlabel class="mt-4" variant="on">
-        <p-select
-          [options]="roleList"
-          formControlName="role"
-          styleClass="w-full"
-          inputId="role"
-          placeholder="Select a Role"
-        >
-        </p-select>
-        <label for="role">Role *</label>
-      </p-floatlabel>
-      <small
-        *ngIf="
-          registrationForm.controls['role'].invalid &&
-          registrationForm.controls['role'].touched
-        "
-        class="text-red-500"
-        >Select a role</small
       >
 
       <p-floatlabel variant="on" class="mt-4">
@@ -120,7 +101,14 @@
         />
       </p-floatlabel>
 
-      <p-button type="submit" styleClass="w-full mt-4"> Create </p-button>
+      <p-button type="submit" styleClass="w-full mt-4"> Register </p-button>
     </fieldset>
   </form>
+
+  <div class="mt-4 text-center">
+    <p class="text-sm">
+      Already registered?
+      <a routerLink="/login" class="text-blue-500 hover:underline">Login</a>
+    </p>
+  </div>
 </p-card>

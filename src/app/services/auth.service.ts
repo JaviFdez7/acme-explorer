@@ -96,6 +96,6 @@ export class AuthService {
   }
 
   getRoles(): string[] {
-    return ['EXPLORER', 'MANAGER', 'ADMIN'];
+    return ['EXPLORER', 'MANAGER', 'ADMIN', 'SPONSOR'];
   }
 }
