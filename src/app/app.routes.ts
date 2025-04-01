@@ -7,12 +7,13 @@ import { HomeComponent } from './components/shared/home/home.component';
 import { ActorRoleGuard } from './guards/actor-role.guard';
 import { LoginComponent } from './components/security/login/login.component';
 import { DeniedAccessComponent } from './components/shared/denied-access/denied-access.component';
+import { TripDetailsComponent } from './components/trip/trip-details/trip-details.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'trips', component: TripListComponent },
   { path: 'trip', component: TripDisplayComponent },
-  { path: 'trip/:id', component: TripDisplayComponent },
+  { path: 'trip/:id', component: TripDetailsComponent },
   { path: 'trip/:id/applications', component: TripDisplayComponent, data: { expectedRole: 'manager' } },
   { path: 'trip/create', component: TripDisplayComponent, data: { expectedRole: 'manager' } },
   { path: 'trip/:id/edit', component: TripDisplayComponent, data: { expectedRole: 'manager' } },
