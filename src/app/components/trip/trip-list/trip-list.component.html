@@ -1,9 +1,12 @@
+<div class="search-container flex flex-row  mb-4">
+  <input pInputText ="text" [(ngModel)]="searchQuery" placeholder="Search trips..." />
+  <p-button icon="pi pi-times" class="p-button-secondary mx-0.5" (click)="clearSearch()"></p-button>
+</div>
 <p-dataView
   #dv
-  [value]="getTripList()"
+  [value]="filteredTrips()"
   [paginator]="true"
   [rows]="6"
-  [style]="{ 'bacground-color': 'white' }"
 >
   <ng-template #list let-trips>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">

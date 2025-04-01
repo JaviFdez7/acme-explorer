@@ -4,15 +4,19 @@ import { TripDisplayComponent } from '../trip-display/trip-display.component';
 import { CommonModule } from '@angular/common';
 import { DataView } from 'primeng/dataview';
 import { TripService } from '../../../services/trip.service';
+import { FormsModule } from '@angular/forms';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-trip-list',
-  imports: [CommonModule, TripDisplayComponent, DataView],
+  imports: [CommonModule, TripDisplayComponent, DataView, FormsModule, InputTextModule, ButtonModule],
   templateUrl: './trip-list.component.html',
   styleUrls: ['./trip-list.component.css']
 })
 export class TripListComponent implements OnInit {
   protected tripList: Trip[] = [];
+  protected searchQuery ='';
 
   constructor(private tripService: TripService) { }
 
@@ -20,6 +24,19 @@ export class TripListComponent implements OnInit {
     this.tripService.getTrips().subscribe((trips: Trip[]) => {
       this.tripList = trips;
     });
+  }
+
+  filteredTrips() {
+    return this.tripList.filter(trip => {
+      const query = this.searchQuery.toLowerCase();
+      return trip.title.toLowerCase().includes(query) ||
+             trip.ticker.toLowerCase().includes(query) ||
+             trip.description.toLowerCase().includes(query);
+    });
+  }
+
+  clearSearch() {
+    this.searchQuery = '';
   }
 
   getTripList() {
