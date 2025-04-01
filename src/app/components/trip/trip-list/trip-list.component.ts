@@ -7,10 +7,12 @@ import { TripService } from '../../../services/trip.service';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 
 @Component({
   selector: 'app-trip-list',
-  imports: [CommonModule, TripDisplayComponent, DataView, FormsModule, InputTextModule, ButtonModule],
+  imports: [CommonModule, TripDisplayComponent, DataView, FormsModule, InputTextModule, ButtonModule, IconFieldModule, InputIconModule],
   templateUrl: './trip-list.component.html',
   styleUrls: ['./trip-list.component.css']
 })

@@ -1,6 +1,9 @@
-<div class="search-container flex flex-row  mb-4">
-  <input pInputText ="text" [(ngModel)]="searchQuery" placeholder="Search trips..." />
-  <p-button icon="pi pi-times" class="p-button-secondary mx-0.5" (click)="clearSearch()"></p-button>
+<div class="search-container flex flex-row justify-center items-center">
+  <p-iconfield iconPosition="left" >
+    <p-inputicon styleClass="pi pi-search" />
+    <input type="text" pInputText placeholder="Search" />
+  </p-iconfield>
+  <p-button icon="pi pi-times" class="p-button-secondary" (click)="clearSearch()"></p-button>
 </div>
 <p-dataView
   #dv
