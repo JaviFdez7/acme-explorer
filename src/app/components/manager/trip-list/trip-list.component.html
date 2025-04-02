@@ -1,0 +1,21 @@
+<div class="search-container flex flex-row justify-center items-center">
+  <p-iconfield iconPosition="left" >
+    <p-inputicon styleClass="pi pi-search" />
+    <input type="text" pInputText placeholder="Search" [(ngModel)]="searchQuery"/>
+  </p-iconfield>
+  <p-button icon="pi pi-times" class="p-button-secondary mx-1" (click)="clearSearch()"></p-button>
+</div>
+<p-dataView
+  #dv
+  [value]="filteredTrips()"
+  [paginator]="true"
+  [rows]="6"
+>
+  <ng-template #list let-trips>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+      <div *ngFor="let trip of trips">
+        <app-trip-display [trip]="trip"></app-trip-display>
+      </div>
+    </div>
+  </ng-template>
+</p-dataView>
