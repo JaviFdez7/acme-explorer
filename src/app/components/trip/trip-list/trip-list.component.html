@@ -1,7 +1,7 @@
 <div class="search-container flex flex-row justify-center items-center">
   <p-iconfield iconPosition="left" >
     <p-inputicon styleClass="pi pi-search" />
-    <input type="text" pInputText placeholder="Search" />
+    <input type="text" pInputText placeholder="Search" [(ngModel)]="searchQuery"/>
   </p-iconfield>
   <p-button icon="pi pi-times" class="p-button-secondary mx-1" (click)="clearSearch()"></p-button>
 </div>
