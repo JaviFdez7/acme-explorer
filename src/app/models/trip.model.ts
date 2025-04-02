@@ -10,9 +10,10 @@ export class Trip extends Entity{
   private _endDate!: Date;
   private _pictures?: string[];
   private _cancelation?: string;
+  private _manager!: string;
 
 
-  constructor(ticker: string, title: string, description: string, price: number, startDate: Date, endDate: Date, requirements: string[], pictures?: string[], cancelation?: string) {
+  constructor(ticker: string, title: string, description: string, price: number, startDate: Date, endDate: Date, requirements: string[], manager: string, pictures?: string[], cancelation?: string) {
     super();
     this._ticker = ticker;
     this._title = title;
@@ -21,6 +22,7 @@ export class Trip extends Entity{
     this._startDate = startDate;
     this._endDate = endDate;
     this._requirements = requirements;
+    this._manager = manager;
     this._pictures = pictures;
     this._cancelation = cancelation;
   }
@@ -97,6 +99,14 @@ export class Trip extends Entity{
     this._cancelation = value;
   }
 
+  public get manager(): string {
+    return this._manager;
+  }
+
+  public set manager(value: string) {
+    this._manager = value;
+  }
+
   public get object(): any {
     return {
       version: this.version,
@@ -108,6 +118,7 @@ export class Trip extends Entity{
       requirements: this.requirements,
       startDate: this.startDate,
       endDate: this.endDate,
+      manager: this.manager,
       pictures: this.pictures,
       cancelation: this.cancelation
     };

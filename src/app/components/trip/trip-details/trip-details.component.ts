@@ -6,6 +6,8 @@ import { CommonModule } from '@angular/common';
 import { DividerModule } from 'primeng/divider';
 import { Timestamp } from 'firebase/firestore';
 import { ImageCarouselComponent } from '../../img-carousel/img-carousel.component';
+import { Actor } from '../../../models/actor.model';
+import { ActorService } from '../../../services/actor.service';
 @Component({
   selector: 'app-trip-details',
   imports: [CommonModule, DividerModule, ImageCarouselComponent],
@@ -14,19 +16,25 @@ import { ImageCarouselComponent } from '../../img-carousel/img-carousel.componen
 })
 export class TripDetailsComponent implements OnInit {
   protected trip: Trip | undefined;
+  protected manager: Actor | null = null;
 
   constructor(
     private tripService: TripService,
+    private actorService: ActorService,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id'); 
     if (id) {
-      this.tripService.getTrips().subscribe(trips => {
+      this.tripService.getTrips().subscribe((trips: Trip[]) => {
         this.trip = trips.find(trip => trip.id === id);
-      }
-      );
+        if (this.trip) {
+          this.actorService.getManagers().subscribe((actors: Actor[]) => {
+            this.manager = actors.find(actor => actor.id === this.trip?.manager) ?? null;
+          });
+        }
+      });
     }
   }
 
