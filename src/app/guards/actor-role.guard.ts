@@ -34,8 +34,7 @@ export class ActorRoleGuard implements CanActivate {
           if (expectedRole.indexOf('anonymous') !== -1) {
             result = true;
           } else {
-            this.router.navigate(['login']);
-              {queryParams: {returnUrl: state.url}};
+            this.router.navigate(['login'], {queryParams: {returnUrl: state.url}});
           }
           resolve(result);
         }
