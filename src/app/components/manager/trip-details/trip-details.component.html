@@ -43,15 +43,15 @@
         From {{ getStartDate('en') }} to {{ getEndDate('en') }}
       </p>
     </div>
-    
+    <div class="text-lg font-medium">
+      {{ trip?.ticker ?? 'No ticker available' }}
+    </div>
     <!-- Información del usuario y ticker -->
-    <div class="flex items-center justify-between pt-6">
-      <div class="flex flex-row text-sm" >
-        <p-button label="Edit" icon="pi pi-pencil" class="mr-2" (click)="goEdit()" [disabled]="canEditOrDelete()"></p-button>
+    <div class="flex flex-row justify-evenly items-start w-full">
+      <div class="flex flex-row text-sm gap-3">
+        <p-button label="Edit" icon="pi pi-pencil" class="" (click)="goEdit()" [disabled]="canEditOrDelete()"></p-button>
         <p-button label="Delete" icon="pi pi-trash"  (click)="null" [disabled]="canEditOrDelete()"></p-button>
-      </div>
-      <div class="text-lg font-medium">
-        {{ trip?.ticker ?? 'No ticker available' }}
+        <p-button label="Cancel" icon="pi pi-times"  (click)="goCancel()" [disabled]="canEditOrDelete()"></p-button>
       </div>
     </div>
   </div>

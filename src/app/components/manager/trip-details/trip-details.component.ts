@@ -105,4 +105,8 @@ export class ManagerTripDetailsComponent implements OnInit{
     return startDate < today && daysDiff < 10; // Disable edit if the trip is starting in less than 10 days or if it has already started
     
   }
+
+  goCancel() {
+    console.log('Cancel button clicked!');
+  }
 }
