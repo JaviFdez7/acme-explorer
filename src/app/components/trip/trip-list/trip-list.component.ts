@@ -31,9 +31,9 @@ export class TripListComponent implements OnInit {
   filteredTrips() {
     return this.tripList.filter(trip => {
       const query = this.searchQuery.toLowerCase();
-      return trip.title.toLowerCase().includes(query) ||
+      return (trip.title.toLowerCase().includes(query) ||
              trip.ticker.toLowerCase().includes(query) ||
-             trip.description.toLowerCase().includes(query);
+             trip.description.toLowerCase().includes(query)) && trip.published;
     });
   }
 

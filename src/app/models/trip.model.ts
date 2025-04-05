@@ -11,8 +11,9 @@ export class Trip extends Entity{
   private _endDate!: Date;
   private _pictures?: string[];
   private _cancelation?: string;
+  private _published?: boolean;
 
-  constructor(ticker: string, manager: string, title: string, description: string, price: number, startDate: Date, endDate: Date, requirements: string[],  pictures?: string[], cancelation?: string) {
+  constructor(ticker: string, manager: string, title: string, description: string, price: number, startDate: Date, endDate: Date, requirements: string[],  pictures?: string[], cancelation?: string, published?: boolean) {
     super();
     this._ticker = ticker;
     this._manager = manager;
@@ -24,6 +25,7 @@ export class Trip extends Entity{
     this._requirements = requirements;
     this._pictures = pictures;
     this._cancelation = cancelation;
+    this._published = published;
   }
 
   public get ticker(): string {
@@ -106,6 +108,14 @@ export class Trip extends Entity{
     this._manager = value;
   }
 
+  public get published(): boolean {
+    return this._published || false;
+  }
+
+  public set published(value: boolean) {
+    this._published = value;
+  }
+
   public get object(): any {
     return {
       version: this.version,
@@ -119,7 +129,8 @@ export class Trip extends Entity{
       endDate: this.endDate,
       manager: this.manager,
       pictures: this.pictures,
-      cancelation: this.cancelation
+      cancelation: this.cancelation,
+      published: this.published
     };
   }
 }

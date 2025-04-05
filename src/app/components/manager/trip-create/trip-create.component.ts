@@ -63,7 +63,9 @@ export class ManagerTripCreateComponent {
         new Date(this.tripForm.value.startDate),
         new Date(this.tripForm.value.endDate),
         this.tripForm.value.requirements,
-        this.tripForm.value.pictures
+        this.tripForm.value.pictures,
+        undefined,
+        false
       )
 
       this.tripService.addTrip(trip).then(() => {

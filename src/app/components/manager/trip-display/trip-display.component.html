@@ -1,0 +1,52 @@
+<p-card class="relative flex flex-col my-6 w-96 card">
+  <div class="relative h-75 m-2.5 overflow-hidden  rounded-md p-2">
+    <app-img-carousel [images]="getPictures()"></app-img-carousel>
+  </div>
+  <div class="p-4">
+    <div class="flex flex-row flex-wrap gap-1 mb-4">
+      <span *ngFor="let requirement of getRequirements()"
+        class="bg-primary-300 text-primary-950 text-xs font-semibold me-2 px-2.5 py-0.5 rounded-full">
+        {{requirement}}
+      </span>
+    </div>
+    <div class="flex flex-row justify-between items-center">
+      <div class="flex items-center gap-2 mb-2">
+        <h6 class="text-xl font-semibold m-0">
+          {{ trip.title }}
+        </h6>
+        <span *ngIf="!trip.published"
+              class="flex items-center gap-1 bg-primary-50 text-primary-600 px-2 py-1 rounded-full text-sm">
+          <i class="pi pi-eraser text-base"></i> Borrador
+        </span>
+      </div>
+      <div class="mb-2">
+        <span class="text-lg font-medium line-through">{{ trip.price }} €</span>
+        <span class="ms-3 text-lg font-medium">{{ trip.price }} €</span>
+      </div>
+    </div>
+    
+    <hr class="border">
+    <p class="leading-normal font-light mb-2 line-clamp-3">
+      {{trip.description}}
+    </p>
+
+    <hr class="border mt-4">
+    <p class="text-left text-[14px] font-normal">
+      From {{getStartDate('en')}} to {{getEndDate('en')}}
+    </p>
+    <p class="text-left text-xs font-light">{{trip.ticker}}</p>
+  </div>
+  
+  <div class="flex items-center justify-between px-4">
+    
+    <div class="flex items-center">
+      <i class="pi pi-user" style="font-size: 2.5rem"></i>
+      <div class="flex flex-col ml-3 text-sm">
+        <span class="font-semibold">{{ manager?.name || 'Cargando' }} {{manager?.surname || 'Cargando'}}</span>
+      </div>
+    </div>
+    <div>
+      <p-button label="Details" icon="pi pi-info-circle" class=" p-button-secondary" (click)="goDetails()"></p-button>
+    </div>
+  </div>
+</p-card>
