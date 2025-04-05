@@ -36,13 +36,18 @@ export class TripDisplayComponent implements OnInit{
   }
 
   getStartDate(lan: string) {
+    const rawDate: Date | { seconds: number } = this.trip.startDate as Date | { seconds: number };
+    const date = rawDate instanceof Date ? rawDate : new Date(rawDate.seconds * 1000);
     const formatter = new Intl.DateTimeFormat(lan, { day: 'numeric', month: 'long', year: 'numeric' });
-    return formatter.format(this.trip.startDate);
+    return formatter.format(date);
   }
+  
 
   getEndDate(lan: string) {
+    const rawDate: Date | { seconds: number } = this.trip.endDate as Date | { seconds: number };
+    const date = rawDate instanceof Date ? rawDate : new Date(rawDate.seconds * 1000);
     const formatter = new Intl.DateTimeFormat(lan, { day: 'numeric', month: 'long', year: 'numeric' });
-    return formatter.format(this.trip.endDate);
+    return formatter.format(date);
   }
 
   goDetails() {
