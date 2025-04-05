@@ -102,12 +102,20 @@ export class ManagerTripDetailsComponent implements OnInit{
       : new Date(this.trip.startDate);
     const timeDiff = startDate.getTime() - today.getTime();
     const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
-    console.log('Days difference:', daysDiff);
     return startDate < today || daysDiff < numDays; // Disable edit if the trip has started or if the difference is less than numDays
   }
 
+  shouldDisableButton(numDays: number): boolean {
+    if (this.trip) {
+      const cancelled = this.trip.cancelation.trim() === '' ? true : false;
+      return !cancelled || this.canDoOperation(numDays);
+    } else {
+      return false;
+    }
+  }
+
   goCancel() {
-    console.log('Cancel button clicked!');
+    this.router.navigate(['manager', this.manager?.id, 'trip', this.trip?.id, 'cancel']);
   }
 
   deleteTrip() {
