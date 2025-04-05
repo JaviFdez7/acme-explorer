@@ -52,6 +52,6 @@ export class ManagerTripDisplayComponent implements OnInit{
   }
 
   goDetails() {
-    this.router.navigate(['/trip', this.trip.id]);
+    this.router.navigate(['manager', this.manager?.id, 'trip', this.trip.id]);
   }
 }

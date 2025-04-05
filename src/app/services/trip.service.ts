@@ -25,6 +25,10 @@ export class TripService {
     return this.tripsCollection.add(trip.object);
   }
 
+  editTrip(trip: Trip, id: string): Promise<void> {
+    return this.tripsCollection.ref.doc(id).update(trip.object);
+  }
+  
   generateRawTicker(): string {
     const today = new Date();
     const year = today.getFullYear().toString().slice(-2); // Get last two digits of the year

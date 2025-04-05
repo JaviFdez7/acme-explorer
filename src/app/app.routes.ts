@@ -10,6 +10,8 @@ import { DeniedAccessComponent } from './components/shared/denied-access/denied-
 import { TripDetailsComponent } from './components/trip/trip-details/trip-details.component';
 import { ManagerTripListComponent } from './components/manager/trip-list/trip-list.component';
 import { ManagerTripCreateComponent } from './components/manager/trip-create/trip-create.component';
+import { ManagerTripDetailsComponent } from './components/manager/trip-details/trip-details.component';
+import { ManagerTripEditComponent } from './components/manager/trip-edit/trip-edit.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -24,6 +26,8 @@ export const routes: Routes = [
   { path: 'explorer/:id/applications', component: TripDisplayComponent, data: { expectedRole: 'explorer' } },
   { path: 'explorer/:id/favorites', component: TripDisplayComponent, data: { expectedRole: 'explorer' } },
   { path: 'manager/:id/trips', component: ManagerTripListComponent, data: { expectedRole: 'manager' } },
+  { path: 'manager/:id/trip/:tripId/edit', component: ManagerTripEditComponent, data: { expectedRole: 'manager' } },
+  { path: 'manager/:id/trip/:tripId', component: ManagerTripDetailsComponent, data: { expectedRole: 'manager' } },
   { path: 'admin/create-manager', component: TripDisplayComponent, data: { expectedRole: 'admin' } },
   { path: 'admin/create-sponsor', component: TripDisplayComponent, data: { expectedRole: 'admin' } },
   { path: 'admin/dashboard', component: TripDisplayComponent, data: { expectedRole: 'admin' } },

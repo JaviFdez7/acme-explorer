@@ -10,7 +10,6 @@ import { IftaLabelModule } from 'primeng/iftalabel';
 import { CardModule } from 'primeng/card';
 import { TextareaModule } from 'primeng/textarea';
 import { Trip } from '../../../models/trip.model';
-import { tick } from '@angular/core/testing';
 
 @Component({
   selector: 'app-manager-trip-create',
