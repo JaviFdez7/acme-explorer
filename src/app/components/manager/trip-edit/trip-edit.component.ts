@@ -108,7 +108,6 @@ export class ManagerTripEditComponent implements OnInit {
         this.tripForm.value.requirements,
         this.tripForm.value.pictures,
         this.trip?.cancelation,
-        this.trip?.published,
         newVersion,
         this.trip?.deleted
       );

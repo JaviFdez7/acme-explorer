@@ -11,9 +11,8 @@ export class Trip extends Entity{
   private _endDate!: Date;
   private _pictures?: string[];
   private _cancelation?: string;
-  private _published?: boolean;
 
-  constructor(ticker: string, manager: string, title: string, description: string, price: number, startDate: Date, endDate: Date, requirements: string[],  pictures?: string[], cancelation?: string, published?: boolean, version?: number, deleted?: boolean) {
+  constructor(ticker: string, manager: string, title: string, description: string, price: number, startDate: Date, endDate: Date, requirements: string[],  pictures?: string[], cancelation?: string, version?: number, deleted?: boolean) {
     super();
     this._ticker = ticker;
     this._manager = manager;
@@ -25,7 +24,6 @@ export class Trip extends Entity{
     this._requirements = requirements;
     this._pictures = pictures;
     this._cancelation = cancelation;
-    this._published = published;
     if (version !== undefined) {
       this.version = version; // Usamos el setter de la clase base `Entity` para version
     }
@@ -114,14 +112,6 @@ export class Trip extends Entity{
     this._manager = value;
   }
 
-  public get published(): boolean {
-    return this._published || false;
-  }
-
-  public set published(value: boolean) {
-    this._published = value;
-  }
-
   public override set deleted(value: boolean) {
     super.deleted = value; // Usamos el setter de la clase base `Entity` para deleted
   }
@@ -151,8 +141,7 @@ export class Trip extends Entity{
       endDate: this.endDate,
       manager: this.manager,
       pictures: this.pictures,
-      cancelation: this.cancelation,
-      published: this.published
+      cancelation: this.cancelation
     };
   }
 }
