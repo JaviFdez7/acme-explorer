@@ -28,8 +28,8 @@ export class ManagerTripDetailsComponent implements OnInit{
   ) {}
 
   ngOnInit() {
-    const managerId = this.route.snapshot.paramMap.get('id'); // Correcto para el manager ID
-    const tripId = this.route.snapshot.paramMap.get('tripId'); // Correcto para el trip ID
+    const managerId = this.route.snapshot.paramMap.get('id'); 
+    const tripId = this.route.snapshot.paramMap.get('tripId'); 
 
     if (tripId) {
       this.tripService.getTrip(tripId).subscribe((trip: Trip | undefined) => {
@@ -94,8 +94,7 @@ export class ManagerTripDetailsComponent implements OnInit{
     }
   }
 
-  canEditOrDelete(): boolean {
-    // Check if the trip is going to start in 10 days or more
+  canDoOperation(numDays: number): boolean {
     const today = new Date();
     if (!this.trip?.startDate) return true; // Disable edit if no start date
     const startDate = this.trip.startDate instanceof Timestamp
@@ -103,11 +102,44 @@ export class ManagerTripDetailsComponent implements OnInit{
       : new Date(this.trip.startDate);
     const timeDiff = startDate.getTime() - today.getTime();
     const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
-    return startDate < today && daysDiff < 10; // Disable edit if the trip is starting in less than 10 days or if it has already started
-    
+    console.log('Days difference:', daysDiff);
+    return startDate < today || daysDiff < numDays; // Disable edit if the trip has started or if the difference is less than numDays
   }
 
   goCancel() {
     console.log('Cancel button clicked!');
+  }
+
+  deleteTrip() {
+    if (this.trip) {
+      const newTrip = new Trip(
+        this.trip.ticker,
+        this.trip.manager,
+        this.trip.title,
+        this.trip.description,
+        this.trip.price,
+        this.trip.startDate,
+        this.trip.endDate,
+        this.trip.requirements,
+        this.trip.pictures,
+        undefined,
+        this.trip.version + 1,
+        true
+      );
+      const id = this.route.snapshot.paramMap.get('tripId');
+      if (!id) {
+        console.error('Trip ID not found');
+        return;
+      }
+      this.tripService.editTrip(newTrip, id).then(() => {
+        this.router.navigate(['/manager/' + this.manager?.id + '/trips']);
+      }).catch((error) => {
+        console.error('Error deleting trip:', error);
+      });
+    } else {
+      console.error('Trip not found');
+    }
+    
+
   }
 }

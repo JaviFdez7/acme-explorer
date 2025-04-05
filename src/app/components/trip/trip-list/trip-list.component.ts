@@ -33,7 +33,7 @@ export class TripListComponent implements OnInit {
       const query = this.searchQuery.toLowerCase();
       return (trip.title.toLowerCase().includes(query) ||
              trip.ticker.toLowerCase().includes(query) ||
-             trip.description.toLowerCase().includes(query));
+             trip.description.toLowerCase().includes(query)) && trip.deleted === false;
     });
   }
 

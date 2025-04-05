@@ -49,9 +49,9 @@
     <!-- Información del usuario y ticker -->
     <div class="flex flex-row justify-evenly items-start w-full">
       <div class="flex flex-row text-sm gap-3">
-        <p-button label="Edit" icon="pi pi-pencil" class="" (click)="goEdit()" [disabled]="canEditOrDelete()"></p-button>
-        <p-button label="Delete" icon="pi pi-trash"  (click)="null" [disabled]="canEditOrDelete()"></p-button>
-        <p-button label="Cancel" icon="pi pi-times"  (click)="goCancel()" [disabled]="canEditOrDelete()"></p-button>
+        <p-button label="Edit" icon="pi pi-pencil" class="" (click)="goEdit()" [disabled]="canDoOperation(10)"></p-button>
+        <p-button label="Delete" icon="pi pi-trash"  (click)="deleteTrip()" [disabled]="canDoOperation(10)"></p-button>
+        <p-button label="Cancel" icon="pi pi-times"  (click)="goCancel()" [disabled]="canDoOperation(7)"></p-button>
       </div>
     </div>
   </div>

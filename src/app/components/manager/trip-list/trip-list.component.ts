@@ -43,7 +43,7 @@ protected tripList: Trip[] = [];
       const query = this.searchQuery.toLowerCase();
       return ( trip.title.toLowerCase().includes(query) ||
              trip.ticker.toLowerCase().includes(query) ||
-             trip.description.toLowerCase().includes(query) ) && trip.manager === this.currentManager ;
+             trip.description.toLowerCase().includes(query) ) && trip.manager === this.currentManager && trip.deleted === false;
     });
   }
 
