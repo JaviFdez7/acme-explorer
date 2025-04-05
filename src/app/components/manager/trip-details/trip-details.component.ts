@@ -92,4 +92,17 @@ export class ManagerTripDetailsComponent implements OnInit{
       console.error('Error navigating to edit trip:', error);
     }
   }
+
+  canEditOrDelete(): boolean {
+    // Check if the trip is going to start in 10 days or more
+    const today = new Date();
+    if (!this.trip?.startDate) return true; // Disable edit if no start date
+    const startDate = this.trip.startDate instanceof Timestamp
+      ? this.trip.startDate.toDate() 
+      : new Date(this.trip.startDate);
+    const timeDiff = startDate.getTime() - today.getTime();
+    const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+    return startDate < today && daysDiff < 10; // Disable edit if the trip is starting in less than 10 days or if it has already started
+    
+  }
 }

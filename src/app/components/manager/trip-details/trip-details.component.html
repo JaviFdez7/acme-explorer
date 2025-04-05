@@ -50,9 +50,9 @@
     
     <!-- Información del usuario y ticker -->
     <div class="flex items-center justify-between pt-6">
-      <div class="flex flex-row text-sm">
-        <p-button label="Edit" icon="pi pi-pencil" class="mr-2" (click)="goEdit()"></p-button>
-        <p-button label="Delete" icon="pi pi-trash"  (click)="null"></p-button>
+      <div class="flex flex-row text-sm" >
+        <p-button label="Edit" icon="pi pi-pencil" class="mr-2" (click)="goEdit()" [disabled]="canEditOrDelete()"></p-button>
+        <p-button label="Delete" icon="pi pi-trash"  (click)="null" [disabled]="canEditOrDelete()"></p-button>
       </div>
       <div class="text-lg font-medium">
         {{ trip?.ticker ?? 'No ticker available' }}
