@@ -7,20 +7,23 @@ import { HomeComponent } from './components/shared/home/home.component';
 import { ActorRoleGuard } from './guards/actor-role.guard';
 import { LoginComponent } from './components/security/login/login.component';
 import { DeniedAccessComponent } from './components/shared/denied-access/denied-access.component';
+import { TripDetailsComponent } from './components/trip/trip-details/trip-details.component';
+import { ManagerTripListComponent } from './components/manager/trip-list/trip-list.component';
+import { ManagerTripCreateComponent } from './components/manager/trip-create/trip-create.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'trips', component: TripListComponent },
   { path: 'trip', component: TripDisplayComponent },
-  { path: 'trip/:id', component: TripDisplayComponent },
+  { path: 'trip/create', component: ManagerTripCreateComponent ,data: { expectedRole: 'manager' } },
+  { path: 'trip/:id', component: TripDetailsComponent },
   { path: 'trip/:id/applications', component: TripDisplayComponent, data: { expectedRole: 'manager' } },
-  { path: 'trip/create', component: TripDisplayComponent, data: { expectedRole: 'manager' } },
   { path: 'trip/:id/edit', component: TripDisplayComponent, data: { expectedRole: 'manager' } },
   { path: 'list/:id', component: TripDisplayComponent, data: { expectedRole: 'explorer' } },
   { path: 'user/:id/profile', component: TripDisplayComponent },
   { path: 'explorer/:id/applications', component: TripDisplayComponent, data: { expectedRole: 'explorer' } },
   { path: 'explorer/:id/favorites', component: TripDisplayComponent, data: { expectedRole: 'explorer' } },
-  { path: 'manager/:id/trips', component: TripDisplayComponent, data: { expectedRole: 'manager' } },
+  { path: 'manager/:id/trips', component: ManagerTripListComponent, data: { expectedRole: 'manager' } },
   { path: 'admin/create-manager', component: TripDisplayComponent, data: { expectedRole: 'admin' } },
   { path: 'admin/create-sponsor', component: TripDisplayComponent, data: { expectedRole: 'admin' } },
   { path: 'admin/dashboard', component: TripDisplayComponent, data: { expectedRole: 'admin' } },

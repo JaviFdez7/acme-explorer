@@ -1,0 +1,58 @@
+<div class="flex flex-col md:flex-row my-6 w-full max-w-4xl mx-auto p-6">
+  <!-- Sección Izquierda: Carrusel -->
+  <div class="w-full md:w-5/12 flex flex-col items-center justify-center p-6">
+    <app-img-carousel [images]="getPictures()" class="w-full max-w-lg"></app-img-carousel>
+    <div class="flex flex-wrap gap-2 mt-4">
+      <span *ngFor="let requirement of getRequirements() ?? []"
+        class="bg-primary-300 text-primary-950 text-sm font-semibold px-3 py-1 rounded-full">
+        {{ requirement }}
+      </span>
+    </div>
+  </div>
+  
+  <!-- Separador -->
+  <div class="w-full md:w-1/12 flex items-center justify-center">
+    <p-divider layout="vertical" class="!hidden md:!flex"></p-divider>
+    <p-divider layout="horizontal" class="!flex md:!hidden" align="center"></p-divider>
+  </div>
+  
+  <!-- Sección Derecha: Información (más ancha) -->
+  <div class="w-full md:w-6/12 flex flex-col justify-between p-6 space-y-6">
+    <div>
+      <div class="flex justify-between items-center">
+        <h6 class="text-2xl font-semibold">
+          {{ trip?.title ?? 'Unknown Trip' }}
+        </h6>
+        <div class="text-right">
+          <span class="text-xl font-medium line-through">{{ trip?.price ?? 'N/A' }} €</span>
+          <span class="ms-4 text-xl font-medium">{{ trip?.price ?? 'N/A' }} €</span>
+        </div>
+      </div>
+      
+      <hr class="border my-4">
+      
+      <p class="leading-relaxed text-base font-light mb-4">
+        {{ trip?.description ?? 'No description available' }}
+      </p>
+      
+      <hr class="border my-6">
+      
+      <p class="text-left text-lg font-normal">
+        From {{ getStartDate('en') }} to {{ getEndDate('en') }}
+      </p>
+    </div>
+    
+    <!-- Información del usuario y ticker -->
+    <div class="flex items-center justify-between pt-6">
+      <div class="flex items-center">
+        <i class="pi pi-user" style="font-size: 2.5rem"></i>
+        <div class="flex flex-col ml-3 text-sm">
+          <span class="font-semibold">{{ manager?.name || 'Cargando' }} {{manager?.surname || 'Cargando'}}</span>
+        </div>
+      </div>
+      <div class="text-lg font-medium">
+        {{ trip?.ticker ?? 'No ticker available' }}
+      </div>
+    </div>
+  </div>
+</div>

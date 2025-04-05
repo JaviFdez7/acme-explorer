@@ -6,6 +6,7 @@ export class Entity {
   constructor() {
     this._id = '';
     this._version = 0;
+    this._deleted = false;
   }
 
   public get id(): string {

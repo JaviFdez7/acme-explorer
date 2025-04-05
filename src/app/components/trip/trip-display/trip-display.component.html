@@ -1,5 +1,5 @@
 <p-card class="relative flex flex-col my-6 w-96 card">
-  <div class="relative h-75 m-2.5 overflow-hidden text-black rounded-md p-2">
+  <div class="relative h-75 m-2.5 overflow-hidden  rounded-md p-2">
     <app-img-carousel [images]="getPictures()"></app-img-carousel>
   </div>
   <div class="p-4">
@@ -27,22 +27,19 @@
     <p class="text-left text-[14px] font-normal">
       From {{getStartDate('en')}} to {{getEndDate('en')}}
     </p>
+    <p class="text-left text-xs font-light">{{trip.ticker}}</p>
   </div>
-
-  <div class="flex items-center justify-between p-4">
+  
+  <div class="flex items-center justify-between px-4">
+    
     <div class="flex items-center">
-      <img alt="Tania Andrew"
-        src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1480&amp;q=80"
-        class="relative inline-block h-8 w-8 rounded-full" />
+      <i class="pi pi-user" style="font-size: 2.5rem"></i>
       <div class="flex flex-col ml-3 text-sm">
-        <span class="font-semibold">Lewis Daniel</span>
-        <span>
-          January 10, 2024
-        </span>
+        <span class="font-semibold">{{ manager?.name || 'Cargando' }} {{manager?.surname || 'Cargando'}}</span>
       </div>
     </div>
     <div>
-      {{trip.ticker}}
+      <p-button label="Details" icon="pi pi-info-circle" class=" p-button-secondary" (click)="goDetails()"></p-button>
     </div>
   </div>
 </p-card>
