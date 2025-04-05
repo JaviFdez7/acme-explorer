@@ -9,14 +9,15 @@ import { LoginComponent } from './components/security/login/login.component';
 import { DeniedAccessComponent } from './components/shared/denied-access/denied-access.component';
 import { TripDetailsComponent } from './components/trip/trip-details/trip-details.component';
 import { ManagerTripListComponent } from './components/manager/trip-list/trip-list.component';
+import { ManagerTripCreateComponent } from './components/manager/trip-create/trip-create.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'trips', component: TripListComponent },
   { path: 'trip', component: TripDisplayComponent },
+  { path: 'trip/create', component: ManagerTripCreateComponent ,data: { expectedRole: 'manager' } },
   { path: 'trip/:id', component: TripDetailsComponent },
   { path: 'trip/:id/applications', component: TripDisplayComponent, data: { expectedRole: 'manager' } },
-  { path: 'trip/create', component: TripDisplayComponent, data: { expectedRole: 'manager' } },
   { path: 'trip/:id/edit', component: TripDisplayComponent, data: { expectedRole: 'manager' } },
   { path: 'list/:id', component: TripDisplayComponent, data: { expectedRole: 'explorer' } },
   { path: 'user/:id/profile', component: TripDisplayComponent },

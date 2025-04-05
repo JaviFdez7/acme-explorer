@@ -18,7 +18,7 @@ export class TripDisplayComponent implements OnInit{
   protected manager: Actor | undefined = undefined;
 
   constructor(private router: Router, private actorService: ActorService) {
-    this.trip = new Trip("", "", "", 0, new Date(), new Date(),[], "",[]);
+    this.trip = new Trip("", "", "", "", 0, new Date(), new Date(),[],[]);
   }
 
   ngOnInit() {

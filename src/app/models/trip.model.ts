@@ -2,6 +2,7 @@ import { Entity } from "./entity.model";
 
 export class Trip extends Entity{
   private _ticker!: string;
+  private _manager!: string;
   private _title!: string;
   private _description!: string;
   private _price!: number;
@@ -10,19 +11,17 @@ export class Trip extends Entity{
   private _endDate!: Date;
   private _pictures?: string[];
   private _cancelation?: string;
-  private _manager!: string;
 
-
-  constructor(ticker: string, title: string, description: string, price: number, startDate: Date, endDate: Date, requirements: string[], manager: string, pictures?: string[], cancelation?: string) {
+  constructor(ticker: string, manager: string, title: string, description: string, price: number, startDate: Date, endDate: Date, requirements: string[],  pictures?: string[], cancelation?: string) {
     super();
     this._ticker = ticker;
+    this._manager = manager;
     this._title = title;
     this._description = description;
     this._price = price;
     this._startDate = startDate;
     this._endDate = endDate;
     this._requirements = requirements;
-    this._manager = manager;
     this._pictures = pictures;
     this._cancelation = cancelation;
   }

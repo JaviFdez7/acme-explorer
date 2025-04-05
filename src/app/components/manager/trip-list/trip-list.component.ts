@@ -10,7 +10,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TripDisplayComponent } from '../../trip/trip-display/trip-display.component';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../services/auth.service';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-manager-trip-list',
   imports: [InputIconModule, ButtonModule, TripDisplayComponent, IconField, FormsModule, DataView, CommonModule, InputTextModule],
@@ -22,7 +22,7 @@ protected tripList: Trip[] = [];
   protected searchQuery ='';
   protected currentManager: string | null = null;
 
-  constructor(private tripService: TripService, private authService: AuthService) { }
+  constructor(private tripService: TripService, private authService: AuthService, private route: Router) { }
 
   ngOnInit() {
     this.tripService.getTrips().subscribe((trips: Trip[]) => {
@@ -49,5 +49,9 @@ protected tripList: Trip[] = [];
 
   clearSearch() {
     this.searchQuery = '';
+  }
+
+  addTrip() {
+    this.route.navigate(['/trip/create']);
   }
 }
