@@ -23,9 +23,10 @@ export class ManagerTripDisplayComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.actorService.getManagers().subscribe((actors: Actor[]) => {
-      this.manager = actors.find(actor => actor.id === this.trip.manager);
-    });
+    this.actorService.getActor(this.trip.manager).subscribe((actor: Actor | undefined) => {
+      this.manager = actor || undefined;
+    }
+    );
   }
 
   getRequirements() {

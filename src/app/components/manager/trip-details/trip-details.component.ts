@@ -32,12 +32,13 @@ export class ManagerTripDetailsComponent implements OnInit{
     const tripId = this.route.snapshot.paramMap.get('tripId'); // Correcto para el trip ID
 
     if (tripId) {
-      this.tripService.getTrips().subscribe((trips: Trip[]) => {
-        this.trip = trips.find(trip => trip.id === tripId);
+      this.tripService.getTrip(tripId).subscribe((trip: Trip | undefined) => {
+        this.trip = trip;
         if (this.trip && managerId) {
-          this.actorService.getManagers().subscribe((actors: Actor[]) => {
-            this.manager = actors.find(actor => actor.id === managerId) ?? null;
-          });
+          this.actorService.getActor(this.trip.manager).subscribe((actor: Actor | undefined) => {
+            this.manager = actor || null;
+          }
+          );
         }
       });
     }

@@ -1,7 +1,7 @@
 import { Injectable, EnvironmentInjector, inject, runInInjectionContext } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Actor } from '../models/actor.model';
-import { map, Observable  } from 'rxjs';
+import { Observable  } from 'rxjs';
 
 
 @Injectable({
@@ -24,11 +24,5 @@ export class ActorService {
     return runInInjectionContext(this.injector, () => {
       return this.actorsCollection.doc<Actor>(id).valueChanges({ idField: 'id' });
     });
-  }
-
-  getManagers(): Observable<Actor[]> {
-    return this.actorsCollection.valueChanges().pipe(
-      map(actors => actors.filter(actor => actor.role === 'MANAGER'))
-    );
   }
 }
