@@ -81,6 +81,11 @@ export class ManagerTripEditComponent implements OnInit {
     this.loading = true;
     this.error = null;
     this.success = null;
+    if (this.trip === undefined) {
+      this.error = 'Trip not found';
+      this.loading = false;
+      return;
+    }
     const managerId = this.trip?.manager;
     if (!managerId) {
       console.error('Manager ID not found');
@@ -90,11 +95,7 @@ export class ManagerTripEditComponent implements OnInit {
     if (pictures.length === 0) {
       pictures.push('https://placehold.co/600x400?text=No+Image')
     }
-    if (this.trip === undefined) {
-      this.error = 'Trip not found';
-      this.loading = false;
-      return;
-    }
+    const newVersion = this.trip?.version + 1;
     if (this.tripForm.valid) {
       const trip = new Trip(
         this.trip?.ticker,
@@ -107,14 +108,15 @@ export class ManagerTripEditComponent implements OnInit {
         this.tripForm.value.requirements,
         this.tripForm.value.pictures,
         this.trip?.cancelation,
-        this.trip?.published
+        this.trip?.published,
+        newVersion,
+        this.trip?.deleted
       );
       const id = this.router.snapshot.paramMap.get('tripId');
       if (!id) {
         console.error('Trip ID not found');
         return;
       }
-      console.log(trip.object)
       this.tripService.editTrip(trip, id).then(() => {
         this.loading = false;
         this.success = 'Trip edited successfully!';

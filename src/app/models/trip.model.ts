@@ -13,7 +13,7 @@ export class Trip extends Entity{
   private _cancelation?: string;
   private _published?: boolean;
 
-  constructor(ticker: string, manager: string, title: string, description: string, price: number, startDate: Date, endDate: Date, requirements: string[],  pictures?: string[], cancelation?: string, published?: boolean) {
+  constructor(ticker: string, manager: string, title: string, description: string, price: number, startDate: Date, endDate: Date, requirements: string[],  pictures?: string[], cancelation?: string, published?: boolean, version?: number, deleted?: boolean) {
     super();
     this._ticker = ticker;
     this._manager = manager;
@@ -26,6 +26,12 @@ export class Trip extends Entity{
     this._pictures = pictures;
     this._cancelation = cancelation;
     this._published = published;
+    if (version !== undefined) {
+      this.version = version; // Usamos el setter de la clase base `Entity` para version
+    }
+    if (deleted !== undefined) {
+      this.deleted = deleted;
+    }
   }
 
   public get ticker(): string {
@@ -114,6 +120,22 @@ export class Trip extends Entity{
 
   public set published(value: boolean) {
     this._published = value;
+  }
+
+  public override set deleted(value: boolean) {
+    super.deleted = value; // Usamos el setter de la clase base `Entity` para deleted
+  }
+  
+  public override get deleted(): boolean {
+    return super.deleted; // Usamos el getter de la clase base `Entity` para deleted
+  }
+
+  public override get version(): number {
+    return super.version; // Usamos el getter de la clase base `Entity` para version
+  }
+
+  public override set version(value: number) {
+    super.version = value; // Usamos el setter de la clase base `Entity` para version
   }
 
   public get object(): any {
