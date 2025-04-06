@@ -1,19 +1,20 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Trip } from '../../../models/trip.model';
-import { ImageCarouselComponent } from "../../img-carousel/img-carousel.component";
-import { CommonModule } from '@angular/common';
-import { CardModule } from 'primeng/card';
-import { Button } from 'primeng/button';
-import { Router } from '@angular/router';
 import { Actor } from '../../../models/actor.model';
+import { Router } from '@angular/router';
 import { ActorService } from '../../../services/actor.service';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { CommonModule } from '@angular/common';
+import { ImageCarouselComponent } from '../../img-carousel/img-carousel.component';
+
 @Component({
   selector: 'app-trip-display',
-  imports: [ImageCarouselComponent, CommonModule, CardModule, Button],
+  imports: [ButtonModule, CardModule, CommonModule, ImageCarouselComponent],
   templateUrl: './trip-display.component.html',
   styleUrl: './trip-display.component.css'
 })
-export class TripDisplayComponent implements OnInit{
+export class ManagerTripDisplayComponent implements OnInit{
   @Input() trip: Trip;
   protected manager: Actor | undefined = undefined;
 
@@ -52,6 +53,6 @@ export class TripDisplayComponent implements OnInit{
   }
 
   goDetails() {
-    this.router.navigate(['/trip', this.trip.id]);
+    this.router.navigate(['manager', this.manager?.id, 'trip', this.trip.id]);
   }
 }

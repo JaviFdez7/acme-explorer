@@ -6,6 +6,7 @@ export class Entity {
   constructor() {
     this._id = '';
     this._version = 0;
+    this._deleted = false;
   }
 
   public get id(): string {
@@ -14,6 +15,10 @@ export class Entity {
 
   public get version(): number {
     return this._version;
+  }
+
+  public set version(value: number) {
+    this._version = value;
   }
 
   public get deleted(): boolean {

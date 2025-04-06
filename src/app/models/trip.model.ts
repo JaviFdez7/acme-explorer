@@ -2,6 +2,7 @@ import { Entity } from "./entity.model";
 
 export class Trip extends Entity{
   private _ticker!: string;
+  private _manager!: string;
   private _title!: string;
   private _description!: string;
   private _price!: number;
@@ -11,10 +12,10 @@ export class Trip extends Entity{
   private _pictures?: string[];
   private _cancelation?: string;
 
-
-  constructor(ticker: string, title: string, description: string, price: number, startDate: Date, endDate: Date, requirements: string[], pictures?: string[], cancelation?: string) {
+  constructor(ticker: string, manager: string, title: string, description: string, price: number, startDate: Date, endDate: Date, requirements: string[],  pictures?: string[], cancelation?: string, version?: number, deleted?: boolean) {
     super();
     this._ticker = ticker;
+    this._manager = manager;
     this._title = title;
     this._description = description;
     this._price = price;
@@ -23,6 +24,12 @@ export class Trip extends Entity{
     this._requirements = requirements;
     this._pictures = pictures;
     this._cancelation = cancelation;
+    if (version !== undefined) {
+      this.version = version; // Usamos el setter de la clase base `Entity` para version
+    }
+    if (deleted !== undefined) {
+      this.deleted = deleted;
+    }
   }
 
   public get ticker(): string {
@@ -97,6 +104,14 @@ export class Trip extends Entity{
     this._cancelation = value;
   }
 
+  public get manager(): string {
+    return this._manager;
+  }
+
+  public set manager(value: string) {
+    this._manager = value;
+  }
+
   public get object(): any {
     return {
       version: this.version,
@@ -108,6 +123,7 @@ export class Trip extends Entity{
       requirements: this.requirements,
       startDate: this.startDate,
       endDate: this.endDate,
+      manager: this.manager,
       pictures: this.pictures,
       cancelation: this.cancelation
     };

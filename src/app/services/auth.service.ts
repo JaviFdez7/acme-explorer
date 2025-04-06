@@ -48,9 +48,7 @@ export class AuthService {
 
   async login(email: string, password: string) {
     try {
-      const res = await signInWithEmailAndPassword(this.auth, email, password);
-      await this.loadUserData(res.user.uid);
-      this.loginStatus.next(true);
+      await signInWithEmailAndPassword(this.auth, email, password);
       console.log('User logged in successfully with role:', this.currentActor?.role);
       return this.currentActor;
     } catch (error) {
@@ -85,6 +83,14 @@ export class AuthService {
 
   getCurrentActor(): Actor | null{
     return this.currentActor;
+  }
+
+  getCurrentRole(): string | null {
+    return this.currentActor ? this.currentActor.role : null;
+  }
+
+  getCurrentId(): string | null {
+    return this.currentActor ? this.currentActor.id : null;
   }
 
   getStatus(): Observable<boolean> {
