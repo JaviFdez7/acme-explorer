@@ -12,6 +12,7 @@
           formControlName="reason"
           rows="3"
           class="mt-1 block w-full"
+          maxlength="400"
         ></textarea>
       </p-iftalabel>      
       <small *ngIf="tripForm.controls['reason'].invalid && tripForm.controls['reason'].touched" class="text-red-500">

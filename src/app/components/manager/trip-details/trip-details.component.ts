@@ -9,10 +9,11 @@ import { ImageCarouselComponent } from '../../img-carousel/img-carousel.componen
 import { DividerModule } from 'primeng/divider';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
+import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'app-manager-trip-details',
-  imports: [ImageCarouselComponent, DividerModule, CommonModule, ButtonModule],
+  imports: [ImageCarouselComponent, DividerModule, CommonModule, ButtonModule, MessageModule],
   templateUrl: './trip-details.component.html',
   styleUrl: './trip-details.component.css'
 })

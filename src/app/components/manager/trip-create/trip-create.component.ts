@@ -29,7 +29,7 @@ export class ManagerTripCreateComponent {
 
   createForm() {
     this.tripForm = this.fb.group({
-      title: ['', Validators.required],
+      title: ['', [Validators.required, Validators.maxLength(75)]],
       description: ['', Validators.required],
       startDate: ['', [Validators.required]],
       endDate: ['', [Validators.required]],
@@ -80,6 +80,7 @@ export class ManagerTripCreateComponent {
     } else {
       this.tripForm.markAllAsTouched(); 
       this.loading = false;
+      console.log(this.tripForm.errors);
       console.log('Form is invalid');
     }
   }

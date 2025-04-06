@@ -8,9 +8,10 @@ import { Timestamp } from 'firebase/firestore';
 import { ImageCarouselComponent } from '../../img-carousel/img-carousel.component';
 import { Actor } from '../../../models/actor.model';
 import { ActorService } from '../../../services/actor.service';
+import { MessageModule } from 'primeng/message';
 @Component({
   selector: 'app-trip-details',
-  imports: [CommonModule, DividerModule, ImageCarouselComponent],
+  imports: [CommonModule, DividerModule, ImageCarouselComponent, MessageModule],
   templateUrl: './trip-details.component.html',
   styleUrl: './trip-details.component.css'
 })

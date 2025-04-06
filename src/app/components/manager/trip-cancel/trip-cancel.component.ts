@@ -36,7 +36,7 @@ export class ManagerTripCancelComponent implements OnInit{
 
   cancelForm() {
     this.tripForm = new FormGroup({
-      reason: new FormControl('', { validators: [Validators.required] }),
+      reason: new FormControl('', { validators: [Validators.required, Validators.maxLength(400)] }),
     });
   }
 
