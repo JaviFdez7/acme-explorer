@@ -43,9 +43,14 @@ export class ManagerTripCreateComponent {
     if (this.tripForm.valid) {
       this.loading = true;
       this.error = null; 
-      const managerId = this.authService.getCurrentActor()?.id;
+      const managerId = this.authService.getCurrentId();
+      const managerRole = this.authService.getCurrentRole();
       if (!managerId) {
         console.error('Manager ID not found');
+        return;
+      }
+      if (managerRole !== 'MANAGER') {
+        console.error('User is not a manager');
         return;
       }
       const ticker = await this.tripService.generateUniqueTicker();

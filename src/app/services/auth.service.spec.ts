@@ -36,9 +36,10 @@ describe('AuthService Tests', () => {
 
       await service.signUp(testActor);
 
-      const loginResponse = await service.login(testEmail, testPassword);
-      expect(loginResponse.user).toBeTruthy();
-      expect(loginResponse.user.uid).toBeDefined();
+      const loginActor = await service.login(testEmail, testPassword);
+      expect(loginActor).toBeTruthy();
+      expect(loginActor?.email).toEqual(testEmail);
+
 
       await service.logout();
     });
@@ -53,9 +54,10 @@ describe('AuthService Tests', () => {
 
       await service.signUp(testActor);
 
-      const loginResponse = await service.login(testEmail, testPassword);
-      expect(loginResponse.user).toBeTruthy();
-      expect(loginResponse.user.email).toEqual(testEmail);
+      const loginActor = await service.login(testEmail, testPassword);
+      expect(loginActor).toBeTruthy();
+      expect(loginActor?.email).toEqual(testEmail);
+
 
       await service.logout();
     });

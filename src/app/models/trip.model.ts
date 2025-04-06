@@ -112,22 +112,6 @@ export class Trip extends Entity{
     this._manager = value;
   }
 
-  public override set deleted(value: boolean) {
-    super.deleted = value; // Usamos el setter de la clase base `Entity` para deleted
-  }
-  
-  public override get deleted(): boolean {
-    return super.deleted; // Usamos el getter de la clase base `Entity` para deleted
-  }
-
-  public override get version(): number {
-    return super.version; // Usamos el getter de la clase base `Entity` para version
-  }
-
-  public override set version(value: number) {
-    super.version = value; // Usamos el setter de la clase base `Entity` para version
-  }
-
   public get object(): any {
     return {
       version: this.version,
