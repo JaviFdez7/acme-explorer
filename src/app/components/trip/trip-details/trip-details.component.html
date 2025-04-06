@@ -18,34 +18,32 @@
   
   <!-- Sección Derecha: Información (más ancha) -->
   <div class="w-full md:w-6/12 flex flex-col justify-between p-6 space-y-6">
-    <div>
-      <div class="flex justify-between items-center">
-        <div class="flex items-center gap-2">
-          <h6 class="text-2xl font-semibold">
-            {{ trip?.title ?? 'Unknown Trip' }}
-          </h6>
-          <span *ngIf="trip?.cancelation !== ''" class="flex items-center gap-1 bg-primary-50 text-primary-600 px-2 py-1 rounded-full text-sm">
-            <i class="pi pi-times-circle text-base"></i> Cancelled
-          </span>
-        </div>
-        <div class="text-right">
-          <span class="ms-4 text-xl font-medium">{{ trip?.price ?? 'N/A' }} €</span>
-        </div>
+    <div class="flex justify-between items-center">
+      <div class="flex items-center gap-2">
+        <h6 class="text-2xl font-semibold">
+          {{ trip?.title ?? 'Unknown Trip' }}
+        </h6>
+        <span *ngIf="trip?.cancelation" class="flex items-center gap-1 bg-primary-50 text-primary-600 px-2 py-1 rounded-full text-sm">
+          <i class="pi pi-times-circle text-base"></i> Cancelled
+        </span>
       </div>
-      
-      <hr class="border my-4">
-      
-      <p class="leading-relaxed text-base font-light mb-4">
-        {{ trip?.description ?? 'No description available' }}
-      </p>
-      
-      <hr class="border my-6">
-      
-      <p class="text-left text-lg font-normal">
-        From {{ getStartDate('en') }} to {{ getEndDate('en') }}
-      </p>
+      <div class="text-right">
+        <span class="ms-4 text-xl font-medium">{{ trip?.price ?? 'N/A' }} €</span>
+      </div>
     </div>
     
+    <hr class="border my-4">
+    
+    <p class="leading-relaxed text-base font-light mb-4">
+      {{ trip?.description ?? 'No description available' }}
+    </p>
+    
+    <hr class="border my-6">
+    
+    <p class="text-left text-lg font-normal">
+      From {{ getStartDate('en') }} to {{ getEndDate('en') }}
+    </p>
+
     <!-- Información del usuario y ticker -->
     <div class="flex items-center justify-between pt-6">
       <div class="flex items-center">
@@ -58,9 +56,10 @@
         {{ trip?.ticker ?? 'No ticker available' }}
       </div>
     </div>
+    <p-button *ngIf="isExplorer()" label="Apply now" icon="pi pi-check" class="mt-6 max-w-xs" (onClick)="goApply()" [disabled]="!!trip?.cancelation"></p-button>
   </div>
 </div>
-<div *ngIf="trip?.cancelation !== ''" class="flex justify-center mt-6">
+<div *ngIf="trip?.cancelation" class="flex justify-center mt-6">
   <p-message severity="warn" class="w-full max-w-3xl text-center shadow-md">
     <div class="w-full text-center px-4 py-2">
       <p class="text-base font-medium text-yellow-900">Cancelation reason: {{ trip?.cancelation }}</p>
