@@ -9,19 +9,20 @@
         {{requirement}}
       </span>
     </div>
-    <div class="flex flex-row justify-between">
+    <div class="flex flex-row justify-between items-center">
       <div class="flex items-center gap-2 mb-2">
-        <h6 class="text-xl font-semibold">
-          {{trip.title}}
+        <h6 class="text-xl font-semibold m-0">
+          {{ trip.title }}
         </h6>
         <span *ngIf="trip?.cancelation !== ''" class="flex items-center gap-1 bg-primary-50 text-primary-600 px-2 py-1 rounded-full text-sm">
           <i class="pi pi-times-circle text-base"></i> Cancelled
         </span>
       </div>
-      <div>
-        <span class="ms-3 text-lg font-medium">{{trip.price}} €</span>
+      <div class="mb-2">
+        <span class="ms-3 text-lg font-medium">{{ trip.price }} €</span>
       </div>
     </div>
+    
     <hr class="border">
     <p class="leading-normal font-light mb-2 line-clamp-3">
       {{trip.description}}

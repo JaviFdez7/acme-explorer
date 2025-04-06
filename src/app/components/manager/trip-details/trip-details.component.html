@@ -19,7 +19,7 @@
   <!-- Sección Derecha: Información (más ancha) -->
   <div class="w-full md:w-6/12 flex flex-col justify-between p-6 space-y-6">
     <div>
-      <div class="flex justify-between items-center">
+      <div class="flex flex-row justify-between items-center mb-2">
         <div class="flex items-center gap-2">
           <h6 class="text-2xl font-semibold">
             {{ trip?.title ?? 'Unknown Trip' }}
@@ -45,17 +45,15 @@
         From {{ getStartDate('en') }} to {{ getEndDate('en') }}
       </p>
     </div>
-    
+    <div class="text-lg font-medium">
+      {{ trip?.ticker ?? 'No ticker available' }}
+    </div>
     <!-- Información del usuario y ticker -->
-    <div class="flex items-center justify-between pt-6">
-      <div class="flex items-center">
-        <i class="pi pi-user" style="font-size: 2.5rem"></i>
-        <div class="flex flex-col ml-3 text-sm">
-          <span class="font-semibold">{{ manager?.name || 'Cargando' }} {{manager?.surname || 'Cargando'}}</span>
-        </div>
-      </div>
-      <div class="text-lg font-medium">
-        {{ trip?.ticker ?? 'No ticker available' }}
+    <div class="flex flex-row justify-evenly items-start w-full">
+      <div class="flex flex-row text-sm gap-3">
+        <p-button label="Edit" icon="pi pi-pencil" class="" (click)="goEdit()" [disabled]="shouldDisableButton(10)"></p-button>
+        <p-button label="Delete" icon="pi pi-trash"  (click)="deleteTrip()" [disabled]="shouldDisableButton(10)"></p-button>
+        <p-button label="Cancel" icon="pi pi-times"  (click)="goCancel()" [disabled]="shouldDisableButton(7)"></p-button>
       </div>
     </div>
   </div>

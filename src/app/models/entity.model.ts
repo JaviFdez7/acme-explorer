@@ -17,6 +17,10 @@ export class Entity {
     return this._version;
   }
 
+  public set version(value: number) {
+    this._version = value;
+  }
+
   public get deleted(): boolean {
     return this._deleted;
   }

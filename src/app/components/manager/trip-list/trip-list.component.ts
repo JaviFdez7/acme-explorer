@@ -7,13 +7,13 @@ import { IconField } from 'primeng/iconfield';
 import { FormsModule } from '@angular/forms';
 import { DataView } from 'primeng/dataview';
 import { InputTextModule } from 'primeng/inputtext';
-import { TripDisplayComponent } from '../../trip/trip-display/trip-display.component';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
+import { ManagerTripDisplayComponent } from '../trip-display/trip-display.component';
 @Component({
   selector: 'app-manager-trip-list',
-  imports: [InputIconModule, ButtonModule, TripDisplayComponent, IconField, FormsModule, DataView, CommonModule, InputTextModule],
+  imports: [InputIconModule, ButtonModule, ManagerTripDisplayComponent, IconField, FormsModule, DataView, CommonModule, InputTextModule],
   templateUrl: './trip-list.component.html',
   styleUrl: './trip-list.component.css'
 })
@@ -43,7 +43,7 @@ protected tripList: Trip[] = [];
       const query = this.searchQuery.toLowerCase();
       return ( trip.title.toLowerCase().includes(query) ||
              trip.ticker.toLowerCase().includes(query) ||
-             trip.description.toLowerCase().includes(query) ) && trip.manager === this.currentManager ;
+             trip.description.toLowerCase().includes(query) ) && trip.manager === this.currentManager && trip.deleted === false;
     });
   }
 

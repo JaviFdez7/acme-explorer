@@ -1,7 +1,7 @@
 <p-card styleClass="max-w-lg mx-auto p-6 card" ngSkipHydration>
-  <form [formGroup]="tripForm" (ngSubmit)="onSubmit()">
+  <form *ngIf="tripForm" [formGroup]="tripForm" (ngSubmit)="onSubmit()">
     <fieldset>
-      <legend class="text-xl font-semibold">Create New Trip</legend>
+      <legend class="text-xl font-semibold">Edit Trip</legend>
 
       <p-iftalabel variant="on" class="mt-4">
         <label for="title">Title *</label>
@@ -11,7 +11,6 @@
           type="text"
           formControlName="title"
           class="mt-1 block w-full"
-          maxlength="75"
         />
       </p-iftalabel>
       <small *ngIf="tripForm.controls['title'].invalid && tripForm.controls['title'].touched" class="text-red-500">
@@ -26,7 +25,6 @@
           formControlName="description"
           rows="3"
           class="mt-1 block w-full"
-          maxlength="600"
         ></textarea>
       </p-iftalabel>      
       <small *ngIf="tripForm.controls['description'].invalid && tripForm.controls['description'].touched" class="text-red-500">
@@ -78,31 +76,34 @@
       <div class="p-field">
         <p-iftaLabel>Requirements:</p-iftaLabel>
         <div formArrayName="requirements">
-          <div *ngFor="let req of requirements.controls; let i = index" class="p-inputgroup flex items-start space-x-2 mt-1">
-            <input [formControlName]="i" pInputText  class="flex-grow" maxlength="65"/>
-            <button pButton type="button" icon="pi pi-trash" class="p-button-danger" (click)="removeRequirement(i)"></button>
+          <div *ngFor="let req of requirements.controls; let i = index" class="p-inputgroup">
+            <input [formControlName]="i" pInputText />
+            <button pButton type="button" icon="pi pi-trash" class="p-button-danger ml-1 mt-1" (click)="removeRequirement(i)"></button>
           </div>
         </div>
         <button pButton type="button" icon="pi pi-plus" class="p-button-success mt-1" (click)="addRequirement()">Add Requirement</button>
       </div>
-      <small *ngIf="tripForm.controls['requirements'].invalid && tripForm.controls['requirements'].touched" class="text-red-500">
+      <small *ngIf="tripForm.controls['requirements'].hasError('minRequirements') " class="text-red-500">
         At least one requirement is required
+      </small>
+      <small *ngIf="tripForm.controls['requirements'].hasError('whitespace') && tripForm.controls['requirements'].touched" class="text-red-500">
+        Requirement cannot be empty or only spaces
       </small>
 
       <div class="p-field">
         <p-iftalabel>Pictures:</p-iftalabel>
         <div formArrayName="pictures">
-          <div *ngFor="let pic of pictures.controls; let i = index" class="p-inputgroup flex items-start space-x-2 mt-1">
-            <input [formControlName]="i" pInputText placeholder="Image URL" class="flex-grow"/>
-            <button pButton type="button" icon="pi pi-trash" class="p-button-danger" (click)="removePicture(i)"></button>
+          <div *ngFor="let pic of pictures.controls; let i = index" class="p-inputgroup">
+            <input [formControlName]="i" pInputText placeholder="Image URL" />
+            <button pButton type="button" icon="pi pi-trash" class="p-button-danger ml-1 mt-1" (click)="removePicture(i)"></button>
           </div>
         </div>
         <button pButton type="button" icon="pi pi-plus" class="p-button-success mt-1" (click)="addPicture()">Add Picture</button>
       </div>
 
       <p-button type="submit" styleClass="w-full mt-4" [disabled]="loading">
-        <span *ngIf="!loading">Create Trip</span>
-        <span *ngIf="loading">Creating...</span>
+        <span *ngIf="!loading">Edit Trip</span>
+        <span *ngIf="loading">Editing...</span>
       </p-button>
       
       <p-button type="button" styleClass="w-full mt-2 p-button-secondary" (click)="onReset()">

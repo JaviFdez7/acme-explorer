@@ -10,7 +10,6 @@ import { IftaLabelModule } from 'primeng/iftalabel';
 import { CardModule } from 'primeng/card';
 import { TextareaModule } from 'primeng/textarea';
 import { Trip } from '../../../models/trip.model';
-import { tick } from '@angular/core/testing';
 
 @Component({
   selector: 'app-manager-trip-create',
@@ -30,7 +29,7 @@ export class ManagerTripCreateComponent {
 
   createForm() {
     this.tripForm = this.fb.group({
-      title: ['', Validators.required],
+      title: ['', [Validators.required, Validators.maxLength(75)]],
       description: ['', Validators.required],
       startDate: ['', [Validators.required]],
       endDate: ['', [Validators.required]],
@@ -63,7 +62,8 @@ export class ManagerTripCreateComponent {
         new Date(this.tripForm.value.startDate),
         new Date(this.tripForm.value.endDate),
         this.tripForm.value.requirements,
-        this.tripForm.value.pictures
+        this.tripForm.value.pictures,
+        undefined
       )
 
       this.tripService.addTrip(trip).then(() => {
@@ -80,6 +80,7 @@ export class ManagerTripCreateComponent {
     } else {
       this.tripForm.markAllAsTouched(); 
       this.loading = false;
+      console.log(this.tripForm.errors);
       console.log('Form is invalid');
     }
   }

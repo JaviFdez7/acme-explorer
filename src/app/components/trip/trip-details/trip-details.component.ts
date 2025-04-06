@@ -8,9 +8,10 @@ import { Timestamp } from 'firebase/firestore';
 import { ImageCarouselComponent } from '../../img-carousel/img-carousel.component';
 import { Actor } from '../../../models/actor.model';
 import { ActorService } from '../../../services/actor.service';
+import { MessageModule } from 'primeng/message';
 @Component({
   selector: 'app-trip-details',
-  imports: [CommonModule, DividerModule, ImageCarouselComponent],
+  imports: [CommonModule, DividerModule, ImageCarouselComponent, MessageModule],
   templateUrl: './trip-details.component.html',
   styleUrl: './trip-details.component.css'
 })
@@ -27,12 +28,13 @@ export class TripDetailsComponent implements OnInit {
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id'); 
     if (id) {
-      this.tripService.getTrips().subscribe((trips: Trip[]) => {
-        this.trip = trips.find(trip => trip.id === id);
+      this.tripService.getTrip(id).subscribe((trip: Trip | undefined) => {
+        this.trip = trip;
         if (this.trip) {
-          this.actorService.getManagers().subscribe((actors: Actor[]) => {
-            this.manager = actors.find(actor => actor.id === this.trip?.manager) ?? null;
-          });
+          this.actorService.getActor(this.trip.manager).subscribe((actor: Actor | undefined) => {
+            this.manager = actor || null;
+          }
+          );
         }
       });
     }

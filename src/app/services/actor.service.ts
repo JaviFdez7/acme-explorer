@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EnvironmentInjector, inject, runInInjectionContext } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Actor } from '../models/actor.model';
-import { map, Observable  } from 'rxjs';
+import { Observable  } from 'rxjs';
 
 
 @Injectable({
@@ -9,8 +9,10 @@ import { map, Observable  } from 'rxjs';
 })
 export class ActorService {
   private actorsCollection;
+  private injector: EnvironmentInjector = inject(EnvironmentInjector);
+  private firestore: AngularFirestore = inject(AngularFirestore);
 
-  constructor(private firestore: AngularFirestore) { 
+  constructor() { 
     this.actorsCollection = this.firestore.collection<Actor>('actors');
   }
 
@@ -18,9 +20,9 @@ export class ActorService {
     return this.actorsCollection.valueChanges();
   }
 
-  getManagers(): Observable<Actor[]> {
-    return this.actorsCollection.valueChanges().pipe(
-      map(actors => actors.filter(actor => actor.role === 'MANAGER'))
-    );
+  getActor(id: string): Observable<Actor | undefined> {
+    return runInInjectionContext(this.injector, () => {
+      return this.actorsCollection.doc<Actor>(id).valueChanges({ idField: 'id' });
+    });
   }
 }

@@ -1,0 +1,35 @@
+<p-card styleClass="max-w-lg mx-auto p-6 card" ngSkipHydration>
+  <form *ngIf="tripForm" [formGroup]="tripForm" (ngSubmit)="onSubmit()">
+    <fieldset>
+      <legend class="text-xl font-semibold">Cancel Trip</legend>
+
+
+      <p-iftalabel variant="on" class="mt-4">
+        <label for="reason">Reason *</label>
+        <textarea
+          pTextarea 
+          id="reason"
+          formControlName="reason"
+          rows="3"
+          class="mt-1 block w-full"
+          maxlength="400"
+        ></textarea>
+      </p-iftalabel>      
+      <small *ngIf="tripForm.controls['reason'].invalid && tripForm.controls['reason'].touched" class="text-red-500">
+        Reason is required
+      </small>
+
+      <p-button type="submit" styleClass="w-full mt-4" [disabled]="loading">
+        <span *ngIf="!loading">Cancel Trip</span>
+        <span *ngIf="loading">Cancelling...</span>
+      </p-button>
+      
+      <p-button type="button" styleClass="w-full mt-2 p-button-secondary" (click)="onReset()">
+        Reset
+      </p-button>
+
+      <div *ngIf="success" class="text-green-500 mt-4">{{ success }}</div>
+      <div *ngIf="error" class="text-red-500 mt-4">{{ error }}</div>
+    </fieldset>
+  </form>
+</p-card>

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EnvironmentInjector, inject, runInInjectionContext } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Trip } from '../models/trip.model';
 import { firstValueFrom, Observable } from 'rxjs';
@@ -8,8 +8,10 @@ import { firstValueFrom, Observable } from 'rxjs';
 })
 export class TripService {
   private tripsCollection;
+  private injector: EnvironmentInjector = inject(EnvironmentInjector);
+  private firestore: AngularFirestore = inject(AngularFirestore);
 
-  constructor(private firestore: AngularFirestore) {
+  constructor() {
     this.tripsCollection = this.firestore.collection<Trip>('trips');
   }
 
@@ -18,13 +20,19 @@ export class TripService {
   }
 
   getTrip(id: string): Observable<Trip | undefined> {
-    return this.tripsCollection.doc<Trip>(id).valueChanges({ idField: 'id' });
+    return runInInjectionContext(this.injector, () => {
+      return this.tripsCollection.doc<Trip>(id).valueChanges({ idField: 'id' });
+    });
   }
 
   addTrip(trip: Trip): Promise<unknown> {
     return this.tripsCollection.add(trip.object);
   }
 
+  editTrip(trip: Trip, id: string): Promise<void> {
+    return this.tripsCollection.ref.doc(id).update(trip.object);
+  }
+  
   generateRawTicker(): string {
     const today = new Date();
     const year = today.getFullYear().toString().slice(-2); // Get last two digits of the year
