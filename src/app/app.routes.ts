@@ -14,6 +14,7 @@ import { ManagerTripCreateComponent } from './components/manager/trip-create/tri
 import { ManagerTripDetailsComponent } from './components/manager/trip-details/trip-details.component';
 import { ManagerTripEditComponent } from './components/manager/trip-edit/trip-edit.component';
 import { ManagerTripCancelComponent } from './components/manager/trip-cancel/trip-cancel.component';
+import { DashboardComponent } from './components/admin/dashboard/dashboard.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -32,7 +33,7 @@ export const routes: Routes = [
   { path: 'manager/:id/trip/:tripId/cancel', component: ManagerTripCancelComponent, data: { expectedRole: 'manager' } },
   { path: 'manager/:id/trip/:tripId', component: ManagerTripDetailsComponent, data: { expectedRole: 'manager' } },
   { path: 'admin/create-user', component: RegisterComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'admin' } },
-  { path: 'admin/dashboard', component: TripDisplayComponent, data: { expectedRole: 'admin' } },
+  { path: 'admin/dashboard', component: DashboardComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'admin' } },
   { path: 'admin/sponsor-configuration', component: TripDisplayComponent },
   { path: 'admin/explorer-analysis', component: TripDisplayComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'admin' } },
   { path: 'sponsor/:id/sponsorships', component: TripDisplayComponent, data: { expectedRole: 'sponsor' } },
