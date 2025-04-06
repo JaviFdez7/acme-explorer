@@ -14,10 +14,12 @@
           "builder": "@angular-devkit/build-angular:application",
           "options": {
             "outputPath": "dist/acme-explorer",
+            "localize": true,
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
-              "zone.js"
+              "zone.js",
+              "@angular/localize/init"
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
@@ -62,6 +64,12 @@
                   "with": "src/environments/environment.development.ts"
                 }
               ]
+            },
+            "es": {
+              "localize": ["es"]
+            },
+            "en": {
+              "localize": ["en"]
             }
           },
           "defaultConfiguration": "production"
@@ -74,6 +82,12 @@
             },
             "development": {
               "buildTarget": "acme-explorer:build:development"
+            },
+            "es": {
+              "buildTarget": "acme-explorer:build:development,es"
+            },
+            "en": {
+              "buildTarget": "acme-explorer:build:development,en"
             }
           },
           "defaultConfiguration": "development"
@@ -86,7 +100,8 @@
           "options": {
             "polyfills": [
               "zone.js",
-              "zone.js/testing"
+              "zone.js/testing",
+              "@angular/localize/init"
             ],
             "tsConfig": "tsconfig.spec.json",
             "assets": [
@@ -108,6 +123,17 @@
               "src/**/*.ts",
               "src/**/*.html"
             ]
+          }
+        }
+      },
+      "i18n": {
+        "sourceLocale": "en-US",
+        "locales": {
+          "es": {
+            "translation": "src/assets/i18n/messages.es.json"
+          },
+          "en": {
+            "translation": "src/assets/i18n/messages.en.json"
           }
         }
       }

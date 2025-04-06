@@ -205,14 +205,9 @@ export class Navbar implements OnInit {
                         style: {'margin-left': 'auto'},
                         items: [
                             {
-                                label: 'Create Manager',
+                                label: 'Create User',
                                 icon: 'pi pi-user-plus',
-                                command: () => this.router.navigate(['/admin/create-manager'])
-                            },
-                            {
-                                label: 'Create Sponsor',
-                                icon: 'pi pi-user-plus',
-                                command: () => this.router.navigate(['/admin/create-sponsor'])
+                                command: () => this.router.navigate(['/admin/create-user'])
                             },
                             {
                                 label: 'Dashboard',

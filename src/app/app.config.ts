@@ -35,6 +35,6 @@ export const appConfig: ApplicationConfig = {
         }
     }),
     provideAnimationsAsync(),
-    provideAnimations(),  
+    provideAnimations(), 
   ],
 };
