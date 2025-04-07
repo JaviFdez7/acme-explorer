@@ -56,7 +56,7 @@
         {{ trip?.ticker ?? 'No ticker available' }}
       </div>
     </div>
-    <p-button *ngIf="isExplorer()" label="Apply now" icon="pi pi-check" class="mt-6 max-w-xs" (onClick)="goApply()" [disabled]="!!trip?.cancelation"></p-button>
+    <p-button *ngIf="isExplorer() && isTripApplicable()" label="Apply now" icon="pi pi-check" class="mt-6 max-w-xs" (onClick)="goApply()" [disabled]="!!trip?.cancelation"></p-button>
   </div>
 </div>
 <div *ngIf="trip?.cancelation" class="flex justify-center mt-6">

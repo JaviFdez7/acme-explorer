@@ -73,6 +73,15 @@ export class TripDetailsComponent implements OnInit {
     return this.authService.isExplorer();
   }
 
+  isTripApplicable(): boolean {
+    if (!this.trip) return false;
+    const currentDate = new Date();
+    const tripStartDate = this.trip.startDate instanceof Timestamp
+      ? this.trip.startDate.toDate()
+      : new Date(this.trip.startDate);
+    return !this.trip.cancelation && !this.trip.deleted && tripStartDate > currentDate;
+  }
+
   goApply() {
     if (this.trip && this.trip.id) {
       this.router.navigate(['/trip', this.trip.id, 'apply']);

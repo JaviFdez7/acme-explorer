@@ -4,6 +4,7 @@ import { ApplicationDisplayComponent } from '../application-display/application-
 import { CommonModule } from '@angular/common';
 import { DataView } from 'primeng/dataview';
 import { ApplicationService } from '../../../services/application.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-application-list',
@@ -14,10 +15,10 @@ import { ApplicationService } from '../../../services/application.service';
 export class ApplicationListComponent implements OnInit {
   protected applicationList: Application[] = [];
 
-  constructor(private applicationService: ApplicationService) { }
+  constructor(private applicationService: ApplicationService, private authService: AuthService) { }
 
   ngOnInit() {
-    this.applicationService.getApplications().subscribe((applications: Application[]) => {
+    this.applicationService.getApplicationsByActor(this.authService.getCurrentId() || '').subscribe((applications: Application[]) => {
       this.applicationList = applications;
     });
   }

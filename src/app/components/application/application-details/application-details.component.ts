@@ -32,11 +32,6 @@ export class ApplicationDetailsComponent implements OnInit {
         return;
       }
       this.application = application;
-      if (this.application.actor !== this.authService.getCurrentId()) {
-        console.log('User is not the owner of the application');
-        this.router.navigate(['/denied-access']);
-        return;
-      }
       this.tripService.getTrip(this.application.trip).subscribe((trip: Trip | undefined) => {
         this.trip = trip;
       });

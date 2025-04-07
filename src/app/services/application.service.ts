@@ -34,11 +34,15 @@ export class ApplicationService {
   }
 
   getApplicationsByActor(actorId: string): Observable<Application[]> {
-    return this.firestore.collection<Application>('applications', ref => ref.where('actor', '==', actorId)).valueChanges({ idField: 'id' });
+    return runInInjectionContext(this.injector, () => {
+      return this.firestore.collection<Application>('applications', ref => ref.where('actor', '==', actorId)).valueChanges({ idField: 'id' });
+    });
   }
 
   getApplicationsByTrip(tripId: string): Observable<Application[]> {
-    return this.firestore.collection<Application>('applications', ref => ref.where('trip', '==', tripId)).valueChanges({ idField: 'id' });
+    return runInInjectionContext(this.injector, () => {
+      return this.firestore.collection<Application>('applications', ref => ref.where('trip', '==', tripId)).valueChanges({ idField: 'id' });
+    });
   }
 
   getApplicationByActorAndTrip(actorId: string, tripId: string): Observable<Application[]> {

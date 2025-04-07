@@ -9,7 +9,6 @@ import { Observable, Subject } from 'rxjs';
 })
 export class AuthService {
   user$: Observable<User | null>;
-  currentActor: Actor | null = null;
   private loginStatus = new Subject<boolean>();
 
   constructor(private auth: Auth, private firestore: Firestore) {
@@ -20,7 +19,7 @@ export class AuthService {
         await this.loadUserData(user.uid);
         this.loginStatus.next(true);
       } else {
-        this.currentActor = null;
+        localStorage.removeItem('user');
         this.loginStatus.next(false);
       }
     });
@@ -49,8 +48,8 @@ export class AuthService {
   async login(email: string, password: string) {
     try {
       await signInWithEmailAndPassword(this.auth, email, password);
-      console.log('User logged in successfully with role:', this.currentActor?.role);
-      return this.currentActor;
+      console.log('User logged in successfully with role:', this.getCurrentRole());
+      return this.getCurrentActor();
     } catch (error) {
       console.error('Error during login:', error);
       throw error;
@@ -60,7 +59,7 @@ export class AuthService {
   async logout() {
     try {
       await signOut(this.auth);
-      this.currentActor = null;
+      localStorage.removeItem('user');
       this.loginStatus.next(false);
       console.log('User logged out');
     } catch (error) {
@@ -72,25 +71,34 @@ export class AuthService {
   private async loadUserData(userId: string) {
     const actorRef = doc(this.firestore, `actors/${userId}`);
     const actorSnap = await getDoc(actorRef);
-
+    console.log('Actor data loaded from Firestore:', actorSnap.data());
     if (actorSnap.exists()) {
-      this.currentActor = actorSnap.data() as Actor;
+      const actorData = actorSnap.data() as Actor;
+      actorData.password = '';
+      actorData.address = '';
+      actorData.phone = '';
+      localStorage.setItem('user', JSON.stringify(actorData));
     } else {
       console.warn('Actor not found in Firestore');
-      this.currentActor = null;
+      localStorage.removeItem('user');
     }
   }
 
   getCurrentActor(): Actor | null {
-    return this.currentActor;
+    const userDataString = localStorage.getItem('user');
+    if (userDataString) {
+      return JSON.parse(userDataString) as Actor;
+    } else {
+      return null;
+    }
   }
 
   getCurrentRole(): string | null {
-    return this.currentActor ? this.currentActor.role : null;
+    return this.getCurrentActor()?.role || null;
   }
 
   getCurrentId(): string | null {
-    return this.currentActor ? this.currentActor.id : null;
+    return this.getCurrentActor()?.id || null;
   }
 
   getStatus(): Observable<boolean> {
@@ -106,14 +114,14 @@ export class AuthService {
   }
 
   isAdmin(): boolean {
-    return this.currentActor?.role === 'ADMIN';
+    return this.getCurrentActor()?.role === 'ADMIN';
   }
 
   isManager(): boolean {
-    return this.currentActor?.role === 'MANAGER';
+    return this.getCurrentActor()?.role === 'MANAGER';
   }
 
   isExplorer(): boolean {
-    return this.currentActor?.role === 'EXPLORER';
+    return this.getCurrentActor()?.role === 'EXPLORER';
   }
 }

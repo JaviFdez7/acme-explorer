@@ -42,12 +42,7 @@ export class ApplicationCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (!this.userId || !this.authService.isExplorer()) {
-      console.log('User is not an explorer or not logged in');
-      this.router.navigate(['/denied-access']);
-    }
     if (this.tripId) {
-
       this.applicationService.getApplicationByActorAndTrip(this.userId, this.tripId).subscribe((applications: Application[]) => {
         if (applications.length > 0) {
           console.log('User has already applied for this trip');
@@ -57,8 +52,8 @@ export class ApplicationCreateComponent implements OnInit {
       this.tripService.getTrip(this.tripId).subscribe((trip: Trip | undefined) => {
         if (!trip) {
           this.router.navigate(['/not-found']);
-          // } else if (trip.cancelation || trip.deleted || trip.startDate < new Date()) {
-          //   console.error('Trip is not available for application');
+        } else if (trip.cancelation || trip.deleted || trip.startDate < new Date()) {
+          console.error('Trip is not available for application');
           this.router.navigate(['/denied-access']);
         } else {
           this.trip = trip;
