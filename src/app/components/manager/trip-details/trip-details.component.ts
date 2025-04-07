@@ -10,10 +10,11 @@ import { DividerModule } from 'primeng/divider';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { MessageModule } from 'primeng/message';
+import { TableModule } from 'primeng/table';
 
 @Component({
   selector: 'app-manager-trip-details',
-  imports: [ImageCarouselComponent, DividerModule, CommonModule, ButtonModule, MessageModule],
+  imports: [ImageCarouselComponent, DividerModule, CommonModule, ButtonModule, MessageModule, TableModule],
   templateUrl: './trip-details.component.html',
   styleUrl: './trip-details.component.css'
 })

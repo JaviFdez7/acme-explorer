@@ -1,4 +1,5 @@
 import { Entity } from "./entity.model";
+import { Stage } from "./stage.model";
 
 export class Trip extends Entity{
   private _ticker!: string;
@@ -11,8 +12,9 @@ export class Trip extends Entity{
   private _endDate!: Date;
   private _pictures?: string[];
   private _cancelation?: string;
+  private _stages!: Stage[];
 
-  constructor(ticker: string, manager: string, title: string, description: string, price: number, startDate: Date, endDate: Date, requirements: string[],  pictures?: string[], cancelation?: string, version?: number, deleted?: boolean) {
+  constructor(ticker: string, manager: string, title: string, description: string, price: number, startDate: Date, endDate: Date, requirements: string[],  pictures?: string[], cancelation?: string, version?: number, deleted?: boolean, stages: Stage[] = []) {
     super();
     this._ticker = ticker;
     this._manager = manager;
@@ -30,6 +32,7 @@ export class Trip extends Entity{
     if (deleted !== undefined) {
       this.deleted = deleted;
     }
+    this._stages = stages;
   }
 
   public get ticker(): string {
@@ -112,6 +115,14 @@ export class Trip extends Entity{
     this._manager = value;
   }
 
+  public get stages(): Stage[] {
+    return this._stages;
+  }
+
+  public set stages(value: Stage[]) {
+    this._stages = value;
+  }
+
   public get object(): any {
     return {
       version: this.version,
@@ -125,7 +136,8 @@ export class Trip extends Entity{
       endDate: this.endDate,
       manager: this.manager,
       pictures: this.pictures,
-      cancelation: this.cancelation
+      cancelation: this.cancelation,
+      stages: this.stages, 
     };
   }
 }

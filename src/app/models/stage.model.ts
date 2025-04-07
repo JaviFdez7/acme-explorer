@@ -1,21 +1,12 @@
-import { Entity } from "./entity.model";
-
-class Stage extends Entity {
+export class Stage{
   private _title!: string;
   private _description!: string;
   private _price!: number;
 
-  constructor(title: string, description: string, price: number, version?: number, deleted?: boolean) {
-    super();
+  constructor(title: string, description: string, price: number) {
     this._title = title;
     this._description = description;
     this._price = price;
-    if (version !== undefined) {
-      this.version = version;
-    }
-    if (deleted !== undefined) {
-      this.deleted = deleted;
-    }
   }
 
   public get title(): string {
@@ -40,6 +31,14 @@ class Stage extends Entity {
 
   public set price(value: number) {
     this._price = value;
+  }
+
+  public get object(): object {
+    return {
+      title: this._title,
+      description: this._description,
+      price: this._price,
+    };
   }
 
 }

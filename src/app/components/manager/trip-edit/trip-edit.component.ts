@@ -11,10 +11,13 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
 import { Actor } from '../../../models/actor.model';
 import { ActorService } from '../../../services/actor.service';
+import { AccordionModule } from 'primeng/accordion';
+import { StepperModule } from 'primeng/stepper';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-trip-edit',
-  imports: [CommonModule, ButtonModule, CardModule, ReactiveFormsModule, IftaLabelModule, InputTextModule, TextareaModule],
+  imports: [CommonModule, ButtonModule, InputTextModule, IftaLabelModule, CardModule, ReactiveFormsModule, TextareaModule, AccordionModule, StepperModule],
   templateUrl: './trip-edit.component.html',
   styleUrl: './trip-edit.component.css'
 })
@@ -25,10 +28,14 @@ export class ManagerTripEditComponent implements OnInit {
   success: string | null = null;
   @Input() trip: Trip | undefined;
   @Input() manager: Actor | null = null;
+  currentStep = 1;
+  stages!: FormArray;
+  formReady = false;
+
 
   constructor(private fb: FormBuilder, private tripService: TripService, 
     private route: Router, private router: ActivatedRoute,
-    private actorService: ActorService) {
+    private actorService: ActorService, private authService: AuthService) {
   }
 
   ngOnInit() {
@@ -59,11 +66,51 @@ export class ManagerTripEditComponent implements OnInit {
         (this.trip?.requirements || []).map(req => new FormControl(req,[Validators.required, this.noWhitespaceValidator])),
         this.minRequirementsValidator 
       ),
-      price: [this.trip?.price, [Validators.required, Validators.min(0), Validators.max(1000000), Validators.pattern('^[0-9]*$')]],
       pictures: this.fb.array(
         (this.trip?.pictures || []).map(pic => new FormControl(pic))
       ),
     });
+
+    this.stages = this.fb.array(
+      (this.trip?.stages || []).map(stage =>
+        this.fb.group({
+          title: [stage.title, Validators.required],
+          description: [stage.description, Validators.required],
+          price: [stage.price, [Validators.required, Validators.min(0), Validators.pattern('^[0-9]*$')]],
+        })
+      )
+    );
+    this.formReady = true;
+  }
+
+  get stagesForms() {
+    return this.stages.controls as FormGroup[];
+  }
+
+  addStage() {
+    const stageGroup = this.fb.group({
+      title: ['', Validators.required],
+      description: ['', Validators.required],
+      price: [0, [Validators.required, Validators.min(0), Validators.pattern('^[0-9]*$')]],
+    });
+    this.stages.push(stageGroup);  
+  }
+
+  removeStage(index: number) {
+    this.stages.removeAt(index);
+  }
+
+  disableNextStep() {
+    if (this.currentStep === 1) {
+      return this.tripForm.invalid;
+    } else if (this.currentStep === 2) {
+      return this.stages.length === 0 || this.stages.invalid || this.loading;
+    }
+    return true;
+  }
+
+  calculateTotalPrice() {
+    return this.stages.controls.reduce((sum, stage) => sum + (stage.value.price || 0), 0);
   }
   
   minRequirementsValidator(control: AbstractControl): Record<string, boolean> | null {
@@ -87,12 +134,14 @@ export class ManagerTripEditComponent implements OnInit {
       this.loading = false;
       return;
     }
-    const managerId = this.trip?.manager;
-    if (!managerId) {
-      console.error('Manager ID not found');
+    const managerId = this.authService.getCurrentId();
+    const managerRole = this.authService.getCurrentRole();
+    if (!managerId || managerRole !== 'MANAGER') {
+      this.loading = false;
+      this.error = 'You are not authorized to edit this trip.';
       return;
     }
-    const pictures = this.tripForm.value.pictures;
+    const pictures = this.tripForm.value.pictures || [];
     if (pictures.length === 0) {
       pictures.push('https://placehold.co/600x400?text=No+Image')
     }
@@ -103,20 +152,22 @@ export class ManagerTripEditComponent implements OnInit {
         managerId,
         this.tripForm.value.title,
         this.tripForm.value.description,
-        this.tripForm.value.price,
+        this.calculateTotalPrice(),
         new Date(this.tripForm.value.startDate),
         new Date(this.tripForm.value.endDate),
         this.tripForm.value.requirements,
         this.tripForm.value.pictures,
         this.trip?.cancelation,
         newVersion,
-        this.trip?.deleted
+        this.trip?.deleted,
+        this.stages.value,
       );
       const id = this.router.snapshot.paramMap.get('tripId');
       if (!id) {
         console.error('Trip ID not found');
         return;
       }
+
       this.tripService.editTrip(trip, id).then(() => {
         this.loading = false;
         this.success = 'Trip edited successfully!';
