@@ -103,8 +103,6 @@ export class ManagerTripCreateComponent {
         this.stages.value,
       )
 
-      console.log('Trip:', trip.object);
-
       this.tripService.addTrip(trip).then(() => {
         this.loading = false;
         this.success = 'Trip added successfully!';

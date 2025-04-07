@@ -10,6 +10,7 @@
       <p-step-panel [value]="1">
         <ng-template #content let-activateCallback="activateCallback">
             <!-- Formulario del primer paso -->
+            <h3 class="text-2xl font-semibold mb-2">Create trip</h3>
             <form [formGroup]="tripForm" (ngSubmit)="onSubmit()">
               <p-iftalabel variant="on" class="mb-2">
                 <label for="title">Title *</label>
@@ -73,6 +74,7 @@
       <!-- PANEL 2: Stages -->
       <p-step-panel [value]="2">
         <ng-template #content let-activateCallback="activateCallback">
+          <h3 class="text-2xl font-semibold mb-2">Create stages</h3>
           <p-accordion [value]="0">
             <div *ngFor="let stage of stagesForms; let i = index">
               <p-accordion-panel [value]="i">
