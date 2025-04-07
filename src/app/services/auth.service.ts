@@ -11,7 +11,7 @@ export class AuthService {
   user$: Observable<User | null>;
   currentActor: Actor | null = null;
   private loginStatus = new Subject<boolean>();
-  
+
   constructor(private auth: Auth, private firestore: Firestore) {
     // Detectar el estado de autenticación al iniciar la app
     this.user$ = user(this.auth);
@@ -35,12 +35,12 @@ export class AuthService {
         id: res.user.uid,
       }
 
-    const actorRef = doc(this.firestore, 'actors', actorData.id);
-    await setDoc(actorRef, {
-      ...actorData,
-      createdAt: new Date()
-    });
-    console.log('Actor data saved in Firestore successfully');
+      const actorRef = doc(this.firestore, 'actors', actorData.id);
+      await setDoc(actorRef, {
+        ...actorData,
+        createdAt: new Date()
+      });
+      console.log('Actor data saved in Firestore successfully');
     } catch (error) {
       console.error('Error during sign up:', error);
     }
@@ -72,7 +72,7 @@ export class AuthService {
   private async loadUserData(userId: string) {
     const actorRef = doc(this.firestore, `actors/${userId}`);
     const actorSnap = await getDoc(actorRef);
-  
+
     if (actorSnap.exists()) {
       this.currentActor = actorSnap.data() as Actor;
     } else {
@@ -81,7 +81,7 @@ export class AuthService {
     }
   }
 
-  getCurrentActor(): Actor | null{
+  getCurrentActor(): Actor | null {
     return this.currentActor;
   }
 
@@ -103,5 +103,17 @@ export class AuthService {
 
   getRoles(): string[] {
     return ['EXPLORER', 'MANAGER', 'ADMIN', 'SPONSOR'];
+  }
+
+  isAdmin(): boolean {
+    return this.currentActor?.role === 'ADMIN';
+  }
+
+  isManager(): boolean {
+    return this.currentActor?.role === 'MANAGER';
+  }
+
+  isExplorer(): boolean {
+    return this.currentActor?.role === 'EXPLORER';
   }
 }

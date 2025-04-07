@@ -14,19 +14,25 @@ import { ManagerTripCreateComponent } from './components/manager/trip-create/tri
 import { ManagerTripDetailsComponent } from './components/manager/trip-details/trip-details.component';
 import { ManagerTripEditComponent } from './components/manager/trip-edit/trip-edit.component';
 import { ManagerTripCancelComponent } from './components/manager/trip-cancel/trip-cancel.component';
+import { ApplicationCreateComponent } from './components/application/application-create/application-create.component';
+import { ApplicationListComponent } from './components/application/application-list/application-list.component';
+import { ApplicationDetailsComponent } from './components/application/application-details/application-details.component';
 import { DashboardComponent } from './components/admin/dashboard/dashboard.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'trips', component: TripListComponent },
   { path: 'trip', component: TripDisplayComponent },
-  { path: 'trip/create', component: ManagerTripCreateComponent ,data: { expectedRole: 'manager' } },
+  { path: 'trip/create', component: ManagerTripCreateComponent, data: { expectedRole: 'manager' } },
   { path: 'trip/:id', component: TripDetailsComponent },
   { path: 'trip/:id/applications', component: TripDisplayComponent, data: { expectedRole: 'manager' } },
   { path: 'trip/:id/edit', component: TripDisplayComponent, data: { expectedRole: 'manager' } },
+  { path: 'trip/:id/apply', component: ApplicationCreateComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'explorer' } },
   { path: 'list/:id', component: TripDisplayComponent, data: { expectedRole: 'explorer' } },
   { path: 'user/:id/profile', component: TripDisplayComponent },
-  { path: 'explorer/:id/applications', component: TripDisplayComponent, data: { expectedRole: 'explorer' } },
+  { path: 'explorer/:id/applications', component: ApplicationListComponent, data: { expectedRole: 'explorer' } },
+  { path: 'explorer/:id/applications/:applicationId', component: ApplicationDetailsComponent, data: { expectedRole: 'explorer' } },
+  { path: 'explorer/:id/applications/:applicationId/edit', component: ApplicationDetailsComponent, data: { expectedRole: 'explorer' } },
   { path: 'explorer/:id/favorites', component: TripDisplayComponent, data: { expectedRole: 'explorer' } },
   { path: 'manager/:id/trips', component: ManagerTripListComponent, data: { expectedRole: 'manager' } },
   { path: 'manager/:id/trip/:tripId/edit', component: ManagerTripEditComponent, data: { expectedRole: 'manager' } },
@@ -43,6 +49,7 @@ export const routes: Routes = [
   { path: 'register', component: RegisterExplorerComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'anonymous' } },
   { path: 'login',component: LoginComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'anonymous' }},
   { path: 'denied-access', component: DeniedAccessComponent },
+  { path: 'not-found', component: NotFoundComponent },
   { path: '**', component: NotFoundComponent }
 ]
 
