@@ -14,6 +14,8 @@ import { ManagerTripDetailsComponent } from './components/manager/trip-details/t
 import { ManagerTripEditComponent } from './components/manager/trip-edit/trip-edit.component';
 import { ManagerTripCancelComponent } from './components/manager/trip-cancel/trip-cancel.component';
 import { ApplicationCreateComponent } from './components/application/application-create/application-create.component';
+import { ApplicationListComponent } from './components/application/application-list/application-list.component';
+import { ApplicationDetailsComponent } from './components/application/application-details/application-details.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -26,8 +28,9 @@ export const routes: Routes = [
   { path: 'trip/:id/apply', component: ApplicationCreateComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'explorer' } },
   { path: 'list/:id', component: TripDisplayComponent, data: { expectedRole: 'explorer' } },
   { path: 'user/:id/profile', component: TripDisplayComponent },
-  { path: 'explorer/:id/applications', component: TripDisplayComponent, data: { expectedRole: 'explorer' } },
-  { path: 'explorer/:id/applications/:applicationId', component: TripDisplayComponent, data: { expectedRole: 'explorer' } },
+  { path: 'explorer/:id/applications', component: ApplicationListComponent, data: { expectedRole: 'explorer' } },
+  { path: 'explorer/:id/applications/:applicationId', component: ApplicationDetailsComponent, data: { expectedRole: 'explorer' } },
+  { path: 'explorer/:id/applications/:applicationId/edit', component: ApplicationDetailsComponent, data: { expectedRole: 'explorer' } },
   { path: 'explorer/:id/favorites', component: TripDisplayComponent, data: { expectedRole: 'explorer' } },
   { path: 'manager/:id/trips', component: ManagerTripListComponent, data: { expectedRole: 'manager' } },
   { path: 'manager/:id/trip/:tripId/edit', component: ManagerTripEditComponent, data: { expectedRole: 'manager' } },

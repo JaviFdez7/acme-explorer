@@ -19,7 +19,8 @@ export class ApplicationDisplayComponent implements OnInit {
   protected trip: Trip | undefined;
 
   constructor(private router: Router, private authService: AuthService, private tripService: TripService) {
-    this.application = new Application("tripId", "actorId", ["message1", "message2"], ApplicationStatus.PENDING, new Date(), "nigga", 0, false);
+    this.application = new Application("", "");
+    this.trip = new Trip("", "", "", "", 0, new Date(), new Date(), [], []);
   }
 
   ngOnInit() {
@@ -28,22 +29,28 @@ export class ApplicationDisplayComponent implements OnInit {
     });
   }
 
-  getStatus() {
+  getApplicationStatus() {
     return this.application.status;
   }
 
-  getMessages() {
-    return this.application.messages;
-  }
-
-  getReason() {
-    return this.application.reason;
-  }
-
-  getDate(lan: string) {
+  getApplicationDate(lan: string) {
     const rawDate: Date | { seconds: number } = this.application.date as Date | { seconds: number };
     const date = rawDate instanceof Date ? rawDate : new Date(rawDate.seconds * 1000);
     const formatter = new Intl.DateTimeFormat(lan, { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric' });
+    return formatter.format(date);
+  }
+
+  getTripStartDate(lan: string) {
+    const rawDate: Date | { seconds: number } = this.trip?.startDate as Date | { seconds: number };
+    const date = rawDate instanceof Date ? rawDate : new Date(rawDate.seconds * 1000);
+    const formatter = new Intl.DateTimeFormat(lan, { day: 'numeric', month: 'long', year: 'numeric' });
+    return formatter.format(date);
+  }
+
+  getTripEndDate(lan: string) {
+    const rawDate: Date | { seconds: number } = this.trip?.endDate as Date | { seconds: number };
+    const date = rawDate instanceof Date ? rawDate : new Date(rawDate.seconds * 1000);
+    const formatter = new Intl.DateTimeFormat(lan, { day: 'numeric', month: 'long', year: 'numeric' });
     return formatter.format(date);
   }
 
@@ -59,7 +66,30 @@ export class ApplicationDisplayComponent implements OnInit {
     return this.trip?.price || 0;
   }
 
-  goToTrip() {
+  goTripDetails() {
     this.router.navigate(['/trip', this.application.trip]);
+  }
+
+  goApplicationDetails() {
+    this.router.navigate(['/explorer', this.application.actor, 'applications', this.application.id]);
+  }
+
+  getApplicationMessagesInfo() {
+    return this.application.messages.length > 0 ? this.application.messages.length + ' messages' : 'No messages';
+  }
+
+  getApplicationStatusClass() {
+    switch (this.application.status) {
+      case ApplicationStatus.PENDING:
+        return 'bg-blue-600 text-blue-100';
+      case ApplicationStatus.DUE:
+        return 'bg-yellow-600 text-yellow-100';
+      case ApplicationStatus.ACCEPTED:
+        return 'bg-green-600 text-green-100';
+      case ApplicationStatus.REJECTED:
+        return 'bg-red-600 text-red-100';
+      default:
+        return 'bg-primary-300 text-primary-950';
+    }
   }
 }

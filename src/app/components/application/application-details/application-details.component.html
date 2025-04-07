@@ -1,1 +1,52 @@
-<p>application-details works!</p>
+<div class="flex flex-col md:flex-row my-6 w-full max-w-4xl mx-auto p-6">
+  <!-- Sección Izquierda: Información de la solicitud y del viaje -->
+  <div class="w-full md:w-5/12 flex flex-col p-6">
+    <div>
+      <span [ngClass]="getApplicationStatusClass()" class="text-xs font-semibold me-2 px-2.5 py-0.5 rounded-full">
+        {{getApplicationStatus()}}
+      </span>
+    </div>
+    <div class="flex justify-between mt-4">
+      <h6 class="text-2xl font-semibold">
+        {{ getTripTitle() }}
+      </h6>
+      <p class="text-lg font-medium">
+        {{ getTripPrice() }} €
+      </p>
+  </div>
+    <p class="leading-relaxed text-base font-light my-4">
+      {{ getTripDescription() }}
+    </p>
+    <!-- Botones de acción -->
+    <div class="flex mt-4 justify-between">
+      <p-button label="Trip" 
+                icon="pi pi-info-circle" 
+                (onClick)="goTripDetails()">
+      </p-button>
+      <p-button *ngIf="getApplicationStatus() === 'DUE'" 
+                label="Pay" 
+                icon="pi pi-credit-card" 
+                (onClick)="pay()">
+      </p-button>
+      <p-button *ngIf="isApplicationCancelable()" 
+                label="Cancel" 
+                icon="pi pi-times" 
+                (onClick)="cancel()">
+      </p-button>
+    </div>
+  </div>
+  
+  <!-- Separador -->
+  <div class="w-full md:w-1/12 flex items-center justify-center">
+    <p-divider layout="vertical" class="!hidden md:!flex"></p-divider>
+    <p-divider layout="horizontal" class="!flex md:!hidden" align="center"></p-divider>
+  </div>
+  
+  <!-- Sección Derecha: Mensajes del usuario -->
+  <div class="w-full md:w-6/12 flex flex-col p-6">
+    <h2 class="text-2xl font-semibold mb-4">Messages</h2>
+    <div *ngFor="let message of getApplicationMessages()" class="mb-4 p-4 border rounded shadow-sm">
+      <p class="text-base">{{ message }}</p>
+    </div>
+  </div>
+</div>

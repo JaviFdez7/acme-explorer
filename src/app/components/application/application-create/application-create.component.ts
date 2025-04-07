@@ -106,7 +106,7 @@ export class ApplicationCreateComponent implements OnInit {
         this.loading = false;
         this.success = 'Application submitted successfully';
         setTimeout(() => {
-          this.router.navigate(['/explorer/applications']);
+          this.router.navigate(['/explorer', this.userId, 'applications']);
         }, 2000);
       }).catch((error) => {
         console.error('Error submitting application:', error);
