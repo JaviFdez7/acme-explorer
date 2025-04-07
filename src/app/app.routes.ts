@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { RegisterComponent } from './components/security/register/register.component';
+import { RegisterExplorerComponent } from './components/security/register-explorer/register-explorer.component';
 import { NotFoundComponent } from './components/shared/not-found/not-found.component';
 import { TripDisplayComponent } from './components/trip/trip-display/trip-display.component';
 import { TripListComponent } from './components/trip/trip-list/trip-list.component';
@@ -16,6 +17,7 @@ import { ManagerTripCancelComponent } from './components/manager/trip-cancel/tri
 import { ApplicationCreateComponent } from './components/application/application-create/application-create.component';
 import { ApplicationListComponent } from './components/application/application-list/application-list.component';
 import { ApplicationDetailsComponent } from './components/application/application-details/application-details.component';
+import { DashboardComponent } from './components/admin/dashboard/dashboard.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -36,17 +38,16 @@ export const routes: Routes = [
   { path: 'manager/:id/trip/:tripId/edit', component: ManagerTripEditComponent, data: { expectedRole: 'manager' } },
   { path: 'manager/:id/trip/:tripId/cancel', component: ManagerTripCancelComponent, data: { expectedRole: 'manager' } },
   { path: 'manager/:id/trip/:tripId', component: ManagerTripDetailsComponent, data: { expectedRole: 'manager' } },
-  { path: 'admin/create-manager', component: TripDisplayComponent, data: { expectedRole: 'admin' } },
-  { path: 'admin/create-sponsor', component: TripDisplayComponent, data: { expectedRole: 'admin' } },
-  { path: 'admin/dashboard', component: TripDisplayComponent, data: { expectedRole: 'admin' } },
+  { path: 'admin/create-user', component: RegisterComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'admin' } },
+  { path: 'admin/dashboard', component: DashboardComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'admin' } },
   { path: 'admin/sponsor-configuration', component: TripDisplayComponent },
-  { path: 'admin/explorer-analysis', component: TripDisplayComponent, data: { expectedRole: 'admin' } },
+  { path: 'admin/explorer-analysis', component: TripDisplayComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'admin' } },
   { path: 'sponsor/:id/sponsorships', component: TripDisplayComponent, data: { expectedRole: 'sponsor' } },
-  { path: 'sponsorship/:id', component: TripDisplayComponent, data: { expectedRole: 'sponsor' } },
-  { path: 'sponsorship/create', component: TripDisplayComponent, data: { expectedRole: 'sponsor' } },
-  { path: 'sponsorship/:id/edit', component: TripDisplayComponent, data: { expectedRole: 'sponsor' } },
-  { path: 'register', component: RegisterComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'anonymous' } },
-  { path: 'login', component: LoginComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'anonymous' } },
+  { path: 'sponsorship/:id', component: TripDisplayComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'sponsor' } },
+  { path: 'sponsorship/create', component: TripDisplayComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'sponsor' } },
+  { path: 'sponsorship/:id/edit', component: TripDisplayComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'sponsor' } },
+  { path: 'register', component: RegisterExplorerComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'anonymous' } },
+  { path: 'login',component: LoginComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'anonymous' }},
   { path: 'denied-access', component: DeniedAccessComponent },
   { path: 'not-found', component: NotFoundComponent },
   { path: '**', component: NotFoundComponent }

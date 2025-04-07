@@ -1,117 +1,140 @@
-<p-card styleClass="max-w-lg mx-auto p-6 card" ngSkipHydration>
-  <form *ngIf="tripForm" [formGroup]="tripForm" (ngSubmit)="onSubmit()">
-    <fieldset>
-      <legend class="text-xl font-semibold">Edit Trip</legend>
+<p-card styleClass="max-w-xl mx-auto p-6 card" ngSkipHydration>
+  <p-stepper [(value)]="currentStep" [linear]="true" *ngIf="formReady">
+    <p-step-list>
+      <p-step [value]="1">Trip Details</p-step>
+      <p-step [value]="2">Stages</p-step>
+    </p-step-list>
 
-      <p-iftalabel variant="on" class="mt-4">
-        <label for="title">Title *</label>
-        <input
-          pInputText
-          id="title"
-          type="text"
-          formControlName="title"
-          class="mt-1 block w-full"
-        />
-      </p-iftalabel>
-      <small *ngIf="tripForm.controls['title'].invalid && tripForm.controls['title'].touched" class="text-red-500">
-        Title is required
-      </small>
+    <p-step-panels>
+      <!-- PANEL 1: Trip Details -->
+      <p-step-panel [value]="1">
+        <ng-template #content let-activateCallback="activateCallback">
+            <!-- Formulario del primer paso -->
+            <h3 class="text-2xl font-semibold mb-2">Edit trip</h3>
+            <form [formGroup]="tripForm" (ngSubmit)="onSubmit()">
+              <p-iftalabel variant="on" class="mb-2">
+                <label for="title">Title *</label>
+                <input pInputText id="title" type="text" formControlName="title" class="w-full" maxlength="75" />
+              </p-iftalabel>
+              <small *ngIf="tripForm.controls['title'].invalid && tripForm.controls['title'].touched" class="text-red-500">
+                Title is required
+              </small>
 
-      <p-iftalabel variant="on" class="mt-4">
-        <label for="description">Description *</label>
-        <textarea
-          pTextarea 
-          id="description"
-          formControlName="description"
-          rows="3"
-          class="mt-1 block w-full"
-        ></textarea>
-      </p-iftalabel>      
-      <small *ngIf="tripForm.controls['description'].invalid && tripForm.controls['description'].touched" class="text-red-500">
-        Description is required
-      </small>
+              <p-iftalabel variant="on">
+                <label for="description">Description *</label>
+                <textarea pTextarea id="description" formControlName="description" rows="3" class="w-full" maxlength="600"></textarea>
+              </p-iftalabel>
+              <small *ngIf="tripForm.controls['description'].invalid && tripForm.controls['description'].touched" class="text-red-500">
+                Description is required
+              </small>
 
-      <p-iftalabel variant="on" class="mt-4">
-        <label for="startDate">Start Date *</label>
-        <input
-          pInputText
-          id="startDate"
-          type="date"
-          formControlName="startDate"
-          class="mt-1 block w-full"
-        />
-      </p-iftalabel>      
-      <small *ngIf="tripForm.controls['startDate'].invalid && tripForm.controls['startDate'].touched" class="text-red-500">
-        Start date is required
-      </small>
+              <div class="grid grid-cols-2 gap-4">
+                <p-iftalabel variant="on">
+                  <label for="startDate">Start Date *</label>
+                  <input pInputText id="startDate" type="date" formControlName="startDate" class="w-full" />
+                </p-iftalabel>
+                <p-iftalabel variant="on">
+                  <label for="endDate">End Date *</label>
+                  <input pInputText id="endDate" type="date" formControlName="endDate" class="w-full" />
+                </p-iftalabel>
+              </div>
 
-      <p-iftalabel variant="on" class="mt-4">
-        <label for="endDate">End Date *</label>
-        <input
-          pInputText
-          id="endDate"
-          type="date"
-          formControlName="endDate"
-          class="mt-1 block w-full"
-        />
-      </p-iftalabel>
-      <small *ngIf="tripForm.controls['endDate'].invalid && tripForm.controls['endDate'].touched" class="text-red-500">
-        End date is required
-      </small>
+              <div class="p-field mt-2">
+                <p-iftaLabel>Requirements *</p-iftaLabel>
+                <div formArrayName="requirements">
+                  <div *ngFor="let req of requirements.controls; let i = index" class="p-inputgroup flex items-start space-x-2 mt-1">
+                    <input [formControlName]="i" pInputText  class="flex-grow" maxlength="65"/>
+                    <button pButton type="button" icon="pi pi-trash" class="p-button-danger" (click)="removeRequirement(i)"></button>
+                  </div>
+                </div>
+                <button pButton type="button" icon="pi pi-plus" class="p-button-success mt-1" (click)="addRequirement()">Add Requirement</button>
+              </div>
+              <small *ngIf="tripForm.controls['requirements'].invalid && tripForm.controls['requirements'].touched" class="text-red-500">
+                At least one requirement is required
+              </small>
 
-      <p-iftalabel variant="on" class="mt-4">
-        <label for="price">Price *</label>
-        <input
-          pInputText
-          id="price"
-          type="number"
-          formControlName="price"
-          class="mt-1 block w-full"
-        />
-      </p-iftalabel>
-      <small *ngIf="tripForm.controls['price'].invalid && tripForm.controls['price'].touched" class="text-red-500">
-        Enter a valid price (0 - 1,000,000)
-      </small>
+              <div class="p-field mt-2">
+                <p-iftalabel>Pictures</p-iftalabel>
+                <div formArrayName="pictures">
+                  <div *ngFor="let pic of pictures.controls; let i = index" class="p-inputgroup flex items-start space-x-2 mt-1">
+                    <input [formControlName]="i" pInputText placeholder="Image URL" class="flex-grow"/>
+                    <button pButton type="button" icon="pi pi-trash" class="p-button-danger" (click)="removePicture(i)"></button>
+                  </div>
+                </div>
+                <button pButton type="button" icon="pi pi-plus" class="p-button-success mt-1" (click)="addPicture()">Add Picture</button>
+              </div>
 
-      <div class="p-field">
-        <p-iftaLabel>Requirements:</p-iftaLabel>
-        <div formArrayName="requirements">
-          <div *ngFor="let req of requirements.controls; let i = index" class="p-inputgroup">
-            <input [formControlName]="i" pInputText />
-            <button pButton type="button" icon="pi pi-trash" class="p-button-danger ml-1 mt-1" (click)="removeRequirement(i)"></button>
+              <div class="flex justify-end pt-6">
+                <p-button label="Next" icon="pi pi-arrow-right" iconPos="right" (click)="activateCallback(2)" [disabled]="disableNextStep()" />
+              </div>
+            </form>
+        </ng-template>
+      </p-step-panel>
+
+      <!-- PANEL 2: Stages -->
+      <p-step-panel [value]="2">
+        <ng-template #content let-activateCallback="activateCallback">
+          <h3 class="text-2xl font-semibold mb-2">Edit stages</h3>
+          <p-accordion [value]="0">
+            <div *ngFor="let stage of stagesForms; let i = index">
+              <p-accordion-panel [value]="i">
+                <p-accordion-header>{{ 'Stage ' + (i + 1) }}</p-accordion-header>
+                <p-accordion-content>
+                  <!-- Asegúrate de tipar 'stage' como FormGroup -->
+                  <form [formGroup]="stage">
+                    <div class="space-y-4">
+                      <p-iftalabel variant="on">
+                        <label for="title">Title *</label>
+                        <input pInputText id="title" formControlName="title" class="w-full" maxlength="75" />
+                      </p-iftalabel>
+                      <small *ngIf="stage.controls['title'].invalid && stage.controls['title'].touched" class="text-red-500">
+                        Title is required
+                      </small>
+          
+                      <p-iftalabel variant="on">
+                        <label for="description">Description *</label>
+                        <textarea pTextarea id="description" formControlName="description" rows="3" class="w-full" maxlength="600"></textarea>
+                      </p-iftalabel>
+                      <small *ngIf="stage.controls['description'].invalid && stage.controls['description'].touched" class="text-red-500">
+                        Description is required
+                      </small>
+          
+                      <p-iftalabel variant="on">
+                        <label for="price">Price *</label>
+                        <input pInputText id="price" formControlName="price" type="number" class="w-full" />
+                      </p-iftalabel>
+                      <small *ngIf="stage.controls['price'].invalid && stage.controls['price'].touched" class="text-red-500">
+                        Price must be a positive number
+                      </small>
+                    </div>
+                  </form>
+                  <div class="flex justify-between pt-4">
+                    <p-button type="button" label="Remove Stage" icon="pi pi-trash" (click)="removeStage(i)" />
+                  </div>
+                </p-accordion-content>
+              </p-accordion-panel>
+            </div>
+          </p-accordion>
+
+            <!-- Botón para agregar un nuevo stage -->
+          <div class="pt-6">
+            <p-button type="button" label="Add Stage" icon="pi pi-plus" (click)="addStage()"  />
           </div>
-        </div>
-        <button pButton type="button" icon="pi pi-plus" class="p-button-success mt-1" (click)="addRequirement()">Add Requirement</button>
-      </div>
-      <small *ngIf="tripForm.controls['requirements'].hasError('minRequirements') " class="text-red-500">
-        At least one requirement is required
-      </small>
-      <small *ngIf="tripForm.controls['requirements'].hasError('whitespace') && tripForm.controls['requirements'].touched" class="text-red-500">
-        Requirement cannot be empty or only spaces
-      </small>
 
-      <div class="p-field">
-        <p-iftalabel>Pictures:</p-iftalabel>
-        <div formArrayName="pictures">
-          <div *ngFor="let pic of pictures.controls; let i = index" class="p-inputgroup">
-            <input [formControlName]="i" pInputText placeholder="Image URL" />
-            <button pButton type="button" icon="pi pi-trash" class="p-button-danger ml-1 mt-1" (click)="removePicture(i)"></button>
+          <!-- Precio total -->
+          <div class="pt-6">
+            <p class="font-semibold">Total Price: ${{ calculateTotalPrice() }}</p>
           </div>
-        </div>
-        <button pButton type="button" icon="pi pi-plus" class="p-button-success mt-1" (click)="addPicture()">Add Picture</button>
-      </div>
 
-      <p-button type="submit" styleClass="w-full mt-4" [disabled]="loading">
-        <span *ngIf="!loading">Edit Trip</span>
-        <span *ngIf="loading">Editing...</span>
-      </p-button>
-      
-      <p-button type="button" styleClass="w-full mt-2 p-button-secondary" (click)="onReset()">
-        Reset
-      </p-button>
+          <div class="flex justify-between pt-6">
+            <p-button label="Back" severity="secondary" icon="pi pi-arrow-left" (click)="activateCallback(1)" />
+            <p-button type="submit" label="Edit Trip" icon="pi pi-check" (click)="onSubmit()" [disabled]="disableNextStep()" />
+          </div>
+        </ng-template>
+      </p-step-panel>
+    </p-step-panels>
+  </p-stepper>
 
-      <div *ngIf="success" class="text-green-500 mt-4">{{ success }}</div>
-      <div *ngIf="error" class="text-red-500 mt-4">{{ error }}</div>
-    </fieldset>
-  </form>
+  <div *ngIf="success" class="text-green-500 mt-4">{{ success }}</div>
+  <div *ngIf="error" class="text-red-500 mt-4">{{ error }}</div>
 </p-card>
