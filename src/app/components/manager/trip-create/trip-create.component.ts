@@ -35,8 +35,8 @@ export class ManagerTripCreateComponent {
     this.tripForm = this.fb.group({
       title: ['', [Validators.required, Validators.maxLength(75)]],
       description: ['', Validators.required],
-      startDate: ['', [Validators.required]],
-      endDate: ['', [Validators.required]],
+      startDate: ['', [Validators.required, this.validateDateNotInThePast.bind(this), this.validateEndDateAfterStartDate.bind(this)]],
+      endDate: ['', [Validators.required, this.validateEndDateAfterStartDate.bind(this), this.validateDateNotInThePast.bind(this)]],
       requirements: this.fb.array([], Validators.required),
       pictures: this.fb.array([]),
     });
@@ -152,4 +152,77 @@ export class ManagerTripCreateComponent {
     this.pictures.removeAt(index);
   }
 
+  validateDateNotInThePast(control: FormControl) {
+    if (!control.value) return null;
+  
+    const inputDate = this.parseDate(control.value);
+    if (!inputDate || isNaN(inputDate.getTime())) {
+      console.error('Invalid date:', inputDate);
+      return { invalidDate: true };
+    }
+  
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    inputDate.setHours(0, 0, 0, 0);
+  
+    console.log('Input date:', inputDate);
+    console.log('Today date:', today);
+  
+    return inputDate < today ? { dateInThePast: true } : null;
+  }
+  
+  
+  validateEndDateAfterStartDate(control: FormControl) {
+    if (!this.tripForm) return null;
+  
+    const startControl = this.tripForm.get('startDate');
+    const endControl = this.tripForm.get('endDate');
+  
+    if (!startControl || !endControl) return null;
+  
+    if (control === endControl) {
+      startControl.updateValueAndValidity();
+    }
+  
+    if (!startControl.value || !endControl.value) return null;
+  
+    const startDate = this.parseDate(startControl.value);
+    const endDate = this.parseDate(endControl.value);
+  
+    if (!startDate || !endDate || isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+      return { invalidDate: true };
+    }
+  
+    startDate.setHours(0, 0, 0, 0);
+    endDate.setHours(0, 0, 0, 0);
+  
+    if (endDate < startDate) {
+      return { endDateBeforeStartDate: true };
+    }
+  
+    return null;
+  }
+  
+
+  private parseDate(value: any): Date | null {
+    if (value instanceof Date) return value;
+  
+    if (typeof value === 'string') {
+      const parts = value.split('-');
+      if (parts.length === 3) {
+        const year = parseInt(parts[0], 10);
+        const month = parseInt(parts[1], 10) - 1;
+        const day = parseInt(parts[2], 10);
+        return new Date(year, month, day);
+      }
+      return null;
+    }
+  
+    if (value?.seconds) {
+      return new Date(value.seconds * 1000);
+    }
+  
+    return null;
+  }
+  
 }
