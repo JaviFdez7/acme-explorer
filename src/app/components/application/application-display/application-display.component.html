@@ -1,17 +1,19 @@
 <p-card class="relative flex flex-col my-6 w-96 card">
   <div class="px-4">
-    <span [ngClass]="getApplicationStatusClass()" class="text-xs font-semibold me-2 px-2.5 py-0.5 rounded-full">
-      {{getApplicationStatus()}}
-    </span>
-    <div class="flex flex-row justify-between mt-4">
+    <div class="flex flex-row justify-between">
+      <div>
+        <span [ngClass]="getApplicationStatusClass()" class="text-xs font-semibold me-2 px-2.5 py-0.5 rounded-full">
+          {{getApplicationStatus()}}
+        </span>
+      </div>
+      <span class="ms-3 text-lg font-medium">{{getTripPrice()}} €</span>
+    </div>
+    <div class="mt-4">
       <div class="flex items-center gap-2 mb-2">
         <h6 class="text-xl font-semibold">
           {{getTripTitle()}}
         </h6>
         <p class="text-left text-xs font-light">{{getTripTicker()}}</p>
-      </div>
-      <div>
-        <span class="ms-3 text-lg font-medium">{{getTripPrice()}} €</span>
       </div>
     </div>
     <hr class="border">

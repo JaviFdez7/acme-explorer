@@ -9,23 +9,35 @@ import { Trip } from '../../../models/trip.model';
 import { ApplicationService } from '../../../services/application.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DividerModule } from 'primeng/divider';
+import { DialogModule } from 'primeng/dialog';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { IftaLabelModule } from 'primeng/iftalabel';
+import { TextareaModule } from 'primeng/textarea';
+import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'app-application-details',
-  imports: [CommonModule, CardModule, ButtonModule, DividerModule],
+  imports: [CommonModule, CardModule, ButtonModule, DividerModule, DialogModule, ReactiveFormsModule, IftaLabelModule, TextareaModule, MessageModule],
   templateUrl: './application-details.component.html',
   styleUrl: './application-details.component.css'
 })
 export class ApplicationDetailsComponent implements OnInit {
   protected application: Application | undefined;
   protected trip: Trip | undefined;
+  protected cancelForm!: FormGroup;
+  protected isVisibleCancelDialog = false;
+  protected isVisiblePayDialog = false;
 
-  constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService, private tripService: TripService, private applicationService: ApplicationService) {
+  constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService, private tripService: TripService, private applicationService: ApplicationService, private fb: FormBuilder) {
     this.application = new Application("", "");
     this.trip = new Trip("", "", "", "", 0, new Date(), new Date(), [], []);
+    this.cancelForm = new FormGroup({
+      reason: new FormControl('', { validators: [Validators.required, Validators.maxLength(400)] }),
+    });
   }
 
   ngOnInit() {
+    console.log(this.cancelForm);
     this.applicationService.getApplication(this.route.snapshot.params['applicationId']).subscribe((application: Application | undefined) => {
       if (!application) {
         this.router.navigate(['/not-found']);
@@ -83,6 +95,10 @@ export class ApplicationDetailsComponent implements OnInit {
     return this.application?.messages;
   }
 
+  getApplicationReason() {
+    return this.application?.reason || '';
+  }
+
   isApplicationCancelable() {
     return this.application?.status === ApplicationStatus.PENDING || this.application?.status === ApplicationStatus.DUE;
   }
@@ -91,12 +107,40 @@ export class ApplicationDetailsComponent implements OnInit {
     this.router.navigate(['/trip', this.application?.trip]);
   }
 
-  pay() {
-    // Implement payment logic here
+  async pay() {
+    if (this.application && this.trip) {
+      const updatedApplication = new Application(this.application.trip, this.application.actor, this.application.messages, ApplicationStatus.ACCEPTED, this.application.date, "", this.application.version + 1)
+
+      await this.applicationService.editApplication(this.application.id, updatedApplication).then(() => {
+        this.router.navigate(['/explorer', this.authService.getCurrentId() || "", "applications"])
+      }).catch((error) => {
+        console.error('Error updating application:', error);
+      }
+      )
+    }
   }
 
-  cancel() {
-    // Implement cancel logic here
+  showCancelDialog() {
+    this.isVisibleCancelDialog = true;
+  }
+
+  async cancel() {
+    if (this.application && this.trip) {
+      if (this.cancelForm.invalid) {
+        this.cancelForm.markAllAsTouched();
+        return;
+      }
+      const updatedApplication = new Application(this.application.trip, this.application.actor, this.application.messages, ApplicationStatus.REJECTED, this.application.date, this.cancelForm.value.reason, this.application.version + 1)
+
+      await this.applicationService.editApplication(this.application.id, updatedApplication).then(() => {
+        this.router.navigate(['/explorer', this.authService.getCurrentId() || "", "applications"])
+      }).catch((error) => {
+        console.error('Error updating application:', error);
+      }
+      )
+    } else {
+      console.error('Application or trip is undefined');
+    }
   }
 
   getApplicationStatusClass() {

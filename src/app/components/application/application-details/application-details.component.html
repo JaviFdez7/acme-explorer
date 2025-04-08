@@ -1,11 +1,18 @@
 <div class="flex flex-col md:flex-row my-6 w-full max-w-4xl mx-auto p-6">
   <!-- Sección Izquierda: Información de la solicitud y del viaje -->
   <div class="w-full md:w-5/12 flex flex-col p-6">
-    <div>
-      <span [ngClass]="getApplicationStatusClass()" class="text-xs font-semibold me-2 px-2.5 py-0.5 rounded-full">
+    <div class="mb-2">
+      <span [ngClass]="getApplicationStatusClass()" class="text-xs font-semibold me-2 px-2.5 py-0.5 rounded-full mb-2">
         {{getApplicationStatus()}}
       </span>
     </div>
+    <div>
+      <p-message *ngIf="getApplicationStatus() === 'REJECTED' && getApplicationReason()"  severity="error">
+        {{ getApplicationReason() }}
+      </p-message>
+    </div>
+    
+
     <div class="flex justify-between mt-4">
       <h6 class="text-2xl font-semibold">
         {{ getTripTitle() }}
@@ -31,8 +38,22 @@
       <p-button *ngIf="isApplicationCancelable()" 
                 label="Cancel" 
                 icon="pi pi-times" 
-                (onClick)="cancel()">
+                (onClick)="showCancelDialog()">
       </p-button>
+      <p-dialog header="Cancel Application" [modal]="true" [(visible)]="isVisibleCancelDialog" [style]="{ width: '25rem' }">
+          <form [formGroup]="cancelForm" (ngSubmit)="cancel()">
+            <div class="flex items-center w-full mb-4">
+              <p-ifta-label variant="on" class="w-full">
+                  <label for="reason" class="font-semibold w-24">Reason</label>
+                  <textarea pTextarea id="reason" class="w-full" formControlName="reason" 
+                    placeholder="Enter the reason for cancellation"></textarea>
+              </p-ifta-label>
+            </div>
+            <div class="flex justify-end gap-2">
+              <p-button label="Cancel Application" type="submit" [disabled]="!cancelForm.valid" icon="pi pi-check"></p-button>
+            </div>
+          </form>
+      </p-dialog>
     </div>
   </div>
   
@@ -45,6 +66,9 @@
   <!-- Sección Derecha: Mensajes del usuario -->
   <div class="w-full md:w-6/12 flex flex-col p-6">
     <h2 class="text-2xl font-semibold mb-4">Messages</h2>
+    <p class="text-sm mb-4" *ngIf="getApplicationMessages()?.length === 0">
+      No messages available
+    </p>
     <div *ngFor="let message of getApplicationMessages()" class="mb-4 p-4 border rounded shadow-sm">
       <p class="text-base">{{ message }}</p>
     </div>

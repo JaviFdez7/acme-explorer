@@ -100,7 +100,8 @@ export class Application extends Entity {
       trip: this.trip,
       actor: this.actor,
       messages: this.messages,
-      date: this.date
+      date: this.date,
+      reason: this.reason
     };
   }
 }

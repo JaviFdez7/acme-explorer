@@ -29,7 +29,7 @@ export class ApplicationService {
     return this.applicationsCollection.add(application.object);
   }
 
-  editApplication(application: Application, id: string): Promise<void> {
+  editApplication(id: string, application: Application): Promise<void> {
     return this.applicationsCollection.ref.doc(id).update(application.object);
   }
 

@@ -19,7 +19,9 @@ export class AuthService {
         await this.loadUserData(user.uid);
         this.loginStatus.next(true);
       } else {
-        localStorage.removeItem('user');
+        if (typeof localStorage !== 'undefined') {
+          localStorage.removeItem('user');
+        }
         this.loginStatus.next(false);
       }
     });
@@ -59,7 +61,9 @@ export class AuthService {
   async logout() {
     try {
       await signOut(this.auth);
-      localStorage.removeItem('user');
+      if (typeof localStorage !== 'undefined') {
+        localStorage.removeItem('user');
+      }
       this.loginStatus.next(false);
       console.log('User logged out');
     } catch (error) {
@@ -76,17 +80,21 @@ export class AuthService {
       actorData.password = '';
       actorData.address = '';
       actorData.phone = '';
-      localStorage.setItem('user', JSON.stringify(actorData));
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem('user', JSON.stringify(actorData));
+      }
     } else {
       console.warn('Actor not found in Firestore');
-      localStorage.removeItem('user');
+      if (typeof localStorage !== 'undefined') {
+        localStorage.removeItem('user');
+      }
     }
   }
 
   getCurrentActor(): Actor | null {
-    const userDataString = localStorage.getItem('user');
-    if (userDataString) {
-      return JSON.parse(userDataString) as Actor;
+    if (typeof localStorage !== 'undefined') {
+      const user = localStorage.getItem('user');
+      return user ? JSON.parse(user) : null;
     } else {
       return null;
     }
