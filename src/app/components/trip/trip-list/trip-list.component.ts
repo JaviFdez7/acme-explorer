@@ -29,12 +29,15 @@ export class TripListComponent implements OnInit {
   }
 
   filteredTrips() {
+    
     return this.tripList.filter(trip => {
+      const rawDate: Date | { seconds: number } = trip.startDate as Date | { seconds: number };
+      const date = rawDate instanceof Date ? rawDate : new Date(rawDate.seconds * 1000);
       const query = this.searchQuery.toLowerCase();
       return (trip.title.toLowerCase().includes(query) ||
              trip.ticker.toLowerCase().includes(query) ||
-             trip.description.toLowerCase().includes(query)) && trip.deleted === false;
-    });
+             trip.description.toLowerCase().includes(query)) && trip.deleted === false && date > new Date();
+    }).sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime());
   }
 
   clearSearch() {

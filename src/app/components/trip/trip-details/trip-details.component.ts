@@ -9,13 +9,14 @@ import { ImageCarouselComponent } from '../../img-carousel/img-carousel.componen
 import { Actor } from '../../../models/actor.model';
 import { ActorService } from '../../../services/actor.service';
 import { MessageModule } from 'primeng/message';
+import { TableModule } from 'primeng/table';
 import { AuthService } from '../../../services/auth.service';
 import { ButtonModule } from 'primeng/button';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-trip-details',
-  imports: [CommonModule, DividerModule, ImageCarouselComponent, MessageModule, ButtonModule],
+  imports: [CommonModule, DividerModule, ImageCarouselComponent, MessageModule, ButtonModule, TableModule],
   templateUrl: './trip-details.component.html',
   styleUrl: './trip-details.component.css'
 })

@@ -1,4 +1,4 @@
-<p-card styleClass="max-w-3xl mx-auto p-6 card" ngSkipHydration>
+<p-card styleClass="max-w-xl mx-auto p-6 card" ngSkipHydration>
   <p-stepper [(value)]="currentStep" [linear]="true">
     <p-step-list>
       <p-step [value]="1">Trip Details</p-step>
@@ -38,6 +38,18 @@
                   <input pInputText id="endDate" type="date" formControlName="endDate" class="w-full" />
                 </p-iftalabel>
               </div>
+              <small *ngIf="tripForm.get('startDate')?.touched && tripForm.get('startDate')?.errors" class="text-red-500">
+                <span *ngIf="tripForm.get('startDate')?.errors?.['required']">Start date is required <br></span>
+                <span *ngIf="tripForm.get('startDate')?.errors?.['dateInvalid']">Start date must be valid <br></span>
+                <span *ngIf="tripForm.get('startDate')?.errors?.['dateInThePast']">Start date can not be in the past <br></span>
+                <span *ngIf="tripForm.get('startDate')?.errors?.['endDateBeforeStartDate']">Start date must be before end date </span>
+              </small>
+              <small *ngIf="tripForm.get('endDate')?.touched && tripForm.get('endDate')?.errors" class="text-red-500">
+                <span *ngIf="tripForm.get('endDate')?.errors?.['required']">End date is required <br></span>
+                <span *ngIf="tripForm.get('endDate')?.errors?.['dateInvalid']">End date must be valid <br></span>
+                <span *ngIf="tripForm.get('endDate')?.errors?.['dateInThePast']">End date can not be in the past <br></span>
+                <span *ngIf="tripForm.get('endDate')?.errors?.['endDateBeforeStartDate']">End date must be after start date </span>
+              </small>
 
               <div class="p-field mt-2">
                 <p-iftaLabel>Requirements *</p-iftaLabel>

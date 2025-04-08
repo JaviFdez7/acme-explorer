@@ -59,10 +59,33 @@
     <p-button *ngIf="isExplorer() && isTripApplicable()" label="Apply now" icon="pi pi-check" class="mt-6 max-w-xs" (onClick)="goApply()" [disabled]="!!trip?.cancelation"></p-button>
   </div>
 </div>
-<div *ngIf="trip?.cancelation" class="flex justify-center mt-6">
-  <p-message severity="warn" class="w-full max-w-3xl text-center shadow-md">
-    <div class="w-full text-center px-4 py-2">
-      <p class="text-base font-medium text-yellow-900">Cancelation reason: {{ trip?.cancelation }}</p>
+<div class="flex flex-col md:flex-row  w-full max-w-4xl mx-auto">
+  <div class="w-full flex flex-col items-center">
+    <div *ngIf="trip?.cancelation !== ''" class="flex justify-center mt-6">
+      <p-message severity="warn" class="w-full max-w-3xl text-center shadow-md">
+        <div class="w-full text-center px-4 py-2">
+          <p class="text-base font-medium text-yellow-900">Cancelation reason: {{ trip?.cancelation }}</p>
+        </div>
+      </p-message>
     </div>
-  </p-message>
+    <div class="flex flex-row justify-between items-center mb-2">
+      <h6 class="text-2xl font-semibold">Stages</h6>
+    </div>
+    <p-table [value]="trip?.stages || []" class="w-full max-w-3xl">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Price</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-stage>
+        <tr>
+          <td>{{ stage.title }}</td>
+          <td>{{ stage.description }}</td>
+          <td>{{ stage.price }} €</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
 </div>
