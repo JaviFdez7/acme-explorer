@@ -52,7 +52,7 @@ export class ApplicationCreateComponent implements OnInit {
       this.tripService.getTrip(this.tripId).subscribe((trip: Trip | undefined) => {
         if (!trip) {
           this.router.navigate(['/not-found']);
-        } else if (trip.cancelation || trip.deleted || trip.startDate < new Date()) {
+        } else if (trip.cancelation || trip.deleted) {
           console.error('Trip is not available for application');
           this.router.navigate(['/denied-access']);
         } else {

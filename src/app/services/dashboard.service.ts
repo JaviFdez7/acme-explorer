@@ -78,10 +78,10 @@ export class DashboardService {
     return this.getApplicationsByEachTrip().pipe(
       map((tripApplications) => {
         if (!tripApplications || tripApplications.length === 0) {
-            return { average: "-", min: "-", max: "-", stdDev: "-" };
+          return { average: "-", min: "-", max: "-", stdDev: "-" };
         }
         const applicationCounts = tripApplications.map((trip) => trip.applications.length);
-        const totalApplications = applicationCounts.reduce((sum, count) => sum + count,0);
+        const totalApplications = applicationCounts.reduce((sum, count) => sum + count, 0);
         const average = Number((totalApplications / applicationCounts.length).toFixed(2));
         const min = Math.min(...applicationCounts);
         const max = Math.max(...applicationCounts);
@@ -97,7 +97,7 @@ export class DashboardService {
     return this.getMockTrips().pipe( // Replace with this.firestore.collection('trips')
       map((trips) => {
         if (!trips || trips.length === 0) {
-            return { average: "-", min: "-", max: "-", stdDev: "-" };
+          return { average: "-", min: "-", max: "-", stdDev: "-" };
         }
         const tripPrices = trips.map((trip) => trip.price);
         const totalPrice = tripPrices.reduce((sum, price) => sum + price, 0);
