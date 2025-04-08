@@ -12,14 +12,15 @@
           class="mt-1 block w-full"
         />
       </p-floatlabel>
-      <small
-        *ngIf="
-          registrationForm.controls['email'].invalid &&
-          registrationForm.controls['email'].touched
-        "
-        class="text-red-500"
-        >Email is required</small
-      >
+      <small *ngIf="registrationForm.controls['email'].touched && registrationForm.controls['email'].errors" class="text-red-500 block mt-1">
+        <ng-container *ngIf="registrationForm.controls['email'].errors['required']">
+          Email is required
+        </ng-container>
+        <ng-container *ngIf="registrationForm.controls['email'].errors['email']">
+          Invalid email format
+        </ng-container>
+      </small>
+
 
       <p-floatlabel variant="on" class="mt-4">
         <label for="password">Password *</label>
@@ -31,14 +32,16 @@
           class="mt-1 block w-full"
         />
       </p-floatlabel>
-      <small
-        *ngIf="
-          registrationForm.controls['password'].invalid &&
-          registrationForm.controls['password'].touched
-        "
-        class="text-red-500"
-        >Password is required</small
-      >
+      <small *ngIf="registrationForm.controls['password'].touched && registrationForm.controls['password'].errors" class="text-red-500 block mt-1">
+        <ng-container *ngIf="registrationForm.controls['password'].errors['required']">
+          Password is required
+        </ng-container>
+        <ng-container *ngIf="registrationForm.controls['password'].errors['minlength']">
+          Password must be at least 6 characters
+        </ng-container>
+      </small>
+      
+
       <p-floatlabel class="mt-4" variant="on">
         <p-select
           [options]="roleList"
@@ -51,13 +54,9 @@
         <label for="role">Role *</label>
       </p-floatlabel>
       <small
-        *ngIf="
-          registrationForm.controls['role'].invalid &&
-          registrationForm.controls['role'].touched
-        "
-        class="text-red-500"
-        >Select a role</small
-      >
+        *ngIf="registrationForm.controls['role'].invalid && registrationForm.controls['role'].touched" class="text-red-500">
+        Select a role
+      </small>
 
       <p-floatlabel variant="on" class="mt-4">
         <label for="name">Name *</label>
@@ -70,14 +69,9 @@
           class="mt-1 block w-full"
         />
       </p-floatlabel>
-      <small
-        *ngIf="
-          registrationForm.controls['name'].invalid &&
-          registrationForm.controls['name'].touched
-        "
-        class="text-red-500"
-        >Name is required</small
-      >
+      <small *ngIf="registrationForm.controls['name'].invalid && registrationForm.controls['name'].touched" class="text-red-500">
+        Name is required
+      </small>
 
       <p-floatlabel variant="on" class="mt-4">
         <label for="surname">Surname *</label>
@@ -89,14 +83,9 @@
           class="mt-1 block w-full"
         />
       </p-floatlabel>
-      <small
-        *ngIf="
-          registrationForm.controls['surname'].invalid &&
-          registrationForm.controls['surname'].touched
-        "
-        class="text-red-500"
-        >Surname is required</small
-      >
+      <small *ngIf="registrationForm.controls['surname'].invalid && registrationForm.controls['surname'].touched" class="text-red-500">
+        Surname is required
+      </small>
 
       <p-floatlabel variant="on" class="mt-4">
         <label for="phone">Phone</label>
@@ -108,6 +97,9 @@
           class="mt-1 block w-full"
         />
       </p-floatlabel>
+      <small *ngIf="registrationForm.controls['phone'].invalid" class="text-red-500">
+        Phone must be valid
+      </small>
 
       <p-floatlabel variant="on" class="mt-4">
         <label for="address">Address</label>
