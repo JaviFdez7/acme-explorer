@@ -9,9 +9,10 @@ import { ImageCarouselComponent } from '../../img-carousel/img-carousel.componen
 import { Actor } from '../../../models/actor.model';
 import { ActorService } from '../../../services/actor.service';
 import { MessageModule } from 'primeng/message';
+import { TableModule } from 'primeng/table';
 @Component({
   selector: 'app-trip-details',
-  imports: [CommonModule, DividerModule, ImageCarouselComponent, MessageModule],
+  imports: [CommonModule, DividerModule, ImageCarouselComponent, MessageModule, TableModule],
   templateUrl: './trip-details.component.html',
   styleUrl: './trip-details.component.css'
 })
