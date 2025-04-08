@@ -1,0 +1,70 @@
+<p-card styleClass="max-w-lg mx-auto p-6 card">
+  <h2 class="text-2xl font-semibold mb-2">User Profile</h2>
+
+  <form class="grid grid-cols-1 gap-6 mt-4" *ngIf="actor" (ngSubmit)="updateActor()" [formGroup]="actorForm">
+
+    <!-- Nombre -->
+    <p-iftalabel variant="on" >
+      <label for="name">Name *</label>
+      <input pInputText id="name" formControlName="name" name="name" class="w-full" />
+    </p-iftalabel>
+    <small *ngIf="actorForm.controls['name'].invalid && actorForm.controls['name'].touched" class="text-red-500">
+      Name is required
+    </small>
+
+    <!-- Apellidos -->
+    <p-iftalabel variant="on" >
+      <input pInputText id="surname" formControlName="surname" name="surname" class="w-full" />
+      <label for="surname">Surname *</label>
+    </p-iftalabel>
+    <small *ngIf="actorForm.controls['surname'].invalid && actorForm.controls['surname'].touched" class="text-red-500">
+      Surname is required
+    </small>
+
+    <!-- Teléfono -->
+    <p-iftalabel variant="on" class="mt-2">
+      <input pInputText id="phone" formControlName="phone" name="phone" class="w-full" />
+      <label for="phone">Telephone</label>
+    </p-iftalabel>
+    <small *ngIf="actorForm.controls['phone'].invalid " class="text-red-500">
+      Phone must be a valid number
+    </small>
+
+
+    <!-- Dirección -->
+    <p-iftalabel variant="on" >
+      <input pInputText id="address" formControlName="address" name="address" class="w-full" />
+      <label for="address">Address</label>
+    </p-iftalabel>
+
+    <!-- Email (readonly) -->
+    <p-iftalabel variant="on" >
+      <input pInputText id="email" formControlName="email" name="email" class="w-full" />
+      <label for="email">Email *</label>
+    </p-iftalabel>
+    <small *ngIf="actorForm.controls['email'].invalid && actorForm.controls['email'].touched" class="text-red-500">
+      Email is required
+    </small>
+    <small *ngIf="actorForm.controls['email'].hasError('email') && actorForm.controls['email'].touched" class="text-red-500">
+      Invalid email format
+    </small>
+
+    <!-- Contraseña -->
+    <p-iftalabel variant="on" >
+      <p-password id="password" formControlName="password" name="password" class="w-full" toggleMask/>
+      <label for="password">Password *</label>
+    </p-iftalabel>
+    <small *ngIf="actorForm.controls['password'].invalid && actorForm.controls['password'].touched" class="text-red-500">
+      Password is required
+    </small>
+    <small *ngIf="actorForm.controls['password'].hasError('minlength') && actorForm.controls['password'].touched" class="text-red-500">
+      Password must be at least 6 characters long
+    </small>
+
+    <!-- Botón Guardar -->
+    <div class="flex justify-end mt-2">
+      <p-button label="Save Changes" icon="pi pi-save" type="submit" />
+    </div>
+
+  </form>
+</p-card>

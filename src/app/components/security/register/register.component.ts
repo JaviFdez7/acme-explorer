@@ -43,7 +43,7 @@ constructor(private authService: AuthService, private fb: FormBuilder, private r
     this.registrationForm = this.fb.group({
       name: ['', [Validators.required]],
       surname: ['', [Validators.required]],
-      password: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
       role: ['', [Validators.required]], // Inicializar con null o un valor por defecto
       email: ['', [Validators.required, Validators.email]],
       phone: ['', [Validators.pattern('^\\d*$')]],

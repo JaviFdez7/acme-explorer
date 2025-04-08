@@ -6,7 +6,6 @@ import { CardModule } from 'primeng/card';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
-import { Select } from 'primeng/select';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
 
@@ -39,7 +38,7 @@ constructor(private authService: AuthService, private fb: FormBuilder, private r
     this.registrationForm = this.fb.group({
       name: ['', [Validators.required]],
       surname: ['', [Validators.required]],
-      password: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
       role: ['EXPLORER', [Validators.required]], 
       email: ['', [Validators.required, Validators.email]],
       phone: ['', [Validators.pattern('^\\d*$')]],

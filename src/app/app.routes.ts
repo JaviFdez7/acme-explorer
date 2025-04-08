@@ -18,6 +18,7 @@ import { ApplicationCreateComponent } from './components/application/application
 import { ApplicationListComponent } from './components/application/application-list/application-list.component';
 import { ApplicationDetailsComponent } from './components/application/application-details/application-details.component';
 import { DashboardComponent } from './components/admin/dashboard/dashboard.component';
+import { ProfileComponent } from './components/security/profile/profile.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -29,7 +30,7 @@ export const routes: Routes = [
   { path: 'trip/:id/edit', component: TripDisplayComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'manager' } },
   { path: 'trip/:id/apply', component: ApplicationCreateComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'explorer' } },
   { path: 'list/:id', component: TripDisplayComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'explorer' } },
-  { path: 'user/:id/profile', component: TripDisplayComponent },
+  { path: 'user/:id/profile', component: ProfileComponent },
   { path: 'explorer/:id/applications', component: ApplicationListComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'explorer' } },
   { path: 'explorer/:id/applications/:applicationId', component: ApplicationDetailsComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'explorer' } },
   { path: 'explorer/:id/applications/:applicationId/edit', component: ApplicationDetailsComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'explorer' } },
