@@ -107,13 +107,9 @@ export class ApplicationDetailsComponent implements OnInit {
     this.router.navigate(['/trip', this.application?.trip]);
   }
 
-  showPayDialog() {
-    this.isVisiblePayDialog = true;
-  }
-
   async pay() {
     if (this.application && this.trip) {
-      const updatedApplication = new Application(this.application.trip, this.application.actor, this.application.messages, ApplicationStatus.ACCEPTED, this.application.date, undefined, this.application.version + 1)
+      const updatedApplication = new Application(this.application.trip, this.application.actor, this.application.messages, ApplicationStatus.ACCEPTED, this.application.date, "", this.application.version + 1)
 
       await this.applicationService.editApplication(this.application.id, updatedApplication).then(() => {
         this.router.navigate(['/explorer', this.authService.getCurrentId() || "", "applications"])
