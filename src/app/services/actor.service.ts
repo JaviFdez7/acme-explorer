@@ -25,4 +25,8 @@ export class ActorService {
       return this.actorsCollection.doc<Actor>(id).valueChanges({ idField: 'id' });
     });
   }
+
+  editActor(actor: Actor, id: string): Promise<void> {
+    return this.actorsCollection.ref.doc(id).update(actor.object);
+  }
 }

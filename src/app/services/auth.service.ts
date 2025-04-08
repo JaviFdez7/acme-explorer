@@ -71,7 +71,6 @@ export class AuthService {
   private async loadUserData(userId: string) {
     const actorRef = doc(this.firestore, `actors/${userId}`);
     const actorSnap = await getDoc(actorRef);
-    console.log('Actor data loaded from Firestore:', actorSnap.data());
     if (actorSnap.exists()) {
       const actorData = actorSnap.data() as Actor;
       actorData.password = '';

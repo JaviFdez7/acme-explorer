@@ -77,4 +77,19 @@ export class Actor extends Entity{
   public set validated(value: boolean) {
     this._validated = value;
   }
+
+  public get object() {
+    return {
+      name: this.name,
+      surname: this.surname,
+      phone: this.phone,
+      address: this.address,
+      role: this.role,
+      email: this.email,
+      password: this.password,
+      validated: this.validated,
+      version: this.version,
+      deleted: this.deleted,
+    };
+  }
 }
