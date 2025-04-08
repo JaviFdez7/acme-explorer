@@ -1,0 +1,34 @@
+<p-card class="relative flex flex-col my-6 w-96 card">
+  <div class="px-4">
+    <span [ngClass]="getApplicationStatusClass()" class="text-xs font-semibold me-2 px-2.5 py-0.5 rounded-full">
+      {{getApplicationStatus()}}
+    </span>
+    <div class="flex flex-row justify-between mt-4">
+      <div class="flex items-center gap-2 mb-2">
+        <h6 class="text-xl font-semibold">
+          {{getTripTitle()}}
+        </h6>
+        <p class="text-left text-xs font-light">{{getTripTicker()}}</p>
+      </div>
+      <div>
+        <span class="ms-3 text-lg font-medium">{{getTripPrice()}} €</span>
+      </div>
+    </div>
+    <hr class="border">
+    <p class="text-left text-[14px] font-normal">
+      From {{getTripStartDate('en')}} to {{getTripEndDate('en')}}
+    </p>
+    <hr class="border mt-4">
+    <p class="text-left text-[14px] font-normal">
+      Applied on {{getApplicationDate('en')}}
+    </p>
+    <p class="text-left text-[14px] font-normal">
+      {{getApplicationMessagesInfo()}}
+    </p>
+  </div>
+  
+  <div class="flex items-center justify-between px-4 mt-4">
+    <p-button label="Trip" icon="pi pi-info-circle" class=" p-button-secondary" (click)="goTripDetails()"></p-button>
+    <p-button label="Application" icon="pi pi-info-circle" class="p-button-secondary" (click)="goApplicationDetails()"></p-button>
+  </div>
+</p-card>
