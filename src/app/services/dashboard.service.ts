@@ -1,8 +1,8 @@
-import { Injectable, EnvironmentInjector, inject, runInInjectionContext } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable, of } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Trip } from '../models/trip.model';
+import { TripService } from './trip.service';
+import { ApplicationService } from './application.service';
 
 
 @Injectable({
@@ -10,18 +10,17 @@ import { Trip } from '../models/trip.model';
 })
 export class DashboardService {
   private tripsCollection;
-  private injector: EnvironmentInjector = inject(EnvironmentInjector);
-  private firestore: AngularFirestore = inject(AngularFirestore);
+  private applicationsCollection;
 
-  constructor() {
-    this.tripsCollection = this.firestore.collection<Trip>('trips');
+  constructor(private tripService: TripService, private applicationService: ApplicationService) {
+    this.tripsCollection = tripService.getTrips();
+    this.applicationsCollection = applicationService.getApplications();
   }
 
   getTripsByEachManager(): Observable<any[]> {
-    return this.getMockTrips().pipe(
-      // Replace with this.tripsCollection
+    return this.tripsCollection.pipe(
       map((managerTrips) => {
-        const groupedTrips = managerTrips.reduce((acc, trip) => {
+        const groupedTrips = managerTrips.reduce((acc: { [key: string]: { managerId: string; trips: any[] } }, trip) => {
           const managerId = trip.manager;
           if (!acc[managerId]) {
             acc[managerId] = { managerId, trips: [] };
@@ -56,19 +55,15 @@ export class DashboardService {
   }
 
   getApplicationsByEachTrip(): Observable<any[]> {
-    return this.getMockApplications().pipe(
-      // Replace with this.firestore.collection('trips')
-      map((trips) => {
-        const groupedTrips = trips.reduce((acc, trip) => {
-          const tripId = trip.trip;
-          if (!acc[tripId]) {
-            acc[tripId] = { ...tripId, applications: [] };
-          }
-          acc[tripId].applications.push(trip);
-          return acc;
-        }, {});
-
-        return Object.values(groupedTrips);
+    return combineLatest([this.tripsCollection, this.applicationsCollection]).pipe(
+      map(([trips, applications]) => {
+        return trips.map(trip => {
+          const relatedApplications = applications.filter(app => app.trip === trip.id);
+          return {
+            trip: trip.id,
+            applications: relatedApplications
+          };
+        });
       })
     );
   }
@@ -94,7 +89,7 @@ export class DashboardService {
 
   // Average, minimum, maximum, and standard deviation of the price of trips.
   getTripsPriceStats(): Observable<any> {
-    return this.getMockTrips().pipe( // Replace with this.firestore.collection('trips')
+    return this.tripsCollection.pipe(
       map((trips) => {
         if (!trips || trips.length === 0) {
           return { average: "-", min: "-", max: "-", stdDev: "-" };
@@ -113,187 +108,18 @@ export class DashboardService {
 
   // Group applications by status
   getApplicationsByEachStatus(): Observable<any[]> {
-    return this.getMockApplications().pipe(// Replace with this.firestore.collection('applications')
+    return this.applicationsCollection.pipe(
       map((applications) => {
-        const groupedApplications = applications.reduce((acc, application) => {
+        const groupedApplications = applications.reduce((acc: { [key: string]: { status: string; applications: any[] } }, application) => {
           const status = application.status;
           if (!acc[status]) {
             acc[status] = { status, applications: [] };
           }
           acc[status].applications.push(application);
           return acc;
-        }, {});
+        }, {} as { [key: string]: { status: string; applications: any[] } });
 
         return Object.values(groupedApplications);
       }));
-  }
-
-  getMockTrips(): Observable<any[]> {
-    return of([
-      {
-        id: 't1',
-        destination: 'Madrid',
-        manager: 'm1',
-        date: '2025-01-01',
-        price: 100,
-      },
-      {
-        id: 't2',
-        destination: 'Barcelona',
-        manager: 'm1',
-        date: '2025-01-15',
-        price: 120,
-      },
-      {
-        id: 't3',
-        destination: 'Valencia',
-        manager: 'm2',
-        date: '2025-02-10',
-        price: 90,
-      },
-      {
-        id: 't4',
-        destination: 'Sevilla',
-        manager: 'm2',
-        date: '2025-02-20',
-        price: 110,
-      },
-      {
-        id: 't5',
-        destination: 'Bilbao',
-        manager: 'm2',
-        date: '2025-03-01',
-        price: 130,
-      },
-      {
-        id: 't6',
-        destination: 'Granada',
-        manager: 'm3',
-        date: '2025-03-15',
-        price: 95,
-      },
-      {
-        id: 't7',
-        destination: 'Zaragoza',
-        manager: 'm4',
-        date: '2025-04-01',
-        price: 105,
-      },
-      {
-        id: 't8',
-        destination: 'Toledo',
-        manager: 'm4',
-        date: '2025-04-10',
-        price: 115,
-      },
-      {
-        id: 't9',
-        destination: 'Málaga',
-        manager: 'm5',
-        date: '2025-05-05',
-        price: 125,
-      },
-      {
-        id: 't10',
-        destination: 'Cádiz',
-        manager: 'm5',
-        date: '2025-05-15',
-        price: 135,
-      },
-      {
-        id: 't11',
-        destination: 'Alicante',
-        manager: 'm5',
-        date: '2025-06-01',
-        price: 140,
-      },
-      {
-        id: 't12',
-        destination: 'Santander',
-        manager: 'm5',
-        date: '2025-06-10',
-        price: 150,
-      },
-    ]);
-  }
-
-  getMockApplications(): Observable<any[]> {
-    return of([
-      {
-        date: '2025-01-01',
-        status: 'PENDING',
-        trip: 't1',
-      },
-      {
-        date: '2025-01-02',
-        status: 'PENDING',
-        trip: 't1',
-      },
-      {
-        date: '2025-01-03',
-        status: 'PENDING',
-        trip: 't3',
-      },
-      {
-        date: '2025-01-01',
-        status: 'DUE',
-        trip: 't4',
-      },
-      {
-        date: '2025-01-02',
-        status: 'DUE',
-        trip: 't5',
-      },
-      {
-        date: '2025-01-01',
-        status: 'ACCEPTED',
-        trip: 't1',
-      },
-      {
-        date: '2025-01-02',
-        status: 'ACCEPTED',
-        trip: 't2',
-      },
-      {
-        date: '2025-01-03',
-        status: 'ACCEPTED',
-        trip: 't3',
-      },
-      {
-        date: '2025-01-01',
-        status: 'REJECTED',
-        trip: 't4',
-      },
-      {
-        date: '2025-01-02',
-        status: 'REJECTED',
-        trip: 't5',
-      },
-      {
-        date: '2025-01-04',
-        status: 'PENDING',
-        trip: 't1',
-      },
-      {
-        date: '2025-01-05',
-        status: 'DUE',
-        trip: 't2',
-      },
-      {
-        date: '2025-01-06',
-        status: 'ACCEPTED',
-        trip: 't3',
-      },
-      {
-        date: '2025-01-07',
-        status: 'REJECTED',
-        trip: 't4',
-      },
-      {
-        date: '2025-01-08',
-        status: 'PENDING',
-        trip: 't5',
-      },
-    ]);
   }
 }
