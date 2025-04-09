@@ -72,7 +72,6 @@ export class DashboardService {
   getApplicationsByEachTripStats(): Observable<any> {
     return this.getApplicationsByEachTrip().pipe(
       map((tripApplications) => {
-        console.log(tripApplications);
         if (!tripApplications || tripApplications.length === 0) {
             return { average: "-", min: "-", max: "-", stdDev: "-" };
         }
