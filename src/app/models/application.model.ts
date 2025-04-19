@@ -2,9 +2,9 @@ import { Entity } from './entity.model';
 
 export enum ApplicationStatus {
   PENDING = 'PENDING',
-  REJECTED = 'REJECTED',
   DUE = 'DUE',
   ACCEPTED = 'ACCEPTED',
+  REJECTED = 'REJECTED',
 }
 
 export class Application extends Entity {
