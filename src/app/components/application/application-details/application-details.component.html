@@ -25,36 +25,20 @@
       {{ getTripDescription() }}
     </p>
     <!-- Botones de acción -->
-    <div class="flex mt-4 justify-between">
-      <p-button label="Trip" 
-                icon="pi pi-info-circle" 
+    <div class="flex mt-4 gap-2">
+      <p-button class="w-full" label="Trip" 
+                icon="pi pi-info-circle"
+                [fluid]="true"
                 (onClick)="goTripDetails()">
       </p-button>
-      <p-button *ngIf="getApplicationStatus() === 'DUE'" 
-                label="Pay" 
-                icon="pi pi-credit-card" 
-                (onClick)="pay()">
-      </p-button>
-      <p-button *ngIf="isApplicationCancelable()" 
+      <p-button class="w-full" *ngIf="isApplicationCancelable()" 
                 label="Cancel" 
                 icon="pi pi-times" 
+                [fluid]="true"
                 (onClick)="showCancelDialog()">
       </p-button>
-      <p-dialog header="Cancel Application" [modal]="true" [(visible)]="isVisibleCancelDialog" [style]="{ width: '25rem' }">
-          <form [formGroup]="cancelForm" (ngSubmit)="cancel()">
-            <div class="flex items-center w-full mb-4">
-              <p-ifta-label variant="on" class="w-full">
-                  <label for="reason" class="font-semibold w-24">Reason</label>
-                  <textarea pTextarea id="reason" class="w-full" formControlName="reason" 
-                    placeholder="Enter the reason for cancellation"></textarea>
-              </p-ifta-label>
-            </div>
-            <div class="flex justify-end gap-2">
-              <p-button label="Cancel Application" type="submit" [disabled]="!cancelForm.valid" icon="pi pi-check"></p-button>
-            </div>
-          </form>
-      </p-dialog>
     </div>
+    <ngx-paypal *ngIf="getApplicationStatus() === 'DUE'" class="mt-4" [config]="payPalConfig" ></ngx-paypal>
   </div>
   
   <!-- Separador -->
@@ -74,3 +58,18 @@
     </div>
   </div>
 </div>
+
+<p-dialog header="Cancel Application" [modal]="true" [(visible)]="isVisibleCancelDialog" [style]="{ width: '25rem' }">
+  <form [formGroup]="cancelForm" (ngSubmit)="cancel()">
+    <div class="flex items-center w-full mb-4">
+      <p-ifta-label variant="on" class="w-full">
+          <label for="reason" class="font-semibold w-24">Reason</label>
+          <textarea pTextarea id="reason" class="w-full" formControlName="reason" 
+            placeholder="Enter the reason for cancellation"></textarea>
+      </p-ifta-label>
+    </div>
+    <div class="flex justify-end gap-2">
+      <p-button label="Cancel Application" type="submit" [disabled]="!cancelForm.valid" icon="pi pi-check"></p-button>
+    </div>
+  </form>
+</p-dialog>
