@@ -11,6 +11,8 @@ import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { MessageModule } from 'primeng/message';
 import { TableModule } from 'primeng/table';
+import { ApplicationService } from '../../../services/application.service';
+import { Application } from '../../../models/application.model';
 
 @Component({
   selector: 'app-manager-trip-details',
@@ -21,10 +23,12 @@ import { TableModule } from 'primeng/table';
 export class ManagerTripDetailsComponent implements OnInit{
   protected trip: Trip | undefined;
   protected manager: Actor | null = null;
+  protected applications: Application[] = [];
 
   constructor(
     private tripService: TripService,
     private actorService: ActorService,
+    private applicationService: ApplicationService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -39,8 +43,10 @@ export class ManagerTripDetailsComponent implements OnInit{
         if (this.trip && managerId) {
           this.actorService.getActor(this.trip.manager).subscribe((actor: Actor | undefined) => {
             this.manager = actor || null;
-          }
-          );
+          });
+          this.applicationService.getApplicationsByTrip(tripId).subscribe((applications) => {
+            this.applications = applications.filter((application) => application.actor !== this.trip?.manager);
+          });
         }
       });
     }
@@ -110,7 +116,8 @@ export class ManagerTripDetailsComponent implements OnInit{
   shouldDisableButton(numDays: number): boolean {
     if (this.trip) {
       const cancelled = this.trip.cancelation.trim() === '' ? true : false;
-      return !cancelled || this.canDoOperation(numDays);
+      const applicationAccepted = this.applications.some((application) => application.status === 'ACCEPTED');
+      return !cancelled || this.canDoOperation(numDays) || applicationAccepted; // Disable button if trip is cancelled or if the difference is less than numDays
     } else {
       return false;
     }
