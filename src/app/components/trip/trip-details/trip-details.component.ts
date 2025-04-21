@@ -51,12 +51,35 @@ export class TripDetailsComponent implements OnInit {
 
           const now = new Date();
           const diffInSeconds = Math.floor((startDate.getTime() - now.getTime()) / 1000);
+          const CountdownTimeUnits: [string, number][] = [
+            ['Y', 1000 * 60 * 60 * 24 * 365], // years
+            ['M', 1000 * 60 * 60 * 24 * 30], // months
+            ['D', 1000 * 60 * 60 * 24], // days
+            ['H', 1000 * 60 * 60], // hours
+            ['m', 1000 * 60], // minutes
+            ['s', 1000], // seconds
+            ['S', 1], // million seconds
+          ];
 
           if (diffInSeconds > 0) {
             this.countdownConfig = {
               leftTime: diffInSeconds,
-              format: 'd:HH:mm:ss'
-            };
+              format: 'ddd:HH:mm:ss',
+              formatDate: ({ date }) => {
+                let totalSeconds = Math.floor(date / 1000); // <- IMPORTANTE: convertir de ms a s
+            
+                const days = Math.floor(totalSeconds / 86400);
+                totalSeconds %= 86400;
+            
+                const hours = Math.floor(totalSeconds / 3600);
+                totalSeconds %= 3600;
+            
+                const minutes = Math.floor(totalSeconds / 60);
+                const seconds = totalSeconds % 60;
+            
+                return `${days}d ${String(hours).padStart(2, '0')}h:${String(minutes).padStart(2, '0')}m:${String(seconds).padStart(2, '0')}s`;
+              }
+            };            
           } 
         }
       });
