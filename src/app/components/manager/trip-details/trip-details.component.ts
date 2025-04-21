@@ -141,7 +141,8 @@ export class ManagerTripDetailsComponent implements OnInit{
         this.trip.pictures,
         undefined,
         this.trip.version + 1,
-        true
+        true,
+        this.trip.stages
       );
       const id = this.route.snapshot.paramMap.get('tripId');
       if (!id) {
