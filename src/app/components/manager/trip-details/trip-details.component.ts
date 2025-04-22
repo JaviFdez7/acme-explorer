@@ -11,26 +11,28 @@ import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { MessageModule } from 'primeng/message';
 import { TableModule } from 'primeng/table';
-import { ApplicationService } from '../../../services/application.service';
 import { Application } from '../../../models/application.model';
+import { ApplicationService } from '../../../services/application.service';
+import { Badge } from 'primeng/badge';
 
 @Component({
   selector: 'app-manager-trip-details',
-  imports: [ImageCarouselComponent, DividerModule, CommonModule, ButtonModule, MessageModule, TableModule],
+  imports: [ImageCarouselComponent, DividerModule, CommonModule, ButtonModule, MessageModule, TableModule, Badge],
   templateUrl: './trip-details.component.html',
   styleUrl: './trip-details.component.css'
 })
 export class ManagerTripDetailsComponent implements OnInit{
   protected trip: Trip | undefined;
   protected manager: Actor | null = null;
+  protected applicationsNumbers: number[] = [0, 0, 0, 0]; 
   protected applications: Application[] = [];
 
   constructor(
     private tripService: TripService,
     private actorService: ActorService,
-    private applicationService: ApplicationService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private applicationService: ApplicationService
   ) {}
 
   ngOnInit() {
@@ -48,6 +50,9 @@ export class ManagerTripDetailsComponent implements OnInit{
             this.applications = applications.filter((application) => application.actor !== this.trip?.manager);
           });
         }
+        this.applicationService.getApplicationsGroupedByStatusPerTrip(tripId).subscribe((applications: any[]) => {
+          this.applicationsNumbers = applications.map((group) => group.applications.length);
+        })
       });
     }
   }
@@ -157,7 +162,9 @@ export class ManagerTripDetailsComponent implements OnInit{
     } else {
       console.error('Trip not found');
     }
-    
+  }
 
+  goApplications() {
+    this.router.navigate(['trip', this.trip?.id, 'applications']);
   }
 }

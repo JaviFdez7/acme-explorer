@@ -1,7 +1,8 @@
 import { Injectable, EnvironmentInjector, inject, runInInjectionContext } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Application } from '../models/application.model';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
+import { ApplicationStatus } from '../models/application.model';
 
 @Injectable({
   providedIn: 'root'
@@ -49,6 +50,25 @@ export class ApplicationService {
     return runInInjectionContext(this.injector, () => {
       return this.firestore.collection<Application>('applications', ref => ref.where('actor', '==', actorId).where('trip', '==', tripId)).valueChanges({ idField: 'id' });
     });
+  }
+
+  getApplicationsGroupedByStatusPerTrip(tripId: string): Observable<any[]> {
+    return this.getApplicationsByTrip(tripId).pipe(
+      map(applications => {
+        const groupedApplications: { status: ApplicationStatus; applications: Application[] }[] = [
+          { status: ApplicationStatus.PENDING, applications: [] },
+          { status: ApplicationStatus.DUE, applications: [] },
+          { status: ApplicationStatus.ACCEPTED, applications: [] },
+          { status: ApplicationStatus.REJECTED, applications: [] }
+        ];
+        applications.forEach(application => {
+          const index = groupedApplications.findIndex(group => group.status === application.status);
+          if (index !== -1)
+            groupedApplications[index].applications.push(application);
+        });
+        return groupedApplications;
+      })
+    )
   }
 }
 

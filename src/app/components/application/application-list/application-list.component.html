@@ -5,7 +5,7 @@
   [rows]="9"
 >
   <ng-template #list let-applications>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
       <div *ngFor="let application of applications">
         <app-application-display [application]="application"></app-application-display>
       </div>

@@ -49,8 +49,17 @@
       {{ trip?.ticker ?? 'No ticker available' }}
     </div>
     <!-- Información del usuario y ticker -->
-    <div class="flex flex-row justify-evenly items-start w-full">
-      <div class="flex flex-row text-sm gap-3">
+    <div class="flex flex-col justify-evenly items-start w-full">
+      <div class="flex flex-row justify-between text-sm gap-3 mb-4 w-full">
+        <div class="flex flex-row items-center gap-2">
+          <p-badge value="{{applicationsNumbers[0]}}" class="!bg-yellow-500" />
+          <p-badge value="{{applicationsNumbers[1]}}" severity="info"/>
+          <p-badge value="{{applicationsNumbers[2]}}" severity="success"/>
+          <p-badge value="{{applicationsNumbers[3]}}" severity="danger"/>
+        </div>
+        <p-button label="Applications" icon="`pi pi-users`" (click)="goApplications()"></p-button>
+      </div>
+      <div class="flex flex-row text-sm gap-3 justify-end w-full">
         <p-button label="Edit" icon="pi pi-pencil" class="" (click)="goEdit()" [disabled]="shouldDisableButton(10)"></p-button>
         <p-button label="Delete" icon="pi pi-trash"  (click)="deleteTrip()" [disabled]="shouldDisableButton(10)"></p-button>
         <p-button label="Cancel" icon="pi pi-times"  (click)="goCancel()" [disabled]="shouldDisableButton(7)"></p-button>
@@ -60,7 +69,7 @@
 </div>
 <div class="flex flex-col md:flex-row  w-full max-w-4xl mx-auto">
   <div class="w-full flex flex-col items-center">
-    <div *ngIf="trip?.cancelation !== ''" class="flex justify-center mt-6">
+    <div *ngIf="trip?.cancelation !== ''" class="flex justify-center mt-6 mb-6">
       <p-message severity="warn" class="w-full max-w-3xl text-center shadow-md">
         <div class="w-full text-center px-4 py-2">
           <p class="text-base font-medium text-yellow-900">Cancelation reason: {{ trip?.cancelation }}</p>

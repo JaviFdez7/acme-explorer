@@ -61,7 +61,6 @@ export class TripDisplayComponent implements OnInit{
     const startDate = rawDate instanceof Date ? rawDate : new Date(rawDate.seconds * 1000);
     const timeDiff = startDate.getTime() - today.getTime();
     const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
-    console.log("daysDiff: " + daysDiff);
     return daysDiff < 7 && daysDiff >= 0;
   }
 }

@@ -38,7 +38,6 @@ export class DashboardComponent implements OnInit {
         });
 
         this.dashboardService.getTripsPriceStats().subscribe((stats: any) => {
-            console.log(stats);
             this.tripsPriceStats = stats;
         });
 

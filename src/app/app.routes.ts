@@ -19,6 +19,7 @@ import { ApplicationListComponent } from './components/application/application-l
 import { ApplicationDetailsComponent } from './components/application/application-details/application-details.component';
 import { DashboardComponent } from './components/admin/dashboard/dashboard.component';
 import { ProfileComponent } from './components/security/profile/profile.component';
+import { ApplicationListManagerComponent } from './components/manager/application-list/application-list.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -26,7 +27,7 @@ export const routes: Routes = [
   { path: 'trip', component: TripDisplayComponent },
   { path: 'trip/create', component: ManagerTripCreateComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'manager' } },
   { path: 'trip/:id', component: TripDetailsComponent },
-  { path: 'trip/:id/applications', component: TripDisplayComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'manager' } },
+  { path: 'trip/:id/applications', component: ApplicationListManagerComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'manager' } },
   { path: 'trip/:id/edit', component: TripDisplayComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'manager' } },
   { path: 'trip/:id/apply', component: ApplicationCreateComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'explorer' } },
   { path: 'list/:id', component: TripDisplayComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'explorer' } },
