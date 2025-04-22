@@ -22,10 +22,7 @@ export class Application extends Entity {
     this._status = status || ApplicationStatus.PENDING;
     this._date = date || new Date();
     this._messages = messages || [];
-
-    if (reason !== undefined) {
-      this._reason = reason;
-    }
+    this._reason = reason || "";
     if (version !== undefined) {
       this.version = version;
     }

@@ -207,9 +207,9 @@ export class ApplicationDetailsComponent implements OnInit {
   getApplicationStatusClass() {
     switch (this.application?.status) {
       case ApplicationStatus.PENDING:
-        return 'bg-blue-600 text-blue-100';
-      case ApplicationStatus.DUE:
         return 'bg-yellow-600 text-yellow-100';
+      case ApplicationStatus.DUE:
+        return 'bg-blue-600 text-blue-100';
       case ApplicationStatus.ACCEPTED:
         return 'bg-green-600 text-green-100';
       case ApplicationStatus.REJECTED:
