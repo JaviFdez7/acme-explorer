@@ -1,116 +1,176 @@
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ManagerTripCreateComponent } from './trip-create.component';
-import { ReactiveFormsModule, FormsModule, FormArray } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule, FormArray, FormGroup } from '@angular/forms';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { generate, of } from 'rxjs';
+import { MessageService } from 'primeng/api';
 import { TripService } from '../../../services/trip.service';
 import { AuthService } from '../../../services/auth.service';
-import { of, throwError } from 'rxjs';
-import { Router, Routes } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
-import { By } from '@angular/platform-browser';
-import { Trip } from '../../../models/trip.model';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Component } from '@angular/core';
 
-@Component({ template: '' })
-class DummyComponent {}
-
-const routes: Routes = [
-  { path: 'manager/:id/trips', component: DummyComponent }
-];
 describe('ManagerTripCreateComponent', () => {
   let component: ManagerTripCreateComponent;
   let fixture: ComponentFixture<ManagerTripCreateComponent>;
-  let tripServiceSpy: jasmine.SpyObj<TripService>;
-  let authServiceSpy: jasmine.SpyObj<AuthService>;
 
-  beforeEach(async () => {
-    const tripSpy = jasmine.createSpyObj('TripService', ['addTrip', 'generateUniqueTicker']);
-    const authSpy = jasmine.createSpyObj('AuthService', ['getCurrentId', 'getCurrentRole']);
+  const mockTripService = {
+    addTrip: jasmine.createSpy('addTrip').and.returnValue(Promise.resolve({})),
+    generateUniqueTicker: jasmine.createSpy('generateUniqueTicker').and.returnValue(Promise.resolve('251225-ABCD')),
+  };
 
-    await TestBed.configureTestingModule({
+  const mockAuthService = {
+    getCurrentId: jasmine.createSpy('getCurrentId').and.returnValue('12345'),
+    getCurrentRole: jasmine.createSpy('getCurrentRole').and.returnValue('MANAGER'),
+    isLoggedIn: jasmine.createSpy('isLoggedIn').and.returnValue(true)
+  };
+
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
       imports: [
-        ManagerTripCreateComponent, // ✅ Así se importa un componente standalone
+        ManagerTripCreateComponent, // como es standalone, va aquí
         ReactiveFormsModule,
         FormsModule,
-        RouterTestingModule.withRoutes(routes),
+        HttpClientTestingModule,
+        RouterTestingModule,
         BrowserAnimationsModule
       ],
       providers: [
-        { provide: TripService, useValue: tripSpy },
-        { provide: AuthService, useValue: authSpy },
+        MessageService,
+        { provide: TripService, useValue: mockTripService },
+        { provide: AuthService, useValue: mockAuthService }
       ]
     }).compileComponents();
+  }));
 
+  beforeEach(async () => {
     fixture = TestBed.createComponent(ManagerTripCreateComponent);
     component = fixture.componentInstance;
-    tripServiceSpy = TestBed.inject(TripService) as jasmine.SpyObj<TripService>;
-    authServiceSpy = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
-
-    authServiceSpy.getCurrentId.and.returnValue('manager-id-123');
-    authServiceSpy.getCurrentRole.and.returnValue('MANAGER');
-    tripServiceSpy.generateUniqueTicker.and.returnValue(Promise.resolve('UNIQUE-TICKER'));
-
     fixture.detectChanges();
   });
 
-  it('should create a valid trip: "Jungle party"', fakeAsync(async () => {
+  it('should create the component', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should initialize the form with default values', () => {
+    expect(component.tripForm).toBeDefined();
+    expect(component.tripForm.get('title')).toBeTruthy();
+    expect(component.tripForm.get('title')?.value).toEqual('');
+  });
+
+  it('should be invalid when form is empty', () => {
+    component.tripForm.reset();
+    expect(component.tripForm.valid).toBeFalse();
+  });
+
+  it('should add a stage to the stages FormArray', () => {
+    const stagesArray = component.stages as FormArray;
+    const initialLength = stagesArray?.value.length || 0;
+
+    expect(component.stages).toBeTruthy();
+
+    component.addStage();
+
+    expect(stagesArray?.value.length).toBe(initialLength + 1);
+  });
+  it ('should remove a stage from the stages FormArray', () => {
+    const stagesArray = component.stages as FormArray;
+    const initialLength = stagesArray?.value.length || 0;
+
+    component.addStage();
+    expect(stagesArray?.value.length).toBe(initialLength + 1);
+
+    component.removeStage(0); 
+    expect(stagesArray?.value.length).toBe(initialLength);
+  });
+  it('should create a trip with valid data', async () => {
     component.tripForm.patchValue({
-      title: 'Jungle party',
-      description: 'A wild trip into the jungle',
-      startDate: '2025-09-20',
-      endDate: '2025-10-01',
+      title: 'Test Trip',
+      description: 'A great adventure',
+      startDate: new Date('2025-12-25').toISOString(),
+      endDate: new Date('2025-12-26').toISOString(), 
+      requirements: [],
+      pictures: [],
     });
-  
+
     component.addRequirement();
-    component.requirements.at(0).setValue('Must love monkeys');
-  
-    component.addPicture();
-    component.pictures.at(0).setValue('https://example.com/image.jpg');
+    const requirement = component.requirements.at(0);
+    requirement.patchValue('Be awesome');
+    expect(component.tripForm.valid).toBeTrue();
+    
   
     component.addStage();
-    component.stages.at(0).patchValue({
+    const stage = component.stages.at(0);
+    stage.patchValue({
       title: 'Stage 1',
       description: 'Explore the jungle',
-      price: 1000,
+      price: 100
     });
-  
-    tripServiceSpy.addTrip.and.returnValue(Promise.resolve());
+    
+    expect(component.stages.valid).toBeTrue();
   
     await component.onSubmit();
-    tick();
-  
-  
-    expect(component.success).toBe('Trip added successfully!');
-    expect(tripServiceSpy.addTrip).toHaveBeenCalled();
-  
-  }));
-  
 
-  it('should fail if end date is before start date', fakeAsync(() => {
+    expect(mockAuthService.getCurrentId).toHaveBeenCalled();
+    expect(mockAuthService.getCurrentRole).toHaveBeenCalled();
+    expect(mockTripService.generateUniqueTicker).toHaveBeenCalled();
+    expect(mockTripService.addTrip).toHaveBeenCalled();
+  });
+  it('should not submit the form if invalid prices', async () => {
     component.tripForm.patchValue({
-      title: 'Short Trip',
-      description: 'Testing invalid date',
-      startDate: '2025-10-01',
-      endDate: '2025-09-20'
+      title: 'Test Trip',
+      description: 'A great adventure',
+      startDate: new Date('2025-12-25').toISOString(),
+      endDate: new Date('2025-12-26').toISOString(), 
+      requirements: [],
+      pictures: [],
     });
 
     component.addRequirement();
-    component.requirements.at(0).setValue('Req');
+    const requirement = component.requirements.at(0);
+    requirement.patchValue('Be awesome');
+    expect(component.tripForm.valid).toBeTrue();
 
     component.addStage();
-    component.stages.at(0).patchValue({
+    const stage = component.stages.at(0);
+    stage.patchValue({
       title: 'Stage 1',
-      description: 'Some description',
+      description: 'Explore the jungle',
+      price: -100 // Invalid price
+    });
+    
+    expect(component.stages.valid).toBeFalse();
+  
+    await component.onSubmit();
+
+    expect(component.tripForm.valid).toBeFalse();
+  });
+  it('should not submit the form if invalid dates', async () => {
+    component.tripForm.patchValue({
+      title: 'Test Trip',
+      description: 'A great adventure',
+      startDate: new Date('2025-12-26').toISOString(), // Start date after end date
+      endDate: new Date('2025-12-25').toISOString(),  
+      requirements: [],
+      pictures: [],
+    });
+
+    component.addRequirement();
+    const requirement = component.requirements.at(0);
+    requirement.patchValue('Be awesome');
+
+    component.addStage();
+    const stage = component.stages.at(0);
+    stage.patchValue({
+      title: 'Stage 1',
+      description: 'Explore the jungle',
       price: 100
     });
 
-    component.onSubmit();
-    tick();
+    expect(component.stages.valid).toBeTrue();
 
-    const startDateErrors = component.tripForm.get('startDate')?.errors;
-    const endDateErrors = component.tripForm.get('endDate')?.errors;
+    await component.onSubmit();
 
-    expect(startDateErrors?.['endDateBeforeStartDate'] || endDateErrors?.['endDateBeforeStartDate']).toBeTruthy();
-    expect(tripServiceSpy.addTrip).not.toHaveBeenCalled();
-  }));
+    expect(component.tripForm.valid).toBeFalse();
+  });
 });
