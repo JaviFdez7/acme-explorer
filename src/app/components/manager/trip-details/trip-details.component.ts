@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { MessageModule } from 'primeng/message';
 import { TableModule } from 'primeng/table';
+import { Application } from '../../../models/application.model';
 import { ApplicationService } from '../../../services/application.service';
 import { Badge } from 'primeng/badge';
 
@@ -24,6 +25,7 @@ export class ManagerTripDetailsComponent implements OnInit{
   protected trip: Trip | undefined;
   protected manager: Actor | null = null;
   protected applicationsNumbers: number[] = [0, 0, 0, 0]; 
+  protected applications: Application[] = [];
 
   constructor(
     private tripService: TripService,
@@ -43,6 +45,9 @@ export class ManagerTripDetailsComponent implements OnInit{
         if (this.trip && managerId) {
           this.actorService.getActor(this.trip.manager).subscribe((actor: Actor | undefined) => {
             this.manager = actor || null;
+          });
+          this.applicationService.getApplicationsByTrip(tripId).subscribe((applications) => {
+            this.applications = applications.filter((application) => application.actor !== this.trip?.manager);
           });
         }
         this.applicationService.getApplicationsGroupedByStatusPerTrip(tripId).subscribe((applications: any[]) => {
@@ -116,7 +121,8 @@ export class ManagerTripDetailsComponent implements OnInit{
   shouldDisableButton(numDays: number): boolean {
     if (this.trip) {
       const cancelled = this.trip.cancelation.trim() === '' ? true : false;
-      return !cancelled || this.canDoOperation(numDays);
+      const applicationAccepted = this.applications.some((application) => application.status === 'ACCEPTED');
+      return !cancelled || this.canDoOperation(numDays) || applicationAccepted; // Disable button if trip is cancelled or if the difference is less than numDays
     } else {
       return false;
     }
@@ -140,7 +146,8 @@ export class ManagerTripDetailsComponent implements OnInit{
         this.trip.pictures,
         undefined,
         this.trip.version + 1,
-        true
+        true,
+        this.trip.stages
       );
       const id = this.route.snapshot.paramMap.get('tripId');
       if (!id) {

@@ -54,4 +54,13 @@ export class TripDisplayComponent implements OnInit{
   goDetails() {
     this.router.navigate(['/trip', this.trip.id]);
   }
+
+  startsInLessThanAWeek(): boolean {
+    const today = new Date();
+    const rawDate: Date | { seconds: number } = this.trip.startDate as Date | { seconds: number };
+    const startDate = rawDate instanceof Date ? rawDate : new Date(rawDate.seconds * 1000);
+    const timeDiff = startDate.getTime() - today.getTime();
+    const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    return daysDiff < 7 && daysDiff >= 0;
+  }
 }

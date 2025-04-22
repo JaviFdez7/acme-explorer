@@ -58,7 +58,10 @@ export class ManagerTripCancelComponent implements OnInit{
         this.trip.endDate,
         this.trip.requirements,
         this.trip.pictures,
-        reason
+        reason,
+        this.trip.version + 1,
+        false,
+        this.trip.stages
       );
       this.tripService.editTrip(newTrip, id).then(() => {
         this.loading = false;

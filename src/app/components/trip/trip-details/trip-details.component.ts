@@ -13,16 +13,20 @@ import { TableModule } from 'primeng/table';
 import { AuthService } from '../../../services/auth.service';
 import { ButtonModule } from 'primeng/button';
 import { Router } from '@angular/router';
+import { CountdownConfig, CountdownModule } from 'ngx-countdown';
 
 @Component({
   selector: 'app-trip-details',
-  imports: [CommonModule, DividerModule, ImageCarouselComponent, MessageModule, ButtonModule, TableModule],
+  imports: [CommonModule, DividerModule, ImageCarouselComponent, MessageModule, ButtonModule, TableModule, CountdownModule],
   templateUrl: './trip-details.component.html',
   styleUrl: './trip-details.component.css'
 })
 export class TripDetailsComponent implements OnInit {
   protected trip: Trip | undefined;
   protected manager: Actor | null = null;
+  countdownTime = 0;
+  countdownConfig: CountdownConfig | null = null;
+  countdownCompleted = false;
 
   constructor(
     private tripService: TripService,
@@ -41,8 +45,50 @@ export class TripDetailsComponent implements OnInit {
           this.actorService.getActor(this.trip.manager).subscribe((actor: Actor | undefined) => {
             this.manager = actor || null;
           });
+          const startDate = this.trip.startDate instanceof Timestamp
+            ? this.trip.startDate.toDate()
+            : new Date(this.trip.startDate);
+
+          const now = new Date();
+          const diffInSeconds = Math.floor((startDate.getTime() - now.getTime()) / 1000);
+          const CountdownTimeUnits: [string, number][] = [
+            ['Y', 1000 * 60 * 60 * 24 * 365], // years
+            ['M', 1000 * 60 * 60 * 24 * 30], // months
+            ['D', 1000 * 60 * 60 * 24], // days
+            ['H', 1000 * 60 * 60], // hours
+            ['m', 1000 * 60], // minutes
+            ['s', 1000], // seconds
+            ['S', 1], // million seconds
+          ];
+
+          if (diffInSeconds > 0) {
+            this.countdownConfig = {
+              leftTime: diffInSeconds,
+              format: 'ddd:HH:mm:ss',
+              formatDate: ({ date }) => {
+                let totalSeconds = Math.floor(date / 1000); // <- IMPORTANTE: convertir de ms a s
+            
+                const days = Math.floor(totalSeconds / 86400);
+                totalSeconds %= 86400;
+            
+                const hours = Math.floor(totalSeconds / 3600);
+                totalSeconds %= 3600;
+            
+                const minutes = Math.floor(totalSeconds / 60);
+                const seconds = totalSeconds % 60;
+            
+                return `${days}d ${String(hours).padStart(2, '0')}h:${String(minutes).padStart(2, '0')}m:${String(seconds).padStart(2, '0')}s`;
+              }
+            };            
+          } 
         }
       });
+    }
+  }
+
+  handleCountdownEvent(event: any) {
+    if (event.action === 'done') {
+      this.countdownCompleted = true;
     }
   }
 

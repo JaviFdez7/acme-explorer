@@ -14,7 +14,7 @@ import { RouterModule } from '@angular/router';
   selector: 'app-register',
   imports: [
     ReactiveFormsModule,
-    FormsModule, 
+    FormsModule,
     CommonModule,
     CardModule,
     FloatLabelModule,
@@ -33,11 +33,11 @@ export class RegisterComponent {
   error: string | null = null;
   success: string | null = null;
 
-constructor(private authService: AuthService, private fb: FormBuilder, private router: Router) {
-  const roles = this.authService.getRoles();
-  this.roleList = roles.map(role => ({ label: role, value: role }));
-  this.createForm();
-}
+  constructor(private authService: AuthService, private fb: FormBuilder, private router: Router) {
+    const roles = this.authService.getRoles();
+    this.roleList = roles.map(role => ({ label: role, value: role }));
+    this.createForm();
+  }
 
   createForm() {
     this.registrationForm = this.fb.group({
@@ -58,15 +58,16 @@ constructor(private authService: AuthService, private fb: FormBuilder, private r
       this.authService.signUp(this.registrationForm.value).then(() => {
         this.loading = false;
         this.success = 'Registration successful!';
-        setTimeout(() => {
-          this.router.navigate(['/']);
-        }, 2000);
+        // Firebase Auth automatically signs in the user after registration, this breaks the flow
+        // A proper backend should handle this
+        this.authService.logout();
+        this.router.navigate(['/login']);
       })
-      .catch((error) => {
-        this.loading = false;
-        this.error = 'Registration failed. Please try again.';
-        console.error('Registration failed', error);
-      });
+        .catch((error) => {
+          this.loading = false;
+          this.error = 'Registration failed. Please try again.';
+          console.error('Registration failed', error);
+        });
     } else {
       this.registrationForm.markAllAsTouched();
       this.error = 'Please fill in all required fields.';
