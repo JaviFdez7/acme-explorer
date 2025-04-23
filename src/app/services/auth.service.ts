@@ -50,7 +50,7 @@ export class AuthService {
   async login(email: string, password: string) {
     try {
       await signInWithEmailAndPassword(this.auth, email, password);
-      console.log('User logged in successfully with role:', this.getCurrentRole());
+      console.log('User logged in successfully');
       return this.getCurrentActor();
     } catch (error) {
       console.error('Error during login:', error);

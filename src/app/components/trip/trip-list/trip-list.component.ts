@@ -9,6 +9,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
+import { AuthService } from '../../../services/auth.service';
+import { FinderService } from '../../../services/finder.service';
+import { Finder } from '../../../models/finder.model';
 
 @Component({
   selector: 'app-trip-list',
@@ -29,7 +32,7 @@ export class TripListComponent implements OnInit {
   protected errorMessages: string[] = []; 
   protected maxResults = 10;
 
-  constructor(private tripService: TripService) { }
+  constructor(private tripService: TripService, private authService: AuthService, private finderService: FinderService) {}
 
   ngOnInit() {
     this.loadCache();
@@ -108,6 +111,12 @@ export class TripListComponent implements OnInit {
     .sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime())
     .slice(0, this.maxResults);
 
+    if(this.authService.isExplorer() && !this.checkEmptyCriteria()) {
+      const newFinder = new Finder('', this.searchQuery || '', this.minPrice as number, this.maxPrice as number, this.startDate as string, this.endDate as string, 0, false);
+      this.finderService.addFinder(newFinder).then(() => {
+        console.log('Finder added successfully');
+      })
+    }
     this.cachedCriteria = currentCriteria;
     this.saveCache();
   }
@@ -152,6 +161,10 @@ export class TripListComponent implements OnInit {
         localStorage.removeItem('tripCache'); // Clear expired cache
       }
     }
+  }
+
+  checkEmptyCriteria() {
+    return this.searchQuery === '' && this.minPrice === null && this.maxPrice === null && this.startDate === null && this.endDate === null;
   }
 
   filteredTrips() {
