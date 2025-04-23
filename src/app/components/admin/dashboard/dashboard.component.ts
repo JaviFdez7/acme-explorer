@@ -4,19 +4,22 @@ import { MeterGroup } from 'primeng/metergroup';
 import { CardModule } from 'primeng/card';
 import { CommonModule } from '@angular/common';
 import { FieldsetModule } from 'primeng/fieldset';
+import { TableModule } from 'primeng/table';
+
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
   standalone: true,
-  imports: [CommonModule, CardModule, MeterGroup, FieldsetModule],
+  imports: [CommonModule, CardModule, MeterGroup, FieldsetModule, TableModule],
 })
 export class DashboardComponent implements OnInit {
     protected tripsByEachManagerStats: any = {};
     protected applicationsByEachTripStats: any = {};
     protected tripsPriceStats: any = {};
     protected totalApplications: number = 0;
+    protected findersStats: any = {};
 
 
     value = [
@@ -54,5 +57,10 @@ export class DashboardComponent implements OnInit {
                 }
             }
         })
+
+        this.dashboardService.getFindersStats().subscribe((stats: any) => {
+            console.log(stats);
+            this.findersStats = stats;
+        });
     }
 }
