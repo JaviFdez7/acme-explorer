@@ -18,7 +18,11 @@ import { InputIconModule } from 'primeng/inputicon';
 })
 export class TripListComponent implements OnInit {
   protected tripList: Trip[] = [];
-  protected searchQuery ='';
+  protected searchQuery = '';
+  protected minPrice: number | null = null;
+  protected maxPrice: number | null = null;
+  protected startDate: string | null = null;
+  protected endDate: string | null = null;
 
   constructor(private tripService: TripService) { }
 
@@ -29,19 +33,26 @@ export class TripListComponent implements OnInit {
   }
 
   filteredTrips() {
-    
     return this.tripList.filter(trip => {
       const rawDate: Date | { seconds: number } = trip.startDate as Date | { seconds: number };
       const date = rawDate instanceof Date ? rawDate : new Date(rawDate.seconds * 1000);
       const query = this.searchQuery.toLowerCase();
-      return (trip.title.toLowerCase().includes(query) ||
-             trip.ticker.toLowerCase().includes(query) ||
-             trip.description.toLowerCase().includes(query)) && trip.deleted === false && date > new Date();
+      const price = trip.price;
+
+      const matchesKeyword = query === '' || trip.title.toLowerCase().includes(query) || trip.ticker.toLowerCase().includes(query) || trip.description.toLowerCase().includes(query);
+      const matchesPrice = (this.minPrice === null || price >= this.minPrice) && (this.maxPrice === null || price <= this.maxPrice);
+      const matchesDate = (this.startDate === null || date >= new Date(this.startDate)) && (this.endDate === null || date <= new Date(this.endDate));
+
+      return matchesKeyword && matchesPrice && matchesDate && trip.deleted === false && date > new Date();
     }).sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime());
   }
 
   clearSearch() {
     this.searchQuery = '';
+    this.minPrice = null;
+    this.maxPrice = null;
+    this.startDate = null;
+    this.endDate = null;
   }
 
   getTripList() {

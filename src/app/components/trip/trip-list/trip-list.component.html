@@ -1,10 +1,15 @@
 <div class="search-container flex flex-row justify-center items-center">
-  <p-iconfield iconPosition="left" >
+  <p-iconfield iconPosition="left">
     <p-inputicon styleClass="pi pi-search" />
-    <input type="text" pInputText placeholder="Search" [(ngModel)]="searchQuery"/>
+    <input type="text" pInputText placeholder="Search" [(ngModel)]="searchQuery" />
   </p-iconfield>
-  <p-button icon="pi pi-times" class=" mx-1" (click)="clearSearch()"></p-button>
+  <input type="number" pInputText placeholder="Min Price" [(ngModel)]="minPrice" class="mx-1" />
+  <input type="number" pInputText placeholder="Max Price" [(ngModel)]="maxPrice" class="mx-1" />
+  <input type="date" pInputText placeholder="Start Date" [(ngModel)]="startDate" class="mx-1" />
+  <input type="date" pInputText placeholder="End Date" [(ngModel)]="endDate" class="mx-1" />
+  <p-button icon="pi pi-times" class="mx-1" (click)="clearSearch()"></p-button>
 </div>
+
 <p-dataView
   #dv
   [value]="filteredTrips()"
