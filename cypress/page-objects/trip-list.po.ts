@@ -1,7 +1,11 @@
 class TripList {
-  typeSearchInput(value: string) {
-    cy.get('input').type(value);
+  clickSearch() {
+    cy.get('app-trip-list').find('p-button[icon="pi pi-search"] button').click();
   }
+  typeSearchInput(value: string) {
+    cy.get('app-trip-list').find('input[placeholder="Search"]').type(value);
+  }
+
   get trips() {
     return cy.get('app-trip-display');
   }
