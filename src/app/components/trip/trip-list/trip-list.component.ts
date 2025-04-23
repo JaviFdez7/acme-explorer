@@ -18,6 +18,7 @@ import { InputIconModule } from 'primeng/inputicon';
 })
 export class TripListComponent implements OnInit {
   protected tripList: Trip[] = [];
+  protected filteredTripList: Trip[] = [];
   protected searchQuery = '';
   protected minPrice: number | null = null;
   protected maxPrice: number | null = null;
@@ -29,11 +30,12 @@ export class TripListComponent implements OnInit {
   ngOnInit() {
     this.tripService.getTrips().subscribe((trips: Trip[]) => {
       this.tripList = trips;
+      this.performSearch();
     });
   }
 
-  filteredTrips() {
-    return this.tripList.filter(trip => {
+  performSearch() {
+    this.filteredTripList = this.tripList.filter(trip => {
       const rawDate: Date | { seconds: number } = trip.startDate as Date | { seconds: number };
       const date = rawDate instanceof Date ? rawDate : new Date(rawDate.seconds * 1000);
       const query = this.searchQuery.toLowerCase();
@@ -47,12 +49,17 @@ export class TripListComponent implements OnInit {
     }).sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime());
   }
 
+  filteredTrips() {
+    return this.filteredTripList;
+  }
+
   clearSearch() {
     this.searchQuery = '';
     this.minPrice = null;
     this.maxPrice = null;
     this.startDate = null;
     this.endDate = null;
+    this.performSearch();
   }
 
   getTripList() {
