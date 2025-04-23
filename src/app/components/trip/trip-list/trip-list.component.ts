@@ -24,17 +24,69 @@ export class TripListComponent implements OnInit {
   protected maxPrice: number | null = null;
   protected startDate: string | null = null;
   protected endDate: string | null = null;
+  protected cacheExpirationHours = 1; 
+  private cachedCriteria: any = null; 
+  protected errorMessages: string[] = []; // Property to store multiple error messages
 
   constructor(private tripService: TripService) { }
 
   ngOnInit() {
+    this.loadCache();
     this.tripService.getTrips().subscribe((trips: Trip[]) => {
       this.tripList = trips;
-      this.performSearch();
-    });
+    })
+    if (!this.filteredTripList.length) {
+      this.performSearch(); 
+    }
   }
 
   performSearch() {
+    this.errorMessages = []; // Clear previous error messages
+
+    const currentCriteria = {
+      searchQuery: this.searchQuery,
+      minPrice: this.minPrice,
+      maxPrice: this.maxPrice,
+      startDate: this.startDate,
+      endDate: this.endDate
+    };
+
+    // Validation: Cache expiration must be between 1 and 24 hours
+    if (this.cacheExpirationHours < 1 || this.cacheExpirationHours > 24) {
+      this.errorMessages.push('Cache expiration must be between 1 and 24 hours.');
+    }
+
+    // Validation: Minimum price cannot be greater than maximum price
+    if (this.minPrice !== null && this.maxPrice !== null && this.minPrice > this.maxPrice) {
+      this.errorMessages.push('Minimum price cannot be greater than maximum price.');
+    }
+
+    // Validation: Dates must be in the future
+    const now = new Date();
+    if (this.startDate && new Date(this.startDate) < now) {
+      this.errorMessages.push('Start date must be in the future.');
+    }
+    if (this.endDate && new Date(this.endDate) < now) {
+      this.errorMessages.push('End date must be in the future.');
+    }
+
+    // Validation: Start date must be earlier than or equal to end date
+    if (this.startDate && this.endDate && new Date(this.startDate) > new Date(this.endDate)) {
+      this.errorMessages.push('Start date cannot be later than end date.');
+    }
+
+    // If there are validation errors, stop the search
+    if (this.errorMessages.length > 0) {
+      return;
+    }
+
+    if (this.isCriteriaCached(currentCriteria)) {
+      // Use cached results if criteria match
+      console.log('Using cached results');
+      return;
+    }
+
+    // Perform a new search if criteria have changed
     this.filteredTripList = this.tripList.filter(trip => {
       const rawDate: Date | { seconds: number } = trip.startDate as Date | { seconds: number };
       const date = rawDate instanceof Date ? rawDate : new Date(rawDate.seconds * 1000);
@@ -47,6 +99,51 @@ export class TripListComponent implements OnInit {
 
       return matchesKeyword && matchesPrice && matchesDate && trip.deleted === false && date > new Date();
     }).sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime());
+
+    this.cachedCriteria = currentCriteria;
+    this.saveCache();
+  }
+
+  private isCriteriaCached(currentCriteria: any): boolean {
+    if (!this.cachedCriteria) {
+      return false;
+    }
+    return JSON.stringify(this.cachedCriteria) === JSON.stringify(currentCriteria);
+  }
+
+  private saveCache() {
+    const cacheData = {
+      filteredTripList: this.filteredTripList,
+      cachedCriteria: this.cachedCriteria,
+      timestamp: new Date().getTime(),
+      cacheExpirationHours: this.cacheExpirationHours
+    };
+    localStorage.setItem('tripCache', JSON.stringify(cacheData));
+  }
+
+  private loadCache() {
+    const cache = localStorage.getItem('tripCache');
+    if (cache) {
+      const cacheData = JSON.parse(cache);
+      const now = new Date().getTime();
+      const cacheAge = (now - cacheData.timestamp) / (1000 * 60 * 60);
+
+      if (cacheAge <= cacheData.cacheExpirationHours) {
+        this.filteredTripList = cacheData.filteredTripList;
+        this.cachedCriteria = cacheData.cachedCriteria;
+        this.cacheExpirationHours = cacheData.cacheExpirationHours;
+
+        if (this.cachedCriteria) {
+          this.searchQuery = this.cachedCriteria.searchQuery || '';
+          this.minPrice = this.cachedCriteria.minPrice || null;
+          this.maxPrice = this.cachedCriteria.maxPrice || null;
+          this.startDate = this.cachedCriteria.startDate || null;
+          this.endDate = this.cachedCriteria.endDate || null;
+        }
+      } else {
+        localStorage.removeItem('tripCache'); // Clear expired cache
+      }
+    }
   }
 
   filteredTrips() {
@@ -59,7 +156,15 @@ export class TripListComponent implements OnInit {
     this.maxPrice = null;
     this.startDate = null;
     this.endDate = null;
+    this.cachedCriteria = null; 
     this.performSearch();
+  }
+
+  setCacheExpiration(hours: number) {
+    if (hours >= 1 && hours <= 24) {
+      this.cacheExpirationHours = hours;
+      this.saveCache();
+    }
   }
 
   getTripList() {
