@@ -1,14 +1,100 @@
-<p-dataView
-  #dv
-  [value]="getApplicationList()"
-  [paginator]="true"
-  [rows]="9"
->
-  <ng-template #list let-applications>
-    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
-      <div *ngFor="let application of applications">
-        <app-application-display [application]="application"></app-application-display>
-      </div>
-    </div>
-  </ng-template>
-</p-dataView>
+<div class="flex justify-content-center">
+  <p-accordion multiple="true" class="w-full" collapseIcon="pi pi-minus" expandIcon="pi pi-plus">
+      <p-accordion-panel value="0">
+          <p-accordion-header>
+              <span class="flex items-center gap-2 w-full">
+                  <p-badge value="{{applicationList[0]?.applications?.length || 0}}" class="!bg-yellow-500 mr-2"/>
+                  <span class="font-bold whitespace-nowrap">PENDING</span>
+              </span>
+          </p-accordion-header>
+          <p-accordion-content>
+              <p-dataView
+                #dv
+                [value]="applicationList[0]?.applications"
+                [paginator]="true"
+                [rows]="9"
+              >
+                <ng-template #list let-applications>
+                  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+                    <div *ngFor="let application of applications">
+                      <app-application-display [application]="application"></app-application-display>
+                    </div>
+                  </div>
+                </ng-template>
+              </p-dataView>
+          </p-accordion-content>
+      </p-accordion-panel>
+      <p-accordion-panel value="1">
+          <p-accordion-header>
+              <span class="flex items-center gap-2 w-full">
+                <p-badge value="{{applicationList[1]?.applications?.length}}" class="mr-2" severity="info"/>
+                <span class="font-bold whitespace-nowrap">DUE</span>
+              </span>
+          </p-accordion-header>
+          <p-accordion-content>
+            <p-dataView
+                #dv
+                [value]="applicationList[1]?.applications"
+                [paginator]="true"
+                [rows]="9"
+              >
+                <ng-template #list let-applications>
+                  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+                    <div *ngFor="let application of applications">
+                      <app-application-display [application]="application"></app-application-display>
+                    </div>
+                  </div>
+                </ng-template>
+              </p-dataView>
+          </p-accordion-content>
+      </p-accordion-panel>
+      <p-accordion-panel value="2">
+          <p-accordion-header>
+              <span class="flex items-center gap-2 w-full">
+                <p-badge value="{{applicationList[2]?.applications?.length}}" class="mr-2" severity="success"/>
+                <span class="font-bold whitespace-nowrap">ACCEPTED</span>
+              </span>
+          </p-accordion-header>
+          <p-accordion-content>
+            <p-dataView
+                #dv
+                [value]="applicationList[2]?.applications"
+                [paginator]="true"
+                [rows]="9"
+              >
+                <ng-template #list let-applications>
+                  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+                    <div *ngFor="let application of applications">
+                      <app-application-display [application]="application"></app-application-display>
+                    </div>
+                  </div>
+                </ng-template>
+              </p-dataView>
+          </p-accordion-content>
+      </p-accordion-panel>
+      <p-accordion-panel value="3">
+        <p-accordion-header>
+            <span class="flex items-center gap-2 w-full">
+              <p-badge value="{{applicationList[3]?.applications?.length}}" class="mr-2" severity="danger"/>
+              <span class="font-bold whitespace-nowrap">REJECTED</span>
+            </span>
+        </p-accordion-header>
+        <p-accordion-content>
+          <p-dataView
+                #dv
+                [value]="applicationList[3]?.applications"
+                [paginator]="true"
+                [rows]="9"
+              >
+                <ng-template #list let-applications>
+                  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+                    <div *ngFor="let application of applications">
+                      <app-application-display [application]="application"></app-application-display>
+                    </div>
+                  </div>
+                </ng-template>
+              </p-dataView>
+        </p-accordion-content>
+    </p-accordion-panel>
+  </p-accordion>
+</div>
