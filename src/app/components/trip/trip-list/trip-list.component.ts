@@ -165,8 +165,14 @@ export class TripListComponent implements OnInit {
     this.maxPrice = null;
     this.startDate = null;
     this.endDate = null;
-    this.cachedCriteria = null
     this.performSearch();
+    this.cachedCriteria = {
+      searchQuery: '',
+      minPrice: null,
+      maxPrice: null,
+      startDate: null,
+      endDate: null
+    }
   }
 
   setCacheExpiration(hours: number) {
