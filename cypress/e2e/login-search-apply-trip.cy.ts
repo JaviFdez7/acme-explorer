@@ -11,6 +11,7 @@ describe('login then search and apply trip', () => {
       LoginPage.fillForm(explorer.email, explorer.password)
     })
     LoginPage.submit()
+    cy.wait(2000)
     cy.url().should('equal', 'http://localhost:4200/')
     Menu.menuItemVisible(2)
     Menu.menuItemText(2).then((text) => {
@@ -23,6 +24,7 @@ describe('login then search and apply trip', () => {
     Menu.menuItemClick(1)
     cy.url().should('equal', 'http://localhost:4200/trips')
     TripList.typeSearchInput('playa')
+    TripList.clickSearch()
     TripList.tripButtonVisible(0)
     TripList.clickButton(0)
     cy.url().should('contain', 'http://localhost:4200/trip/')
