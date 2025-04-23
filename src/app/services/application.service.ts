@@ -69,6 +69,26 @@ export class ApplicationService {
         return groupedApplications;
       })
     )
+  }  
+
+  getApplicationsByActorIdGroupedByStatusPerTrip(actorId: string): Observable<any[]> {
+    return this.getApplicationsByActor(actorId).pipe(
+      map(applications => {
+        const groupedApplications: { status: ApplicationStatus; applications: Application[] }[] = [
+          { status: ApplicationStatus.PENDING, applications: [] },
+          { status: ApplicationStatus.DUE, applications: [] },
+          { status: ApplicationStatus.ACCEPTED, applications: [] },
+          { status: ApplicationStatus.REJECTED, applications: [] }
+        ];
+        applications.forEach(application => {
+          const index = groupedApplications.findIndex(group => group.status === application.status);
+          if (index !== -1)
+            groupedApplications[index].applications.push(application);
+        });
+        return groupedApplications;
+      })
+    )
   }
 }
+
 

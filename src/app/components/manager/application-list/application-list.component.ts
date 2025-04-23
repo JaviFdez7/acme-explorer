@@ -6,7 +6,6 @@ import { ApplicationDisplayManagerComponent } from '../application-display/appli
 import { ActivatedRoute } from '@angular/router';
 import { BadgeModule } from 'primeng/badge';
 import { AccordionModule } from 'primeng/accordion';
-import { Application } from '../../../models/application.model';
 import { DataView } from 'primeng/dataview';
 
 @Component({
@@ -17,7 +16,6 @@ import { DataView } from 'primeng/dataview';
 })
 export class ApplicationListManagerComponent implements OnInit {
   protected applicationList: any[] = [];
-  protected pendingApplications: Application[] = [];
 
   constructor(private applicationService: ApplicationService, private authService: AuthService, private route: ActivatedRoute) { }
 
