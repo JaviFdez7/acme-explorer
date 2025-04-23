@@ -26,7 +26,8 @@ export class TripListComponent implements OnInit {
   protected endDate: string | null = null;
   protected cacheExpirationHours = 1; 
   private cachedCriteria: any = null; 
-  protected errorMessages: string[] = []; // Property to store multiple error messages
+  protected errorMessages: string[] = []; 
+  protected maxResults = 10;
 
   constructor(private tripService: TripService) { }
 
@@ -41,7 +42,7 @@ export class TripListComponent implements OnInit {
   }
 
   performSearch() {
-    this.errorMessages = []; // Clear previous error messages
+    this.errorMessages = [];
 
     const currentCriteria = {
       searchQuery: this.searchQuery,
@@ -54,6 +55,11 @@ export class TripListComponent implements OnInit {
     // Validation: Cache expiration must be between 1 and 24 hours
     if (this.cacheExpirationHours < 1 || this.cacheExpirationHours > 24) {
       this.errorMessages.push('Cache expiration must be between 1 and 24 hours.');
+    }
+
+    // Validation: Maximum results must be between 10 and 50
+    if (this.maxResults < 10 || this.maxResults > 50) {
+      this.errorMessages.push('Maximum results must be between 10 and 50.');
     }
 
     // Validation: Minimum price cannot be greater than maximum price
@@ -98,8 +104,11 @@ export class TripListComponent implements OnInit {
       const matchesDate = (this.startDate === null || date >= new Date(this.startDate)) && (this.endDate === null || date <= new Date(this.endDate));
 
       return matchesKeyword && matchesPrice && matchesDate && trip.deleted === false && date > new Date();
-    }).sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime());
+    })
+    .sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime())
+    .slice(0, this.maxResults);
 
+    console.log('Search results:', this.filteredTripList);
     this.cachedCriteria = currentCriteria;
     this.saveCache();
   }
@@ -156,7 +165,7 @@ export class TripListComponent implements OnInit {
     this.maxPrice = null;
     this.startDate = null;
     this.endDate = null;
-    this.cachedCriteria = null; 
+    this.cachedCriteria = null
     this.performSearch();
   }
 
@@ -164,6 +173,12 @@ export class TripListComponent implements OnInit {
     if (hours >= 1 && hours <= 24) {
       this.cacheExpirationHours = hours;
       this.saveCache();
+    }
+  }
+
+  setMaxResults(value: number) {
+    if (value >= 10 && value <= 50) {
+      this.maxResults = value;
     }
   }
 
