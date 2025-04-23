@@ -3,6 +3,8 @@ import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TripService } from './trip.service';
 import { ApplicationService } from './application.service';
+import { FinderService } from './finder.service';
+import { Finder } from '../models/finder.model';
 
 
 @Injectable({
@@ -11,10 +13,12 @@ import { ApplicationService } from './application.service';
 export class DashboardService {
   private tripsCollection;
   private applicationsCollection;
+  private findersCollection;
 
-  constructor(private tripService: TripService, private applicationService: ApplicationService) {
+  constructor(private tripService: TripService, private applicationService: ApplicationService, private finderService: FinderService) {
     this.tripsCollection = tripService.getTrips();
     this.applicationsCollection = applicationService.getApplications();
+    this.findersCollection = finderService.getFinders();
   }
 
   getTripsByEachManager(): Observable<any[]> {
@@ -121,5 +125,69 @@ export class DashboardService {
 
         return Object.values(groupedApplications);
       }));
+  }
+
+  getFindersStats(): Observable<any> {
+    return combineLatest([
+      this.getAverageMinimumPrice(),
+      this.getAverageMaximumPrice(),
+      this.getTopKeyWords()
+    ]).pipe(
+      map(([averageMinPrice, averageMaxPrice, topKeyWords]) => ({
+        averageMinPrice,
+        averageMaxPrice,
+        topKeyWords
+      }))
+    );
+  }
+
+  getAverageMinimumPrice(): Observable<any> {
+    return this.finderService.getFinders().pipe(
+      map((finders: Finder[]) => {
+        const validFinders = finders.filter(finder => finder.minPrice !== null && finder.minPrice >= 0);
+        if(validFinders.length === 0) {
+          return '-'; 
+        }
+        const totalMinPrice = validFinders.reduce((sum, finder) => sum + (finder.minPrice || 0), 0);
+        return (totalMinPrice / validFinders.length).toFixed(2);
+      })
+    );
+  }
+
+  getAverageMaximumPrice(): Observable<any> {
+    return this.finderService.getFinders().pipe(
+      map((finders: Finder[]) => {
+        const validFinders = finders.filter(finder => finder.maxPrice !== null && finder.maxPrice >= 0);
+        if(validFinders.length === 0) {
+          return '-'; 
+        }
+        const totalMaxPrice = validFinders.reduce((sum, finder) => sum + (finder.maxPrice || 0), 0);
+        return (totalMaxPrice / validFinders.length).toFixed(2);
+      })
+    );
+  }
+
+  //The top 10 key words that the explorers indicate in their finders. 
+  getTopKeyWords(): Observable<any[]> {
+    return this.findersCollection.pipe(
+      map((finders: Finder[]) => {
+        const validFinders = finders.filter(finder => finder.searchQuery !== null && finder.searchQuery.trim() !== '');
+        const keywordsCount: { [key: string]: number } = {};
+
+        validFinders.forEach(finder => {
+          const keywords = finder.searchQuery.split(',').map(keyword => keyword.trim());
+          keywords.forEach(keyword => {
+            if (keywordsCount[keyword]) {
+              keywordsCount[keyword]++;
+            } else {
+              keywordsCount[keyword] = 1;
+            }
+          });
+        });
+
+        const sortedKeywords = Object.entries(keywordsCount).sort((a, b) => b[1] - a[1]);
+        return sortedKeywords.slice(0, 10).map(([keyword, count]) => ({ keyword, count }));
+      })
+    );
   }
 }

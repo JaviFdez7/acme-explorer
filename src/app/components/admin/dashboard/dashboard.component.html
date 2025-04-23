@@ -1,4 +1,3 @@
-
 <div class="p-4 pt-0">
     <div class="flex flex-row justify-between mb-4">
         <h5 class="text-xl font-semibold">Admin Dashboard</h5>
@@ -163,6 +162,55 @@
                     </div>
                 </ng-template>
             </p-metergroup>
+        </p-fieldset>
+    </div>
+
+    <div class="mt-4">
+        <p-fieldset legend="Finders Stats" [toggleable]="true">
+            <p class="text-surface-400 text-md mb-4">
+                The following statistics are based on finders enhanced by explorers.
+            </p>
+            <div class="flex flex-wrap gap-4">
+                <p-card class="flex-1" styleClass="border border-surface shadow-none">
+                    <div class="flex justify-between gap-8">
+                        <div class="flex flex-col gap-1">
+                            <span class="text-surface-400 text-sm">Minimum Price Average</span>
+                            <span class="font-bold text-lg">{{findersStats.averageMinPrice}}</span>
+                        </div>
+                    </div>
+                </p-card>
+                <p-card class="flex-1" styleClass="border border-surface shadow-none">
+                    <div class="flex justify-between gap-8">
+                        <div class="flex flex-col gap-1">
+                            <span class="text-surface-400 text-sm">Maximum Price Average</span>
+                            <span class="font-bold text-lg">{{findersStats.averageMaxPrice}}</span>
+                        </div>
+                    </div>
+                </p-card>
+            </div>
+            <div class="mt-4">
+                <p-card class="flex-1" styleClass="border border-surface shadow-none">
+                    <div class="flex justify-between gap-8">
+                        <div class="flex flex-col gap-1 w-full">
+                            <span class="text-surface-400 text-sm">Top 10 Keywords</span>
+                            <p-table [value]="findersStats.topKeyWords" class="w-full">
+                                <ng-template #header>
+                                    <tr>
+                                        <th>Keyword</th>
+                                        <th>Count</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template #body let-keyword>
+                                    <tr>
+                                        <td>{{ keyword.keyword }}</td>
+                                        <td>{{ keyword.count }}</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </p-card>
+            </div>
         </p-fieldset>
     </div>
 </div>
