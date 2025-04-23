@@ -1,10 +1,32 @@
-<div class="search-container flex flex-row justify-center items-center">
-  <p-iconfield iconPosition="left" >
+<div class="flex flex-row justify-center items-center">
+  <p-iconfield iconPosition="left">
     <p-inputicon styleClass="pi pi-search" />
-    <input type="text" pInputText placeholder="Search" [(ngModel)]="searchQuery"/>
+    <input type="text" pInputText placeholder="Search" [(ngModel)]="searchQuery" />
   </p-iconfield>
-  <p-button icon="pi pi-times" class=" mx-1" (click)="clearSearch()"></p-button>
+  <input type="number" pInputText placeholder="Min Price" [(ngModel)]="minPrice" class="mx-1" min="0"/>
+  <input type="number" pInputText placeholder="Max Price" [(ngModel)]="maxPrice" class="mx-1" min="0"/>
+  <input type="date" pInputText placeholder="Start Date" [(ngModel)]="startDate" class="mx-1" />
+  <input type="date" pInputText placeholder="End Date" [(ngModel)]="endDate" class="mx-1" />
+  <p-button icon="pi pi-search" class="mx-1" (click)="performSearch()"></p-button>
+  <p-button icon="pi pi-times" class="mx-1" (click)="clearSearch()"></p-button>
 </div>
+
+<div class="flex flex-row justify-center items-center mt-4">
+  <label for="cacheExpiration">Cache Expiration (hours):</label>
+  <input type="number" id="cacheExpiration" pInputText [(ngModel)]="cacheExpirationHours" (change)="setCacheExpiration(cacheExpirationHours)" min="1" max="24" class="mx-2" />
+</div>
+
+<div class="flex flex-row justify-center items-center mt-4">
+  <label for="maxResults">Max Results:</label>
+  <input type="number" id="maxResults" pInputText [(ngModel)]="maxResults" (change)="setMaxResults(maxResults)" min="10" max="50" class="mx-2"/>
+</div>
+
+<div *ngIf="errorMessages.length > 0" class="error-messages text-red-500 text-center mt-2">
+  <ul>
+    <li *ngFor="let error of errorMessages">{{ error }}</li>
+  </ul>
+</div>
+
 <p-dataView
   #dv
   [value]="filteredTrips()"
