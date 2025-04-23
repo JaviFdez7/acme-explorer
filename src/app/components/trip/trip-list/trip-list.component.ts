@@ -35,10 +35,10 @@ export class TripListComponent implements OnInit {
     this.loadCache();
     this.tripService.getTrips().subscribe((trips: Trip[]) => {
       this.tripList = trips;
-    })
-    if (!this.filteredTripList.length) {
-      this.performSearch(); 
-    }
+      if (!this.filteredTripList.length) {
+        this.performSearch(); // Perform search only after trips are loaded
+      }
+    });
   }
 
   performSearch() {
@@ -108,7 +108,6 @@ export class TripListComponent implements OnInit {
     .sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime())
     .slice(0, this.maxResults);
 
-    console.log('Search results:', this.filteredTripList);
     this.cachedCriteria = currentCriteria;
     this.saveCache();
   }
