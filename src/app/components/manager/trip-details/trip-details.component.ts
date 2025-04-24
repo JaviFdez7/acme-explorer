@@ -14,10 +14,12 @@ import { TableModule } from 'primeng/table';
 import { Application } from '../../../models/application.model';
 import { ApplicationService } from '../../../services/application.service';
 import { Badge } from 'primeng/badge';
+import { CountdownConfig, CountdownModule } from 'ngx-countdown';
+import { SponsorshipBannerComponent } from '../../sponsor/sponsorship-banner/sponsorship-banner.component';
 
 @Component({
   selector: 'app-manager-trip-details',
-  imports: [ImageCarouselComponent, DividerModule, CommonModule, ButtonModule, MessageModule, TableModule, Badge],
+  imports: [ImageCarouselComponent, DividerModule, CommonModule, ButtonModule, MessageModule, TableModule, Badge, CountdownModule, SponsorshipBannerComponent],
   templateUrl: './trip-details.component.html',
   styleUrl: './trip-details.component.css'
 })
@@ -26,6 +28,9 @@ export class ManagerTripDetailsComponent implements OnInit{
   protected manager: Actor | null = null;
   protected applicationsNumbers: number[] = [0, 0, 0, 0]; 
   protected applications: Application[] = [];
+  countdownTime = 0;
+  countdownConfig: CountdownConfig | null = null;
+  countdownCompleted = false;
 
   constructor(
     private tripService: TripService,
@@ -49,6 +54,42 @@ export class ManagerTripDetailsComponent implements OnInit{
           this.applicationService.getApplicationsByTrip(tripId).subscribe((applications) => {
             this.applications = applications.filter((application) => application.actor !== this.trip?.manager);
           });
+          const startDate = this.trip.startDate instanceof Timestamp
+            ? this.trip.startDate.toDate()
+            : new Date(this.trip.startDate);
+
+          const now = new Date();
+          const diffInSeconds = Math.floor((startDate.getTime() - now.getTime()) / 1000);
+          const CountdownTimeUnits: [string, number][] = [
+            ['Y', 1000 * 60 * 60 * 24 * 365], // years
+            ['M', 1000 * 60 * 60 * 24 * 30], // months
+            ['D', 1000 * 60 * 60 * 24], // days
+            ['H', 1000 * 60 * 60], // hours
+            ['m', 1000 * 60], // minutes
+            ['s', 1000], // seconds
+            ['S', 1], // million seconds
+          ];
+
+          if (diffInSeconds > 0) {
+            this.countdownConfig = {
+              leftTime: diffInSeconds,
+              format: 'ddd:HH:mm:ss',
+              formatDate: ({ date }) => {
+                let totalSeconds = Math.floor(date / 1000); // <- IMPORTANTE: convertir de ms a s
+            
+                const days = Math.floor(totalSeconds / 86400);
+                totalSeconds %= 86400;
+            
+                const hours = Math.floor(totalSeconds / 3600);
+                totalSeconds %= 3600;
+            
+                const minutes = Math.floor(totalSeconds / 60);
+                const seconds = totalSeconds % 60;
+            
+                return `${days}d ${String(hours).padStart(2, '0')}h:${String(minutes).padStart(2, '0')}m:${String(seconds).padStart(2, '0')}s`;
+              }
+            };            
+          }
         }
         this.applicationService.getApplicationsGroupedByStatusPerTrip(tripId).subscribe((applications: any[]) => {
           this.applicationsNumbers = applications.map((group) => group.applications.length);
@@ -57,6 +98,11 @@ export class ManagerTripDetailsComponent implements OnInit{
     }
   }
   
+  handleCountdownEvent(event: any) {
+    if (event.action === 'done') {
+      this.countdownCompleted = true;
+    }
+  }
 
   getRequirements() {
     return this.trip?.requirements ?? [];

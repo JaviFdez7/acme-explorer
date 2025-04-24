@@ -1,0 +1,19 @@
+<p-card class="relative flex flex-col my-6 w-96 card">
+  <div class="relative h-50 m-2.5 overflow-hidden p-2">
+    <p-image src="{{sponsorship.bannerUrl}}" alt="Image" [preview]="true" class="w-full h-full object-cover"/>
+  </div>
+  <div class="p-4 flex flex-col gap-2 w-full">
+    <div class="flex flex-row justify-end w-full">
+        <span *ngIf="!sponsorship.paid" class="flex items-center gap-1 bg-red-50 text-red-600 px-2 py-1 rounded-full text-sm flex items-center">
+            <i class="pi pi-times-circle"></i> Not Paid
+        </span>
+        <span *ngIf="sponsorship.paid" class="flex items-center gap-1 bg-green-50 text-green-700 px-2 py-1 rounded-full text-sm">
+            <i class="pi pi-check-circle"></i> Paid
+        </span>
+    </div>
+    <div class="flex flex-row justify-between items-center gap-2">
+      <p-button label="Info Page" icon="pi pi-info-circle" class="p-button-secondary" (click)="goToInfoPage()"></p-button>
+      <p-button label="Details" icon="pi pi-info-circle" class="p-button-secondary" (click)="goDetails()"></p-button>
+    </div>
+  </div>
+</p-card>

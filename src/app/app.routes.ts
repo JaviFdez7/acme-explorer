@@ -20,6 +20,11 @@ import { ApplicationDetailsComponent } from './components/application/applicatio
 import { DashboardComponent } from './components/admin/dashboard/dashboard.component';
 import { ProfileComponent } from './components/security/profile/profile.component';
 import { ApplicationListManagerComponent } from './components/manager/application-list/application-list.component';
+import { SponsorshipCreateComponent } from './components/sponsor/sponsorship-create/sponsorship-create.component';
+import { SponsorshipListComponent } from './components/sponsor/sponsorship-list/sponsorship-list.component';
+import { SponsorshipDetailsComponent } from './components/sponsor/sponsorship-details/sponsorship-details.component';
+import { SponsorshipEditComponent } from './components/sponsor/sponsorship-edit/sponsorship-edit.component';
+import { SponsorshipConfigComponent } from './components/admin/sponsorship-config/sponsorship-config.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -42,12 +47,12 @@ export const routes: Routes = [
   { path: 'manager/:id/trip/:tripId', component: ManagerTripDetailsComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'manager' } },
   { path: 'admin/create-user', component: RegisterComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'admin' } },
   { path: 'admin/dashboard', component: DashboardComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'admin' } },
-  { path: 'admin/sponsor-configuration', component: TripDisplayComponent },
+  { path: 'admin/sponsorship-configuration', component: SponsorshipConfigComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'admin' } },
   { path: 'admin/explorer-analysis', component: TripDisplayComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'admin' } },
-  { path: 'sponsor/:id/sponsorships', component: TripDisplayComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'sponsor' } },
-  { path: 'sponsorship/:id', component: TripDisplayComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'sponsor' } },
-  { path: 'sponsorship/create', component: TripDisplayComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'sponsor' } },
-  { path: 'sponsorship/:id/edit', component: TripDisplayComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'sponsor' } },
+  { path: 'sponsor/:id/sponsorships', component: SponsorshipListComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'sponsor' } },
+  { path: 'sponsorship/create', component: SponsorshipCreateComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'sponsor' } },
+  { path: 'sponsorship/:id', component: SponsorshipDetailsComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'sponsor' } },
+  { path: 'sponsorship/:id/edit', component: SponsorshipEditComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'sponsor' } },
   { path: 'register', component: RegisterExplorerComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'anonymous' } },
   { path: 'login', component: LoginComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'anonymous' } },
   { path: 'denied-access', component: DeniedAccessComponent },

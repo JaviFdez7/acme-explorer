@@ -217,12 +217,7 @@ export class Navbar implements OnInit {
                             {
                                 label: 'Sponsorship Configuration',
                                 icon: 'pi pi-cog',
-                                command: () => this.router.navigate(['/admin/sponsor-configuration'])
-                            },
-                            {
-                                label: 'Explorer Analysis',
-                                icon: 'pi pi-chart-bar',
-                                command: () => this.router.navigate(['/admin/explorer-analysis'])
+                                command: () => this.router.navigate(['/admin/sponsorship-configuration'])
                             }
                         ]
                     }];
@@ -239,12 +234,12 @@ export class Navbar implements OnInit {
                             {
                                 label: 'Create Sponsorship',
                                 icon: 'pi pi-plus',
-                                command: () => this.router.navigate(['/sponsorships/create'])
+                                command: () => this.router.navigate(['/sponsorship/create'])
                             },
                             {
                                 label: 'My Sponsorships',
                                 icon: 'pi pi-money-bill',
-                                command: () => this.router.navigate(['/sponsor/${this.currentActor?.id}/sponsorships'])
+                                command: () => this.router.navigate([`/sponsor/${this.currentActor?.id}/sponsorships`])
                             }
                         ]
                     }];

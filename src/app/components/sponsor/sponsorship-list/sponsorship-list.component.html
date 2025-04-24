@@ -1,0 +1,13 @@
+<p-dataView 
+[value]="sponsorshipList" 
+#dv 
+[paginator]="true"
+[rows]="9">
+<ng-template #list let-sponsorships>
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+    <div *ngFor="let sponsorship of sponsorships">
+        <app-sponsorship-display [sponsorship]="sponsorship"></app-sponsorship-display>
+    </div>
+    </div>
+</ng-template>
+</p-dataView>

@@ -52,7 +52,8 @@ export class TripListComponent implements OnInit {
       minPrice: this.minPrice,
       maxPrice: this.maxPrice,
       startDate: this.startDate,
-      endDate: this.endDate
+      endDate: this.endDate,
+      maxResults: this.maxResults // Include maxResults in the criteria
     };
 
     // Validation: Cache expiration must be between 1 and 24 hours
@@ -112,7 +113,7 @@ export class TripListComponent implements OnInit {
     .slice(0, this.maxResults);
 
     if(this.authService.isExplorer() && !this.checkEmptyCriteria()) {
-      const newFinder = new Finder('', this.searchQuery || '', this.minPrice as number, this.maxPrice as number, this.startDate as string, this.endDate as string, 0, false);
+      const newFinder = new Finder(this.authService.getCurrentId() || '', this.searchQuery || '', this.minPrice as number, this.maxPrice as number, this.startDate as string, this.endDate as string, 0, false);
       this.finderService.addFinder(newFinder).then(() => {
         console.log('Finder added successfully');
       })
@@ -156,6 +157,7 @@ export class TripListComponent implements OnInit {
           this.maxPrice = this.cachedCriteria.maxPrice || null;
           this.startDate = this.cachedCriteria.startDate || null;
           this.endDate = this.cachedCriteria.endDate || null;
+          this.maxResults = this.cachedCriteria.maxResults || 10;
         }
       } else {
         localStorage.removeItem('tripCache'); // Clear expired cache
@@ -183,7 +185,8 @@ export class TripListComponent implements OnInit {
       minPrice: null,
       maxPrice: null,
       startDate: null,
-      endDate: null
+      endDate: null,
+      maxResults: this.maxResults
     }
   }
 
