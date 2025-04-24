@@ -1,0 +1,37 @@
+<p-card styleClass="max-w-lg mx-auto p-6 card">
+  <form [formGroup]="sponsorshipForm" (ngSubmit)="onUpdateSponsorship()">
+    <fieldset>
+      <legend class="text-xl font-semibold">Edit Sponsorship</legend>
+
+      <p-floatlabel variant="on" class="mt-4">
+        <label for="bannerUrl">Banner URL *</label>
+        <input
+          pInputText
+          id="bannerUrl"
+          type="text"
+          formControlName="bannerUrl"
+          class="mt-1 block w-full"
+        />
+      </p-floatlabel>
+      <small *ngIf="sponsorshipForm.controls['bannerUrl'].invalid && sponsorshipForm.controls['bannerUrl'].touched" class="text-red-500">
+        Banner URL is required
+      </small>
+
+      <p-floatlabel variant="on" class="mt-4">
+        <label for="infoPageUrl">Info Page URL *</label>
+        <input
+          pInputText
+          id="infoPageUrl"
+          type="text"
+          formControlName="infoPageUrl"
+          class="mt-1 block w-full"
+        />
+      </p-floatlabel>
+      <small *ngIf="sponsorshipForm.controls['infoPageUrl'].invalid && sponsorshipForm.controls['infoPageUrl'].touched" class="text-red-500">
+        Info Page URL is required
+      </small>
+
+      <p-button type="submit" styleClass="w-full mt-4"> Update </p-button>
+    </fieldset>
+  </form>
+</p-card>

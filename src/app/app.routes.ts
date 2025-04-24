@@ -23,6 +23,7 @@ import { ApplicationListManagerComponent } from './components/manager/applicatio
 import { SponsorshipCreateComponent } from './components/sponsor/sponsorship-create/sponsorship-create.component';
 import { SponsorshipListComponent } from './components/sponsor/sponsorship-list/sponsorship-list.component';
 import { SponsorshipDetailsComponent } from './components/sponsor/sponsorship-details/sponsorship-details.component';
+import { SponsorshipEditComponent } from './components/sponsor/sponsorship-edit/sponsorship-edit.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -50,7 +51,7 @@ export const routes: Routes = [
   { path: 'sponsor/:id/sponsorships', component: SponsorshipListComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'sponsor' } },
   { path: 'sponsorship/create', component: SponsorshipCreateComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'sponsor' } },
   { path: 'sponsorship/:id', component: SponsorshipDetailsComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'sponsor' } },
-  { path: 'sponsorship/:id/edit', component: TripDisplayComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'sponsor' } },
+  { path: 'sponsorship/:id/edit', component: SponsorshipEditComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'sponsor' } },
   { path: 'register', component: RegisterExplorerComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'anonymous' } },
   { path: 'login', component: LoginComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'anonymous' } },
   { path: 'denied-access', component: DeniedAccessComponent },
