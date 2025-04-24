@@ -19,10 +19,9 @@ export class SponsorshipListComponent implements OnInit {
   ngOnInit() {
     const currentUser = this.authService.getCurrentActor();
     if (currentUser) {
-        console.log('Current User:', currentUser);
       this.sponsorshipService.getSponsorshipsBySponsorId(currentUser.id).subscribe((sponsorships: any[]) => {
-        console.log('Sponsorships:', sponsorships);
-        this.sponsorshipList = sponsorships;
+        const sponsorshipFilteredList = sponsorships.filter((sponsorship) => !sponsorship.deleted);
+        this.sponsorshipList = sponsorshipFilteredList;
       });
     }
   }

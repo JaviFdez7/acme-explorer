@@ -6,7 +6,6 @@ import { CardModule } from 'primeng/card';
 import { CommonModule } from '@angular/common';
 import { Image } from 'primeng/image';
 
-
 @Component({
   selector: 'app-sponsorship-display',
   templateUrl: './sponsorship-display.component.html',

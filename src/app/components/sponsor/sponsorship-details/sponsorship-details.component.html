@@ -1,0 +1,33 @@
+<div class="flex flex-col items-center w-full max-w-4xl mx-auto p-4">
+  <div class="relative w-full mb-4 flex justify-center items-center">
+      <p-image src="{{sponsorship?.bannerUrl}}" alt="Image" [preview]="true" class="w-auto h-auto object-cover"></p-image>
+  </div>
+  <div class="w-full flex flex-col gap-4">
+    <div class="flex flex-row justify-center items-center">
+      <span *ngIf="!sponsorship?.paid" class="flex items-center gap-1 bg-red-100 text-red-600 px-3 py-1 rounded-full text-sm">
+        <i class="pi pi-times-circle"></i> Not Paid
+      </span>
+      <span *ngIf="sponsorship?.paid" class="flex items-center gap-1 bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">
+        <i class="pi pi-check-circle"></i> Paid
+      </span>
+    </div>
+    <p class="text-base font-semibold ">
+        Info Page URL: 
+        <a [href]="sponsorship?.infoPageUrl" target="_blank" class="text-blue-600 underline">{{ sponsorship?.infoPageUrl }}</a>
+    </p>
+    <div class="flex flex-wrap justify-between items-center gap-2">
+        <div class="flex flex-col gap-2">
+            <p-button 
+            label="Info Page" 
+            icon="pi pi-info-circle" 
+            class="p-button-secondary self-start" 
+            (click)="goToInfoPage()">
+            </p-button>
+        </div>
+        <div class="flex flex-wrap justify-end gap-3">
+            <p-button label="Edit" icon="pi pi-pencil" (click)="editSponsorship()"></p-button>
+            <p-button label="Delete" icon="pi pi-trash" (click)="deleteSponsorship()"></p-button>
+        </div>
+    </div>
+  </div>
+</div>

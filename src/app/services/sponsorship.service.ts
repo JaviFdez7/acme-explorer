@@ -25,13 +25,13 @@ export class SponsorshipService {
     return this.sponsorshipsCollection.add(sponsorship.object);
   }
 
-  getSponsorshipById(id: string) {
+  getSponsorshipById(id: string): Observable<Sponsorship | undefined> {
     return runInInjectionContext(this.injector, () => {
       return this.sponsorshipsCollection.doc<Sponsorship>(id).valueChanges({ idField: 'id' });
     });
   }
 
-  updateSponsorship(sponsorship: Sponsorship, id: string): Promise<void> {
+  updateSponsorship(id: string, sponsorship: Sponsorship): Promise<void> {
     return this.sponsorshipsCollection.ref.doc(id).update(sponsorship.object);
   }
 }
