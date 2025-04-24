@@ -1,0 +1,29 @@
+<p-card styleClass="max-w-lg mx-auto p-6 card" *ngIf="sponsorshipConfigForm">
+  <div class="mb-4">
+    <p class="text-lg font-semibold">Current Price: {{ sponsorshipConfig.price.toFixed(2) }} €</p>
+  </div>
+  <form [formGroup]="sponsorshipConfigForm" (ngSubmit)="onUpdateSponsorshipConfig()">
+    <fieldset>
+      <legend class="text-xl font-semibold">Edit Sponsorship Configuration</legend>
+
+      <p-floatlabel variant="on" class="mt-4">
+        <label for="price">Price *</label>
+        <input
+          pInputText
+          id="price"
+          type="number"
+          formControlName="price"
+          class="mt-1 block w-full"
+        />
+      </p-floatlabel>
+      <small *ngIf="sponsorshipConfigForm.controls['price'].hasError('maxTwoDecimals') && sponsorshipConfigForm.controls['price'].touched" class="text-red-500">
+        Price must have at most two decimal places.
+      </small>
+      <small *ngIf="sponsorshipConfigForm.controls['price'].invalid && sponsorshipConfigForm.controls['price'].touched && !sponsorshipConfigForm.controls['price'].hasError('maxTwoDecimals')" class="text-red-500">
+        Price is required and must be a non-negative number.
+      </small>
+
+      <p-button type="submit" styleClass="w-full mt-4"> Update </p-button>
+    </fieldset>
+  </form>
+</p-card>

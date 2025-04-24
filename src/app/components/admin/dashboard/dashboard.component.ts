@@ -59,7 +59,6 @@ export class DashboardComponent implements OnInit {
         })
 
         this.dashboardService.getFindersStats().subscribe((stats: any) => {
-            console.log(stats);
             this.findersStats = stats;
         });
     }
