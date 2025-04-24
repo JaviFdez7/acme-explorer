@@ -76,6 +76,14 @@
         </div>
       </p-message>
     </div>
+    <div *ngIf="trip?.cancelation === '' && countdownConfig && !countdownCompleted" class="flex justify-center mt-6 mb-6">
+      <p-message severity="info" class="w-full max-w-3xl text-center shadow-md">
+        <div class="w-full text-center px-4 py-2">
+          Starts in
+          <countdown [config]="countdownConfig" (event)="handleCountdownEvent($event)"></countdown>
+        </div>
+      </p-message>
+    </div>
     <div class="flex flex-row justify-between items-center mb-2">
       <h6 class="text-2xl font-semibold">Stages</h6>
     </div>
