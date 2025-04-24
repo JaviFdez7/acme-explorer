@@ -1,6 +1,7 @@
 import { Injectable, EnvironmentInjector, inject, runInInjectionContext } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Sponsorship } from '../models/sponsorship';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +15,11 @@ export class SponsorshipService {
     this.sponsorshipsCollection = this.firestore.collection<Sponsorship>('sponsorships');
   }
 
-  getSponsorshipsBySponsor(sponsor: string) {
-    return this.firestore.collection<Sponsorship>('sponsorships', ref => ref.where('sponsor', '==', sponsor)).valueChanges({ idField: 'id' });
-  }
+  getSponsorshipsBySponsorId(sponsorId: string): Observable<Sponsorship[]> {
+    return runInInjectionContext(this.injector, () => {
+      return this.firestore.collection<Sponsorship>('sponsorships', ref => ref.where('sponsor', '==', sponsorId)).valueChanges({ idField: 'id' });
+    })
+  };
 
   createSponsorship(sponsorship: Sponsorship): Promise<unknown> {
     return this.sponsorshipsCollection.add(sponsorship.object);

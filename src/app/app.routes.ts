@@ -21,6 +21,7 @@ import { DashboardComponent } from './components/admin/dashboard/dashboard.compo
 import { ProfileComponent } from './components/security/profile/profile.component';
 import { ApplicationListManagerComponent } from './components/manager/application-list/application-list.component';
 import { SponsorshipCreateComponent } from './components/sponsor/sponsorship-create/sponsorship-create.component';
+import { SponsorshipListComponent } from './components/sponsor/sponsorship-list/sponsorship-list.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -45,7 +46,7 @@ export const routes: Routes = [
   { path: 'admin/dashboard', component: DashboardComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'admin' } },
   { path: 'admin/sponsor-configuration', component: TripDisplayComponent },
   { path: 'admin/explorer-analysis', component: TripDisplayComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'admin' } },
-  { path: 'sponsor/:id/sponsorships', component: TripDisplayComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'sponsor' } },
+  { path: 'sponsor/:id/sponsorships', component: SponsorshipListComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'sponsor' } },
   { path: 'sponsorship/create', component: SponsorshipCreateComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'sponsor' } },
   { path: 'sponsorship/:id', component: TripDisplayComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'sponsor' } },
   { path: 'sponsorship/:id/edit', component: TripDisplayComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'sponsor' } },
