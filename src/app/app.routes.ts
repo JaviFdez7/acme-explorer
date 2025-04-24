@@ -20,6 +20,7 @@ import { ApplicationDetailsComponent } from './components/application/applicatio
 import { DashboardComponent } from './components/admin/dashboard/dashboard.component';
 import { ProfileComponent } from './components/security/profile/profile.component';
 import { ApplicationListManagerComponent } from './components/manager/application-list/application-list.component';
+import { SponsorshipCreateComponent } from './components/sponsor/sponsorship-create/sponsorship-create.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -45,8 +46,8 @@ export const routes: Routes = [
   { path: 'admin/sponsor-configuration', component: TripDisplayComponent },
   { path: 'admin/explorer-analysis', component: TripDisplayComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'admin' } },
   { path: 'sponsor/:id/sponsorships', component: TripDisplayComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'sponsor' } },
+  { path: 'sponsorship/create', component: SponsorshipCreateComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'sponsor' } },
   { path: 'sponsorship/:id', component: TripDisplayComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'sponsor' } },
-  { path: 'sponsorship/create', component: TripDisplayComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'sponsor' } },
   { path: 'sponsorship/:id/edit', component: TripDisplayComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'sponsor' } },
   { path: 'register', component: RegisterExplorerComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'anonymous' } },
   { path: 'login', component: LoginComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'anonymous' } },

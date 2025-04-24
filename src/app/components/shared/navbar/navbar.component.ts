@@ -239,7 +239,7 @@ export class Navbar implements OnInit {
                             {
                                 label: 'Create Sponsorship',
                                 icon: 'pi pi-plus',
-                                command: () => this.router.navigate(['/sponsorships/create'])
+                                command: () => this.router.navigate(['/sponsorship/create'])
                             },
                             {
                                 label: 'My Sponsorships',
