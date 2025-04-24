@@ -2,6 +2,7 @@ import { Injectable, EnvironmentInjector, inject, runInInjectionContext } from '
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Sponsorship } from '../models/sponsorship';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -33,5 +34,15 @@ export class SponsorshipService {
 
   updateSponsorship(id: string, sponsorship: Sponsorship): Promise<void> {
     return this.sponsorshipsCollection.ref.doc(id).update(sponsorship.object);
+  }
+
+  getRandomPaidSponsorship(): Observable<Sponsorship> {
+    return runInInjectionContext(this.injector, () => {
+      return this.firestore.collection<Sponsorship>('sponsorships', ref => 
+        ref.where('paid', '==', true).where('deleted', '==', false)
+      ).valueChanges({ idField: 'id' }).pipe(
+        map(sponsorships => sponsorships[Math.floor(Math.random() * sponsorships.length)])
+      );
+    });
   }
 }

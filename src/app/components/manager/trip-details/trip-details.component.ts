@@ -15,10 +15,11 @@ import { Application } from '../../../models/application.model';
 import { ApplicationService } from '../../../services/application.service';
 import { Badge } from 'primeng/badge';
 import { CountdownConfig, CountdownModule } from 'ngx-countdown';
+import { SponsorshipBannerComponent } from '../../sponsor/sponsorship-banner/sponsorship-banner.component';
 
 @Component({
   selector: 'app-manager-trip-details',
-  imports: [ImageCarouselComponent, DividerModule, CommonModule, ButtonModule, MessageModule, TableModule, Badge, CountdownModule],
+  imports: [ImageCarouselComponent, DividerModule, CommonModule, ButtonModule, MessageModule, TableModule, Badge, CountdownModule, SponsorshipBannerComponent],
   templateUrl: './trip-details.component.html',
   styleUrl: './trip-details.component.css'
 })

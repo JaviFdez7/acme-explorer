@@ -14,10 +14,11 @@ import { AuthService } from '../../../services/auth.service';
 import { ButtonModule } from 'primeng/button';
 import { Router } from '@angular/router';
 import { CountdownConfig, CountdownModule } from 'ngx-countdown';
+import { SponsorshipBannerComponent } from '../../sponsor/sponsorship-banner/sponsorship-banner.component';
 
 @Component({
   selector: 'app-trip-details',
-  imports: [CommonModule, DividerModule, ImageCarouselComponent, MessageModule, ButtonModule, TableModule, CountdownModule],
+  imports: [CommonModule, DividerModule, ImageCarouselComponent, MessageModule, ButtonModule, TableModule, CountdownModule, SponsorshipBannerComponent],
   templateUrl: './trip-details.component.html',
   styleUrl: './trip-details.component.css'
 })
