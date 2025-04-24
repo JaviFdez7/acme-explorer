@@ -10,7 +10,7 @@ import { ButtonModule } from 'primeng/button';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
-import { Sponsorship } from '../../../models/sponsorship';
+import { Sponsorship } from '../../../models/sponsorship.model';
 
 @Component({
   selector: 'app-sponsorship-create',

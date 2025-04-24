@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Sponsorship } from '../../../models/sponsorship';
+import { Sponsorship } from '../../../models/sponsorship.model';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';

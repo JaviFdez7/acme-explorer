@@ -1,6 +1,6 @@
 import { Injectable, EnvironmentInjector, inject, runInInjectionContext } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Sponsorship } from '../models/sponsorship';
+import { Sponsorship } from '../models/sponsorship.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 

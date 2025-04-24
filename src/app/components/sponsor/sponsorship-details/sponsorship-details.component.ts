@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Sponsorship } from '../../../models/sponsorship';
+import { Sponsorship } from '../../../models/sponsorship.model';
 import { SponsorshipService } from '../../../services/sponsorship.service';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';

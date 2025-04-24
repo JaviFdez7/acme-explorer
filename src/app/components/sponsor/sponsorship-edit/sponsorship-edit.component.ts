@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SponsorshipService } from '../../../services/sponsorship.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Sponsorship } from '../../../models/sponsorship';
+import { Sponsorship } from '../../../models/sponsorship.model';
 import { CommonModule } from '@angular/common';
 import { CardModule } from 'primeng/card';
 import { FloatLabelModule } from 'primeng/floatlabel';
