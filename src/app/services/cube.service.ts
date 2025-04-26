@@ -107,6 +107,66 @@ export class CubeService {
         );
     }
 
+    getExplorersWithTripsBySpendingCondition(period: string, operator: string, value: number): Observable<{ explorerId: string, trips: Trip[] }[]> {
+        const now = new Date();
+        let startDate: Date;
+        let endDate: Date;
+
+        if (period.startsWith('M')) {
+            const months = parseInt(period.slice(1), 10);
+            startDate = new Date(now.getFullYear(), now.getMonth() - (months - 1), 1);
+            endDate = new Date(now.getFullYear(), now.getMonth() - (months - 1) + 1, 0);
+        } else if (period.startsWith('Y')) {
+            const years = parseInt(period.slice(1), 10);
+            startDate = new Date(now.getFullYear() - (years - 1), 0, 1);
+            endDate = new Date(now.getFullYear() - (years - 1), 11, 31);
+        } else {
+            throw new Error('Invalid period format. Use M01-M36 for months or Y01-Y03 for years.');
+        }
+
+        return this.applicationsCollection.pipe(
+            switchMap((applications: Application[]) =>
+                this.tripsCollection.pipe(
+                    map((trips: Trip[]) => {
+                        const explorerData: { [explorerId: string]: { spending: number, trips: Trip[] } } = {};
+
+                        applications
+                            .filter(app =>
+                                app.status === ApplicationStatus.ACCEPTED &&
+                                this.timestampToDate(app.date) >= startDate &&
+                                this.timestampToDate(app.date) <= endDate
+                            )
+                            .forEach(app => {
+                                const trip = trips.find(t => t.id === app.trip);
+                                if (trip) {
+                                    if (!explorerData[app.actor]) {
+                                        explorerData[app.actor] = { spending: 0, trips: [] };
+                                    }
+                                    explorerData[app.actor].spending += trip.price;
+                                    explorerData[app.actor].trips.push(trip);
+                                }
+                            });
+
+                        return Object.entries(explorerData)
+                            .filter(([_, data]) => {
+                                switch (operator) {
+                                    case 'equal': return data.spending === value;
+                                    case 'notEqual': return data.spending !== value;
+                                    case 'greaterThan': return data.spending > value;
+                                    case 'greaterThanOrEqual': return data.spending >= value;
+                                    case 'smallerThan': return data.spending < value;
+                                    case 'smallerThanOrEqual': return data.spending <= value;
+                                    default: throw new Error('Invalid comparison operator.');
+                                }
+                            })
+                            .map(([explorerId, data]) => ({ explorerId, trips: data.trips }));
+                    })
+                )
+            )
+        );
+    }
+
+
     private timestampToDate(timestamp: any): Date {
         if (timestamp.seconds) {
             return new Date(timestamp.seconds * 1000);
