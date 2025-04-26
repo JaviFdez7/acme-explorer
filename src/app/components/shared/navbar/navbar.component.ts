@@ -218,6 +218,11 @@ export class Navbar implements OnInit {
                                 label: 'Sponsorship Configuration',
                                 icon: 'pi pi-cog',
                                 command: () => this.router.navigate(['/admin/sponsorship-configuration'])
+                            },
+                            {
+                                label: 'Cube',
+                                icon: 'pi pi-stop',
+                                command: () => this.router.navigate(['/admin/cube'])
                             }
                         ]
                     }];

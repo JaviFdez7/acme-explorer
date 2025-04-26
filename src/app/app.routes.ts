@@ -25,6 +25,7 @@ import { SponsorshipListComponent } from './components/sponsor/sponsorship-list/
 import { SponsorshipDetailsComponent } from './components/sponsor/sponsorship-details/sponsorship-details.component';
 import { SponsorshipEditComponent } from './components/sponsor/sponsorship-edit/sponsorship-edit.component';
 import { SponsorshipConfigComponent } from './components/admin/sponsorship-config/sponsorship-config.component';
+import { CubeComponent } from './components/admin/cube/cube.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -48,7 +49,8 @@ export const routes: Routes = [
   { path: 'admin/create-user', component: RegisterComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'admin' } },
   { path: 'admin/dashboard', component: DashboardComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'admin' } },
   { path: 'admin/sponsorship-configuration', component: SponsorshipConfigComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'admin' } },
-  { path: 'admin/explorer-analysis', component: TripDisplayComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'admin' } },
+  { path: 'admin/sponsorship-configuration', component: SponsorshipConfigComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'admin' } },
+  { path: 'admin/cube', component: CubeComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'admin' } },
   { path: 'sponsor/:id/sponsorships', component: SponsorshipListComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'sponsor' } },
   { path: 'sponsorship/create', component: SponsorshipCreateComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'sponsor' } },
   { path: 'sponsorship/:id', component: SponsorshipDetailsComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'sponsor' } },
