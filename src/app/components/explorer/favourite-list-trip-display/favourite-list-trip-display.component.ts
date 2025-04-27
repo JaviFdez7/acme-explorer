@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -14,6 +14,8 @@ import { FavouriteListService } from '../../../services/favourite-list.service';
 export class FavouriteListTripDisplayComponent {
   @Input() trip: any;
   @Input() listId!: string;
+  currentChange: string = '$';
+
 
   constructor(private router: Router, private favouriteListService: FavouriteListService) {}
 

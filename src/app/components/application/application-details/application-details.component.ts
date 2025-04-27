@@ -15,6 +15,7 @@ import { IftaLabelModule } from 'primeng/iftalabel';
 import { TextareaModule } from 'primeng/textarea';
 import { MessageModule } from 'primeng/message';
 import { IPayPalConfig, ICreateOrderRequest, NgxPayPalModule } from 'ngx-paypal';
+import { LocateService } from '../../../services/locate.service';
 
 @Component({
   selector: 'app-application-details',
@@ -28,8 +29,9 @@ export class ApplicationDetailsComponent implements OnInit {
   protected cancelForm!: FormGroup;
   protected isVisibleCancelDialog = false;
   protected payPalConfig?: IPayPalConfig;
+  protected currentChange: string = '$';
 
-  constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService, private tripService: TripService, private applicationService: ApplicationService, private fb: FormBuilder) {
+  constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService, private tripService: TripService, private applicationService: ApplicationService, private fb: FormBuilder, private locateService: LocateService) {
     this.application = new Application("", "");
     this.trip = new Trip("", "", "", "", 0, new Date(), new Date(), [], []);
     this.cancelForm = new FormGroup({
@@ -74,6 +76,10 @@ export class ApplicationDetailsComponent implements OnInit {
           } as ICreateOrderRequest)
         }
       });
+    });
+
+    this.locateService.getCurrentLanguage().subscribe((lang) => {
+      this.currentChange = this.locateService.translate('€'); 
     });
   }
 

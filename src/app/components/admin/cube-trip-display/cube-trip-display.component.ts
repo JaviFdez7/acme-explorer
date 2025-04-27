@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Trip } from '../../../models/trip.model';
 import { ApplicationService } from '../../../services/application.service';
+import { LocateService } from '../../../services/locate.service';
 
 @Component({
   selector: 'app-cube-trip-display',
@@ -12,8 +13,10 @@ export class CubeTripDisplayComponent implements OnInit {
   @Input() explorerId!: string;
 
   applicationDate: Date | null = null;
+  currentChange: string = '$';
 
-  constructor(private applicationService: ApplicationService) {}
+
+  constructor(private applicationService: ApplicationService, private locateService: LocateService) {}
 
   ngOnInit(): void {
     this.applicationService.getApplicationByActorAndTrip(this.explorerId, this.trip.id).subscribe(applications => {
@@ -21,6 +24,10 @@ export class CubeTripDisplayComponent implements OnInit {
         const timestamp = applications[0].date;
         this.applicationDate = this.convertTimestampToDate(timestamp);
       }
+    })
+
+    this.locateService.getCurrentLanguage().subscribe((lang) => {
+      this.currentChange = this.locateService.translate('€'); 
     });
   }
 

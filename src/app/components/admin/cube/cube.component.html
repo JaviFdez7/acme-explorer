@@ -56,7 +56,7 @@
     <hr class="mt-2 mb-2" />
 
     <h5>Total Amount:</h5>
-    <p class="font-bold">{{ amountResult.toFixed(2) }} €</p>
+    <p class="font-bold">{{ amountResult.toFixed(2) }} {{this.currentChange}}</p>
     <hr class="mt-2 mb-2" />
     <p-accordion multiple="true" class="w-full" collapseIcon="pi pi-minus" expandIcon="pi pi-plus">
         <p-accordion-panel value="0">
@@ -132,7 +132,7 @@
       </small>
 
       <p-floatlabel variant="on" class="mt-4">
-        <label for="queryValue">Value (€):</label>
+        <label for="queryValue">Value ({{this.currentChange}}):</label>
         <input
           pInputText
           id="queryValue"
@@ -165,7 +165,7 @@
     <h5>Search Details:</h5>
     <p><strong>Period:</strong> {{ explorerQueryForm.value.queryPeriod }}</p>
     <p><strong>Operator:</strong> {{ explorerQueryForm.value.queryOperator }}</p>
-    <p><strong>Value:</strong> {{ explorerQueryForm.value.queryValue }} €</p>
+    <p><strong>Value:</strong> {{ explorerQueryForm.value.queryValue }} {{this.currentChange}}</p>
     <hr class="mt-2 mb-2" />
     <p-accordion multiple="true" class="w-full" collapseIcon="pi pi-minus" expandIcon="pi pi-plus">
       <p-accordion-panel value="0">

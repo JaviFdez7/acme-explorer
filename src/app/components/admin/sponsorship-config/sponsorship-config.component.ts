@@ -8,6 +8,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
+import { LocateService } from '../../../services/locate.service';
 
 @Component({
   selector: 'app-sponsorship-config',
@@ -29,16 +30,23 @@ export class SponsorshipConfigComponent implements OnInit {
   error: string | null = null;
   success: string | null = null;
   sponsorshipConfig!: SponsorshipConfig;
+  currentChange: string = '$';
 
   constructor(
     private fb: FormBuilder,
-    private sponsorshipConfigService: SponsorshipConfigService
+    private sponsorshipConfigService: SponsorshipConfigService,
+    private locateService: LocateService
   ) {}
+    
 
   ngOnInit() {
     this.sponsorshipConfigService.getOrCreateSponsorshipConfig().subscribe((config) => {
       this.sponsorshipConfig = config;
       this.createForm(config);
+    });
+
+    this.locateService.getCurrentLanguage().subscribe((lang) => {
+      this.currentChange = this.locateService.translate('€'); 
     });
   }
 

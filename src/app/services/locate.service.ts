@@ -11,15 +11,17 @@ export class LocateService {
             : 'en'
     );
 
+    
     changeLanguage = (lang: string) => {
         if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
             localStorage.setItem('locale', lang);
-            this.currentLanguage.next(lang); 
+            location.reload();
         } else {
             console.warn('localStorage is not available in this environment.');
-            this.currentLanguage.next(lang);
         }
+        localStorage.setItem('locale', lang);
     }
+
 
     getCurrentLanguage(): Observable<string> {
         return this.currentLanguage.asObservable();
@@ -48,7 +50,8 @@ export class LocateService {
             'Cube': { 'en': 'Cube', 'es': 'Cubo' },
             'Sponsor': { 'en': 'Sponsor', 'es': 'Patrocinador' },
             'Create Sponsorship': { 'en': 'Create Sponsorship', 'es': 'Crear Patrocinio' },
-            'My Sponsorships': { 'en': 'My Sponsorships', 'es': 'Mis Patrocinios' }
+            'My Sponsorships': { 'en': 'My Sponsorships', 'es': 'Mis Patrocinios' },
+            '€': { 'en': '$', 'es': '€' },
         };
 
         const lang = this.currentLanguage.value;

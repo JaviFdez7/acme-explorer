@@ -1,6 +1,6 @@
 <p-card styleClass="max-w-lg mx-auto p-6 card" *ngIf="sponsorshipConfigForm">
   <div class="mb-4">
-    <p class="text-lg font-semibold">Current Price: {{ sponsorshipConfig.price.toFixed(2) }} €</p>
+    <p class="text-lg font-semibold">Current Price: {{ sponsorshipConfig.price.toFixed(2) }} {{this.currentChange}}</p>
   </div>
   <form [formGroup]="sponsorshipConfigForm" (ngSubmit)="onUpdateSponsorshipConfig()">
     <fieldset>
