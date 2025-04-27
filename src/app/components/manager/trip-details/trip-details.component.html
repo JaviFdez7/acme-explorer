@@ -29,7 +29,7 @@
           </span>
         </div>
         <div class="text-right">
-          <span class="ms-4 text-xl font-medium">{{ trip?.price ?? 'N/A' }} €</span>
+          <span class="ms-4 text-xl font-medium">{{ trip?.price ?? 'N/A' }} {{this.currentChange}}</span>
         </div>
       </div>
       
@@ -99,7 +99,7 @@
         <tr>
           <td>{{ stage.title }}</td>
           <td>{{ stage.description }}</td>
-          <td>{{ stage.price }} €</td>
+          <td>{{ stage.price }} {{this.currentChange}}</td>
         </tr>
       </ng-template>
     </p-table>

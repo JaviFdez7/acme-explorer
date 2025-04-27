@@ -15,6 +15,7 @@ import { ButtonModule } from 'primeng/button';
 import { Router } from '@angular/router';
 import { CountdownConfig, CountdownModule } from 'ngx-countdown';
 import { SponsorshipBannerComponent } from '../../sponsor/sponsorship-banner/sponsorship-banner.component';
+import { LocateService } from '../../../services/locate.service';
 
 @Component({
   selector: 'app-trip-details',
@@ -28,13 +29,15 @@ export class TripDetailsComponent implements OnInit {
   countdownTime = 0;
   countdownConfig: CountdownConfig | null = null;
   countdownCompleted = false;
+  currentChange: string = '$';
 
   constructor(
     private tripService: TripService,
     private actorService: ActorService,
     private route: ActivatedRoute,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private locateService: LocateService
   ) { }
 
   ngOnInit() {
@@ -85,6 +88,10 @@ export class TripDetailsComponent implements OnInit {
         }
       });
     }
+
+    this.locateService.getCurrentLanguage().subscribe((lang) => {
+      this.currentChange = this.locateService.translate('€'); 
+    });
   }
 
   handleCountdownEvent(event: any) {

@@ -42,7 +42,6 @@ testem.log
 Thumbs.db
 
 # Environment variables
-environment*.ts
 
 # Firebase
 .firebase

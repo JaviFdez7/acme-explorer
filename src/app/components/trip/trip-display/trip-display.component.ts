@@ -7,6 +7,8 @@ import { Button } from 'primeng/button';
 import { Router } from '@angular/router';
 import { Actor } from '../../../models/actor.model';
 import { ActorService } from '../../../services/actor.service';
+import { LocateService } from '../../../services/locate.service';
+
 @Component({
   selector: 'app-trip-display',
   imports: [ImageCarouselComponent, CommonModule, CardModule, Button],
@@ -16,16 +18,20 @@ import { ActorService } from '../../../services/actor.service';
 export class TripDisplayComponent implements OnInit{
   @Input() trip: Trip;
   protected manager: Actor | undefined = undefined;
+  protected currentChange: string = '$';
 
-  constructor(private router: Router, private actorService: ActorService) {
+  constructor(private router: Router, private actorService: ActorService, private locateService: LocateService) {
     this.trip = new Trip("", "", "", "", 0, new Date(), new Date(),[],[]);
   }
 
   ngOnInit() {
     this.actorService.getActor(this.trip.manager).subscribe((actor: Actor | undefined) => {
       this.manager = actor || undefined;
-    }
-    );
+    });
+
+    this.locateService.getCurrentLanguage().subscribe((lang) => {
+      this.currentChange = this.locateService.translate('€'); 
+    });
   }
 
   getRequirements() {
