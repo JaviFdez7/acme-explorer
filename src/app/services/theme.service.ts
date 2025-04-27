@@ -139,14 +139,4 @@ export class ThemeService {
         });
         usePreset(newPreset);
     }
-
-    changeLanguage = (lang: string) => {
-        if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
-            localStorage.setItem('locale', lang);
-            location.reload();
-        } else {
-            console.warn('localStorage is not available in this environment.');
-        }
-        localStorage.setItem('locale', lang);
-    }
 }
