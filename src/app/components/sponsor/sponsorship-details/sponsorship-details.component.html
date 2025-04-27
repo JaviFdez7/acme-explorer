@@ -3,13 +3,16 @@
       <p-image src="{{sponsorship?.bannerUrl}}" alt="Image" [preview]="true" class="w-auto h-auto object-cover"></p-image>
   </div>
   <div class="w-full flex flex-col gap-4">
-    <div class="flex flex-row justify-center items-center">
+    <div class="flex flex-col justify-center items-center">
       <span *ngIf="!sponsorship?.paid" class="flex items-center gap-1 bg-red-100 text-red-600 px-3 py-1 rounded-full text-sm">
         <i class="pi pi-times-circle"></i> Not Paid
       </span>
       <span *ngIf="sponsorship?.paid" class="flex items-center gap-1 bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">
         <i class="pi pi-check-circle"></i> Paid
       </span>
+      <div class="w-1/2 mt-4">
+        <ngx-paypal *ngIf="!sponsorship?.paid && payPalConfig" class="mt-4" [config]="payPalConfig" ></ngx-paypal>
+      </div>
     </div>
     <p class="text-base font-semibold ">
         Info Page URL: 

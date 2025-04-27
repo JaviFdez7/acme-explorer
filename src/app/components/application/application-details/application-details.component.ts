@@ -78,7 +78,6 @@ export class ApplicationDetailsComponent implements OnInit {
   }
 
   initConfig(): void {
-    const total = this.trip?.price || 0;
     this.payPalConfig = {
       currency: 'EUR',
       clientId: 'ASD_DhyqRnbAHiqtC_V9C-qGxvlEREIQcOTtg7EhMKa984PI2bRJarwIpKRldpNEuZnagTpriBg3ZbeG',
