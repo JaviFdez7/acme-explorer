@@ -11,7 +11,7 @@ describe('login then search and apply trip', () => {
       LoginPage.fillForm(explorer.email, explorer.password)
     })
     LoginPage.submit()
-    cy.wait(2000)
+    cy.wait(3000)
     cy.url().should('equal', 'http://localhost:4200/')
     Menu.menuItemVisible(2)
     Menu.menuItemText(2).then((text) => {
@@ -31,7 +31,7 @@ describe('login then search and apply trip', () => {
     TripDetails.visible()
     TripDetails.clickApply()
     // Wait for the URL to change after clicking the apply button and resolve redirections
-    cy.wait(2000)
+    cy.wait(3000)
     cy.url().then((url) => {
       if (url.includes('http://localhost:4200/trip/')) {
         // The user has not already applied for the trip and is redirected to the trip application

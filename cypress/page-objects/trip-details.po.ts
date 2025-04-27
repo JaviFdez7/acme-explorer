@@ -6,7 +6,7 @@ class TripDetails {
 
   clickApply() {
     cy.get('app-trip-details')
-      .find('p-button button')
+      .find('p-button button').contains('Apply now')
       .click();
   }
 }
