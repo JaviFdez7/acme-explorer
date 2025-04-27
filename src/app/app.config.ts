@@ -15,6 +15,7 @@ import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { I18nModule } from './i18n.module';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -35,6 +36,8 @@ export const appConfig: ApplicationConfig = {
         }
     }),
     provideAnimationsAsync(),
-    provideAnimations(), 
+    provideAnimations(),
+    I18nModule.setLocale(),
+    I18nModule.setLocaleId(),
   ],
 };
