@@ -2,11 +2,11 @@
   <div class="p-2 flex flex-col gap-2 w-full">
     <div class="flex flex-row flex-wrap gap-1">
       <h3 class="text-lg font-bold">{{ favouriteList.name }}</h3>
-      <span *ngIf="isTripAdded()" class="flex items-center gap-1 bg-primary-50 text-primary-600 px-2 py-1 rounded-full text-sm">
+      <span *ngIf="isTripAdded()" class="flex items-center gap-1 bg-primary-50 text-primary-600 px-2 py-1 rounded-full text-sm" i18n>
         <i class="pi pi-check-circle text-base"></i> Trip already added
       </span>
     </div>
-    <p class="text-sm">Number of trips: {{ favouriteList.tripLinks?.length || 0 }}</p>
+    <p class="text-sm" i18n>Number of trips: {{ favouriteList.tripLinks?.length || 0 }}</p>
     <div class="flex flex-row justify-end items-center gap-2">
       <p-button label="Add" icon="pi pi-plus" class="p-button-secondary" (click)="addTripToList()"></p-button>
     </div>
