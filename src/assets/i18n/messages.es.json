@@ -19,6 +19,8 @@
     "6578397717654172779": "Página no encontrada",
     "3800907313482097374": "Lo sentimos, la página que buscas no existe o ha sido eliminada.",
     "1267391936361303948": "Volver al inicio",
-    "5520695424645717401": "Bienvenido a {$START_TAG_SPAN}ACME Explorer{$CLOSE_TAG_SPAN}"
+    "5520695424645717401": "Bienvenido a {$START_TAG_SPAN}ACME Explorer{$CLOSE_TAG_SPAN}",
+    "3511239665776204882": "Acceso denegado",
+    "3825494065265268776": "Acceso restringido al recurso: {$INTERPOLATION}"
   }
 }
