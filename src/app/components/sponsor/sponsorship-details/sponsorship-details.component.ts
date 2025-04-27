@@ -30,13 +30,13 @@ export class SponsorshipDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.initConfig();
     const sponsorshipId = this.route.snapshot.paramMap.get('id');
     if (sponsorshipId) {
       this.sponsorshipService.getSponsorshipById(sponsorshipId).subscribe((sponsorship) => {
         this.sponsorship = sponsorship;
         this.sponsorshipConfigService.getOrCreateSponsorshipConfig().subscribe((sponsorshipConfig) => {
           const price = sponsorshipConfig.price;
+          this.initConfig();
           if (this.payPalConfig) {
             this.payPalConfig.createOrderOnClient = (data) => ({
               intent: 'CAPTURE',
