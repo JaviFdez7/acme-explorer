@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { Button } from 'primeng/button';
 import { DataView } from 'primeng/dataview';
 import { FavouriteListTripDisplayComponent } from '../favourite-list-trip-display/favourite-list-trip-display.component';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-favourite-list-details',
@@ -21,7 +22,8 @@ export class FavouriteListDetailsComponent implements OnInit {
     private favouriteListService: FavouriteListService,
     private tripService: TripService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -47,7 +49,7 @@ export class FavouriteListDetailsComponent implements OnInit {
   deleteFavouriteList() {
     if (this.favouriteList) {
       this.favouriteListService.deleteList(this.favouriteList.id).then(() => {
-        this.router.navigate(['explorer/favourite-lists']);
+        this.router.navigate(['explorer/' + this.authService.getCurrentActor()?.id + '/favourite-lists']);
       });
     }
   }
