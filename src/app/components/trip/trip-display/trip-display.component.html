@@ -15,9 +15,9 @@
           {{trip.title}}
         </h6>
         <span *ngIf="trip?.cancelation !== ''" class="flex items-center gap-1 bg-primary-50 text-primary-600 px-2 py-1 rounded-full text-sm">
-          <i class="pi pi-times-circle text-base"></i> Cancelled
+          <i class="pi pi-times-circle text-base" i18n></i> Cancelled
         </span>
-        <span *ngIf="trip?.cancelation === '' && startsInLessThanAWeek()" class="flex items-center gap-1 bg-yellow-200 text-yellow-700 px-2 py-1 rounded-full text-sm">
+        <span *ngIf="trip?.cancelation === '' && startsInLessThanAWeek()" class="flex items-center gap-1 bg-yellow-200 text-yellow-700 px-2 py-1 rounded-full text-sm" i18n>
           <i class="pi pi-exclamation-circle text-base"></i> It starts soon
         </span>
       </div>
@@ -31,7 +31,7 @@
     </p>
 
     <hr class="border mt-4">
-    <p class="text-left text-[14px] font-normal">
+    <p class="text-left text-[14px] font-normal" i18n>
       From {{getStartDate('en')}} to {{getEndDate('en')}}
     </p>
     <p class="text-left text-xs font-light">{{trip.ticker}}</p>
