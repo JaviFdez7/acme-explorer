@@ -1,0 +1,31 @@
+<div class="search-container flex justify-between items-center w-full px-4">
+  <div class="w-1/3"></div>
+
+  <div class="flex items-center space-x-2 w-1/3 justify-center">
+    <p-iconfield iconPosition="left">
+      <p-inputicon styleClass="pi pi-search" />
+      <input type="text" pInputText placeholder="Search" [(ngModel)]="searchQuery" />
+    </p-iconfield>
+    <p-button icon="pi pi-times" class="" (click)="clearSearch()"></p-button>
+  </div>
+
+  <div class="w-1/3 flex justify-end pr-6">
+    <p-button icon="pi pi-plus" class="p-button-primary" label="Create" (click)="createFavouriteList()"></p-button>
+  </div>
+</div>
+
+<p-dataView 
+  [value]="filteredFavouriteLists()" 
+  #dv 
+  [paginator]="true" 
+  [rows]="9">
+  <ng-template #list let-favouriteLists>
+    <div class="flex  justify-center ">
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+        <div *ngFor="let favouriteList of favouriteLists">
+          <app-favourite-list-add-display [favouriteList]="favouriteList" [tripId]="tripId"></app-favourite-list-add-display>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-dataView>

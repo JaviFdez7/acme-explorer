@@ -18,13 +18,12 @@ export class FavouriteListService {
     this.initializeFavouriteLists();
   }
 
-  private async initializeFavouriteLists(): Promise<void> {
+  async initializeFavouriteLists(): Promise<void> { 
     const userId = this.authService.getCurrentActor()?.id;
     if (!userId) return;
 
     const userLists = await this.getUserLists();
-    if (!userLists.length) {
-      // Create a new entry for the user if it doesn't exist
+    if (!await this.existUserEntry()) {
       const newUserEntry = {
         id: userId,
         favouriteList: []
@@ -33,6 +32,19 @@ export class FavouriteListService {
     }
 
     this.favouriteListsSubject.next(userLists || []);
+  }
+
+  private async existUserEntry(): Promise<boolean> {
+    const userId = this.authService.getCurrentActor()?.id;
+    if (!userId) return false;
+
+    try {
+      const response = await axios.get<{ id: string }[]>(backendURL);
+      return response.data.some(entry => entry.id === userId);
+    } catch (error) {
+      console.error("Error checking user entry:", error);
+      return false;
+    }
   }
 
   private getLocalData(): FavouriteList[] {
@@ -130,5 +142,19 @@ export class FavouriteListService {
     this.favouriteListsSubject.next(lists.filter(list => !list.deleted));
     await this.syncToServer(lists);
   }
-  
+
+  async addTripToList(listId: string, tripId: string): Promise<void> {
+    const lists = this.getLocalData().map(list => {
+      if (list.id === listId) {
+        const updatedTripLinks = list.tripLinks?.includes(tripId)
+          ? list.tripLinks
+          : [...(list.tripLinks ?? []), tripId];
+        return new FavouriteList(list.id, list.name, updatedTripLinks, list.version, list.deleted);
+      }
+      return list;
+    });
+    this.saveLocalData(lists);
+    this.favouriteListsSubject.next(lists.filter(list => !list.deleted));
+    await this.syncToServer(lists);
+  }
 }

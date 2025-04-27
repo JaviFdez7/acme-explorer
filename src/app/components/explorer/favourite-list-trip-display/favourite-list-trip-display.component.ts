@@ -32,13 +32,11 @@ export class FavouriteListTripDisplayComponent {
   }
 
   goDetails() {
-    console.log('Navigating to trip details:', this.listId, this.trip.id);
     this.router.navigate(['/trip', this.trip.id]);
   }
 
   deleteTrip() {
     this.favouriteListService.deleteTripFromList(this.listId, this.trip.id).then(() => {
-      console.log('Trip deleted from favourite list successfully');
     })
   }
 

@@ -63,6 +63,7 @@ export class AuthService {
       await signOut(this.auth);
       if (typeof localStorage !== 'undefined') {
         localStorage.removeItem('user');
+        localStorage.removeItem('favourite_lists');
       }
       this.loginStatus.next(false);
       console.log('User logged out');
