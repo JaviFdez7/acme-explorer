@@ -40,6 +40,10 @@
         >Password is required</small
       >
 
+      <small *ngIf="loginError" class="text-red-500">
+        Username or password are incorrect.
+      </small>
+
       <p-button type="submit" styleClass="w-full mt-4"> Log in </p-button>
     </fieldset>
   </form>

@@ -25,6 +25,13 @@ import { SponsorshipListComponent } from './components/sponsor/sponsorship-list/
 import { SponsorshipDetailsComponent } from './components/sponsor/sponsorship-details/sponsorship-details.component';
 import { SponsorshipEditComponent } from './components/sponsor/sponsorship-edit/sponsorship-edit.component';
 import { SponsorshipConfigComponent } from './components/admin/sponsorship-config/sponsorship-config.component';
+import { CubeComponent } from './components/admin/cube/cube.component';
+import { FavouriteListListComponent } from './components/explorer/favourite-list-list/favourite-list-list.component';
+import { FavouriteListDetailsComponent } from './components/explorer/favourite-list-details/favourite-list-details.component';
+import { FavouriteListCreateComponent } from './components/explorer/favourite-list-create/favourite-list-create.component';
+import { FavouriteListEditComponent } from './components/explorer/favourite-list-edit/favourite-list-edit.component';
+import { FavouriteListAddComponent } from './components/explorer/favourite-list-add/favourite-list-add.component';
+
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -40,7 +47,11 @@ export const routes: Routes = [
   { path: 'explorer/:id/applications', component: ApplicationListComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'explorer' } },
   { path: 'explorer/:id/applications/:applicationId', component: ApplicationDetailsComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'explorer' } },
   { path: 'explorer/:id/applications/:applicationId/edit', component: ApplicationDetailsComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'explorer' } },
-  { path: 'explorer/:id/favorites', component: TripDisplayComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'explorer' } },
+  { path: 'explorer/:id/favourite-lists', component: FavouriteListListComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'explorer' } },
+  { path: 'favourite-list/add/:id', component: FavouriteListAddComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'explorer' } },
+  { path: 'favourite-list/create', component: FavouriteListCreateComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'explorer' } },
+  { path: 'favourite-list/:id', component: FavouriteListDetailsComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'explorer' } },
+  { path: 'favourite-list/:id/edit', component: FavouriteListEditComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'explorer' } },
   { path: 'manager/:id/trips', component: ManagerTripListComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'manager' } },
   { path: 'manager/:id/trip/:tripId/edit', component: ManagerTripEditComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'manager' } },
   { path: 'manager/:id/trip/:tripId/cancel', component: ManagerTripCancelComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'manager' } },
@@ -48,7 +59,8 @@ export const routes: Routes = [
   { path: 'admin/create-user', component: RegisterComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'admin' } },
   { path: 'admin/dashboard', component: DashboardComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'admin' } },
   { path: 'admin/sponsorship-configuration', component: SponsorshipConfigComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'admin' } },
-  { path: 'admin/explorer-analysis', component: TripDisplayComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'admin' } },
+  { path: 'admin/sponsorship-configuration', component: SponsorshipConfigComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'admin' } },
+  { path: 'admin/cube', component: CubeComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'admin' } },
   { path: 'sponsor/:id/sponsorships', component: SponsorshipListComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'sponsor' } },
   { path: 'sponsorship/create', component: SponsorshipCreateComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'sponsor' } },
   { path: 'sponsorship/:id', component: SponsorshipDetailsComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'sponsor' } },

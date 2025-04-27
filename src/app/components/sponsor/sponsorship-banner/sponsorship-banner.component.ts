@@ -8,7 +8,7 @@ import { Sponsorship } from '../../../models/sponsorship.model';
   styleUrls: ['./sponsorship-banner.component.css']
 })
 export class SponsorshipBannerComponent implements OnInit {
-  sponsorship!: Sponsorship;
+  sponsorship: Sponsorship | null = null;
 
   constructor(private sponsorshipService: SponsorshipService) {}
 

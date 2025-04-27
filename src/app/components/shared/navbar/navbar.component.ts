@@ -170,9 +170,9 @@ export class Navbar implements OnInit {
                                     command: () => this.router.navigate([`/explorer/${this.currentActor?.id}/applications`])
                                 },
                                 {
-                                    label: 'My Favorites',
+                                    label: 'My Favourite Lists',
                                     icon: 'pi pi-heart',
-                                    command: () => this.router.navigate([`/explorer/${this.currentActor?.id}/favorites`])
+                                    command: () => this.router.navigate([`/explorer/${this.currentActor?.id}/favourite-lists`])
                                 }
                             ]
                         }
@@ -218,6 +218,11 @@ export class Navbar implements OnInit {
                                 label: 'Sponsorship Configuration',
                                 icon: 'pi pi-cog',
                                 command: () => this.router.navigate(['/admin/sponsorship-configuration'])
+                            },
+                            {
+                                label: 'Cube',
+                                icon: 'pi pi-stop',
+                                command: () => this.router.navigate(['/admin/cube'])
                             }
                         ]
                     }];

@@ -44,6 +44,11 @@ export class SponsorshipEditComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.sponsorshipForm = this.fb.group({
+      bannerUrl: ['', [Validators.required]],
+      infoPageUrl: ['', [Validators.required]],
+    });
+
     this.sponsorshipId = this.route.snapshot.paramMap.get('id') || '';
     if (this.sponsorshipId) {
       this.sponsorshipService.getSponsorshipById(this.sponsorshipId).subscribe((sponsorship) => {

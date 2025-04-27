@@ -1,0 +1,205 @@
+<p-card styleClass="max-w-lg mx-auto p-6 card">
+  <form [formGroup]="spendingForm" (ngSubmit)="getAmountSpent()">
+    <fieldset>
+      <legend class="text-xl font-semibold">Explorer Spending Cube</legend>
+
+      <p-floatlabel variant="on" class="mt-4">
+        <label for="selectedExplorer">Explorer ID</label>
+        <input
+          pInputText
+          id="selectedExplorer"
+          type="text"
+          formControlName="selectedExplorer"
+          class="mt-1 block w-full"
+        />
+      </p-floatlabel>
+      <small *ngIf="spendingForm.controls['selectedExplorer'].invalid && spendingForm.controls['selectedExplorer'].touched" class="text-red-500">
+        Explorer ID is required.
+      </small>
+
+      <p-floatlabel variant="on" class="mt-4">
+        <label for="selectedPeriod">Period (M01 - M36, Y01 - Y03)</label>
+        <input
+          pInputText
+          id="selectedPeriod"
+          type="text"
+          formControlName="selectedPeriod"
+          class="mt-1 block w-full"
+        />
+      </p-floatlabel>
+      <small *ngIf="spendingForm.controls['selectedPeriod'].invalid && spendingForm.controls['selectedPeriod'].touched" class="text-red-500">
+        Invalid format. Use M01–M36 or Y01–Y03.
+      </small>
+
+      <p-button 
+        *ngIf="!spendingSearchSubmitted" 
+        type="submit" 
+        styleClass="w-full mt-4">
+        Search
+      </p-button>
+      <p-button 
+        *ngIf="spendingSearchSubmitted" 
+        type="button" 
+        styleClass="w-full mt-4" 
+        (click)="resetSpendingSearch()">
+        Reset
+      </p-button>
+    </fieldset>
+  </form>
+
+  <div *ngIf="spendingSearchSubmitted && amountResult !== null" class="mt-4">
+    <h5>Search Details:</h5>
+    <p><strong>Explorer ID:</strong> {{ spendingForm.value.selectedExplorer }}</p>
+    <p><strong>Period:</strong> {{ spendingForm.value.selectedPeriod }}</p>
+    <p><strong>Initial Date:</strong> {{ searchDetails?.startDate | date: 'longDate' }}</p>
+    <p><strong>End Date:</strong> {{ searchDetails?.endDate | date: 'longDate' }}</p>
+    <hr class="mt-2 mb-2" />
+
+    <h5>Total Amount:</h5>
+    <p class="font-bold">{{ amountResult.toFixed(2) }} €</p>
+    <hr class="mt-2 mb-2" />
+    <p-accordion multiple="true" class="w-full" collapseIcon="pi pi-minus" expandIcon="pi pi-plus">
+        <p-accordion-panel value="0">
+          <p-accordion-header>
+            <span class="flex items-center gap-2 w-full">
+              <p-badge value="{{ tripsResult.length }}" class="!bg-primary-400 mr-2"></p-badge>
+              <span class="font-bold whitespace-nowrap">Trips</span>
+            </span>
+          </p-accordion-header>
+          <p-accordion-content>
+            <div *ngIf="tripsResult.length > 0">
+              <p-dataView
+                #dv
+                [value]="tripsResult"
+                [paginator]="true"
+                [rows]="3"
+              >
+                <ng-template #list let-tripsResult>
+                  <div class="grid grid-cols-1 gap-4">
+                    <div *ngFor="let trip of tripsResult">
+                      <app-cube-trip-display
+                        [explorerId]="spendingForm.value.selectedExplorer"
+                        [trip]="trip">
+                      </app-cube-trip-display>
+                    </div>
+                  </div>
+                </ng-template>
+              </p-dataView>
+            </div>
+            <div *ngIf="tripsResult.length === 0" class="text-center text-muted">
+              No spending found for this explorer in the selected period.
+            </div>
+          </p-accordion-content>
+        </p-accordion-panel>
+    </p-accordion>
+  </div>
+</p-card>
+
+<p-card styleClass="max-w-lg mx-auto p-6 card mt-4">
+  <form [formGroup]="explorerQueryForm" (ngSubmit)="getExplorersByCondition()">
+    <fieldset>
+      <legend class="text-xl font-semibold">Explorers Matching Spending Criteria</legend>
+
+      <p-floatlabel variant="on" class="mt-4">
+        <label for="queryPeriod">Period (M01 - M36, Y01 - Y03):</label>
+        <input
+          pInputText
+          id="queryPeriod"
+          type="text"
+          formControlName="queryPeriod"
+          class="mt-1 block w-full"
+        />
+      </p-floatlabel>
+      <small *ngIf="explorerQueryForm.controls['queryPeriod'].invalid && explorerQueryForm.controls['queryPeriod'].touched" class="text-red-500">
+        Invalid format. Use M01–M36 or Y01–Y03.
+      </small>
+
+      <p-dropdown
+        [options]="[ 
+          { label: 'Equal', value: 'equal' },
+          { label: 'Not Equal', value: 'notEqual' },
+          { label: 'Greater Than', value: 'greaterThan' },
+          { label: 'Greater Than or Equal', value: 'greaterThanOrEqual' },
+          { label: 'Smaller Than', value: 'smallerThan' },
+          { label: 'Smaller Than or Equal', value: 'smallerThanOrEqual' }
+        ]"
+        formControlName="queryOperator"
+        placeholder="Select Operator"
+        class="mt-4 block w-full"
+      ></p-dropdown>
+      <small *ngIf="explorerQueryForm.controls['queryOperator'].invalid && explorerQueryForm.controls['queryOperator'].touched" class="text-red-500">
+        Operator is required.
+      </small>
+
+      <p-floatlabel variant="on" class="mt-4">
+        <label for="queryValue">Value (€):</label>
+        <input
+          pInputText
+          id="queryValue"
+          type="number"
+          formControlName="queryValue"
+          class="mt-1 block w-full"
+        />
+      </p-floatlabel>
+      <small *ngIf="explorerQueryForm.controls['queryValue'].invalid && explorerQueryForm.controls['queryValue'].touched" class="text-red-500">
+        Value is required, must be greater than 0, and can have at most 2 decimal places.
+      </small>
+
+      <p-button 
+        *ngIf="!explorerSearchSubmitted" 
+        type="submit" 
+        styleClass="w-full mt-4">
+        Search
+      </p-button>
+      <p-button 
+        *ngIf="explorerSearchSubmitted" 
+        type="button" 
+        styleClass="w-full mt-4" 
+        (click)="resetExplorerSearch()">
+        Reset
+      </p-button>
+    </fieldset>
+  </form>
+
+  <div *ngIf="explorerSearchSubmitted" class="mt-4">
+    <h5>Search Details:</h5>
+    <p><strong>Period:</strong> {{ explorerQueryForm.value.queryPeriod }}</p>
+    <p><strong>Operator:</strong> {{ explorerQueryForm.value.queryOperator }}</p>
+    <p><strong>Value:</strong> {{ explorerQueryForm.value.queryValue }} €</p>
+    <hr class="mt-2 mb-2" />
+    <p-accordion multiple="true" class="w-full" collapseIcon="pi pi-minus" expandIcon="pi pi-plus">
+      <p-accordion-panel value="0">
+        <p-accordion-header>
+          <span class="flex items-center gap-2 w-full">
+            <p-badge [value]="explorersWithTrips.length" class="!bg-primary-400 mr-2"></p-badge>
+            <span class="font-bold whitespace-nowrap">Explorers</span>
+          </span>
+        </p-accordion-header>
+        <p-accordion-content>
+          <div *ngIf="explorersWithTrips.length > 0">
+            <p-dataView
+              #dv
+              [value]="explorersWithTrips"
+              [paginator]="true"
+              [rows]="3"
+            >
+              <ng-template #list let-explorersWithTrips>
+                <div class="grid grid-cols-1 gap-4">
+                  <div *ngFor="let explorer of explorersWithTrips">
+                    <app-cube-explorer-display
+                      [explorerId]="explorer.explorerId"
+                      [trips]="explorer.trips">
+                    </app-cube-explorer-display>
+                  </div>
+                </div>
+              </ng-template>
+            </p-dataView>
+          </div>
+          <div *ngIf="explorersWithTrips.length === 0" class="text-center text-muted">
+            No explorers found matching the spending criteria in the selected period.
+          </div>
+        </p-accordion-content>
+      </p-accordion-panel>
+    </p-accordion>
+  </div>
+</p-card>

@@ -136,6 +136,12 @@ export class TripDetailsComponent implements OnInit {
     }
   }
 
+  goAddToList() {
+    if (this.trip && this.trip.id) {
+      this.router.navigate(['/favourite-list', 'add', this.trip.id]);
+    }
+  }
+
   getEndDate(lan: string) {
     if (!this.trip?.endDate) return 'N/A';
     try {
