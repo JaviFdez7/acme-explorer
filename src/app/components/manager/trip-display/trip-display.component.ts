@@ -45,7 +45,8 @@ export class ManagerTripDisplayComponent implements OnInit{
   getStartDate(lan: string) {
     const rawDate: Date | { seconds: number } = this.trip.startDate as Date | { seconds: number };
     const date = rawDate instanceof Date ? rawDate : new Date(rawDate.seconds * 1000);
-    const formatter = new Intl.DateTimeFormat(lan, { day: 'numeric', month: 'long', year: 'numeric' });
+    const language = this.locateService.getCurrentLanguageValue();
+    const formatter = new Intl.DateTimeFormat(language, { day: 'numeric', month: 'long', year: 'numeric' });
     return formatter.format(date);
   }
   
@@ -53,7 +54,8 @@ export class ManagerTripDisplayComponent implements OnInit{
   getEndDate(lan: string) {
     const rawDate: Date | { seconds: number } = this.trip.endDate as Date | { seconds: number };
     const date = rawDate instanceof Date ? rawDate : new Date(rawDate.seconds * 1000);
-    const formatter = new Intl.DateTimeFormat(lan, { day: 'numeric', month: 'long', year: 'numeric' });
+    const language = this.locateService.getCurrentLanguageValue();
+    const formatter = new Intl.DateTimeFormat(language, { day: 'numeric', month: 'long', year: 'numeric' });
     return formatter.format(date);
   }
 

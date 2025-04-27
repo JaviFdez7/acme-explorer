@@ -27,6 +27,10 @@ export class LocateService {
         return this.currentLanguage.asObservable();
     }
 
+    getCurrentLanguageValue(): string {
+        return this.currentLanguage.value;
+    }
+
     translate(key: string): string {
         const translations: { [key: string]: { [lang: string]: string } } = {
             'Home': { 'en': 'Home', 'es': 'Inicio' },

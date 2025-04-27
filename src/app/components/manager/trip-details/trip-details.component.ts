@@ -127,7 +127,8 @@ export class ManagerTripDetailsComponent implements OnInit{
             ? this.trip.startDate.toDate() 
             : new Date(this.trip.startDate); 
 
-        const formatter = new Intl.DateTimeFormat(lan, { day: 'numeric', month: 'long', year: 'numeric' });
+        const language = this.locateService.getCurrentLanguageValue();
+        const formatter = new Intl.DateTimeFormat(language, { day: 'numeric', month: 'long', year: 'numeric' });
         return formatter.format(date);
     } catch (error) {
         console.error('Error formatting start date:', error);
@@ -143,7 +144,8 @@ export class ManagerTripDetailsComponent implements OnInit{
             ? this.trip.endDate.toDate() 
             : new Date(this.trip.endDate); 
 
-        const formatter = new Intl.DateTimeFormat(lan, { day: 'numeric', month: 'long', year: 'numeric' });
+        const language = this.locateService.getCurrentLanguageValue();
+        const formatter = new Intl.DateTimeFormat(language, { day: 'numeric', month: 'long', year: 'numeric' });
         return formatter.format(date);
     }
     catch (error) {
