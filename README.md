@@ -1,7 +1,5 @@
 # AcmeExplorer
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.1.
-
 ## Node version
 
 The current version used for the project is v22.14.0
@@ -12,43 +10,35 @@ If you are using nvm, run:
 nvm use
 ```
 
+## Installation
+To install the project dependencies, run:
+
+```bash
+npm install
+```
+
+## Configuration
+
+The project is using firebase for authentication and storage. You can find the configuration in the `src/environments/environment*.ts` file.
+
+Our configuration has been uploaded to the repository for the sake of evaluation.
+
 ## Development server
 
 To start a local development server, run:
 
 ```bash
-ng serve
+npm start
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+> **IMPORTANT:** 
+Use this command to start the server instead of `ng serve` to ensure that both the Angular application and the json-server are running simultaneously. json-server is used for the favourites feature.
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Once the server is running, open your browser and navigate to `http://localhost:4200/`.
 
 ## Running unit tests
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+To execute unit tests use the following command:
 
 ```bash
 ng test
@@ -59,11 +49,67 @@ ng test
 For end-to-end (e2e) testing, run:
 
 ```bash
-ng e2e
+npm start
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Then open a new terminal and run:
 
-## Additional Resources
+```bash
+npx cypress open
+```
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+This will open the Cypress Test Runner, where you can run the end-to-end tests.
+
+## Credentials
+
+You can use the following credentials to log in:
+
+#### Admin
+- Email: `admin@admin.com`
+- Password: `password`
+
+#### Manager
+- Email: `manager@manager.com`
+- Password: `password`
+
+#### Explorer
+- Email: `explorer@explorer.com`
+- Password: `password`
+
+#### Sponsor
+- Email: `sponsor@sponsor.com`
+- Password: `password`
+
+#### Paypal
+- Email: `acmeexplorer@personal.example.com`
+- Password: `acmeexplorer`
+
+## Features
+
+The features of the application are those aligned with the `level A` of the guidelines, as well as other extra features. The following list summarizes the features of the application:
+- **Level A**: All features aligned with the level A of the guidelines.
+- **Extra features**: 
+  - ***Tailwind***: CSS framework for styling.
+  - ***PrimeNG***: UI component library for Angular.
+  - ***Configurable theme***: The application allows you to change the theme of the application.
+  - ***Firebase & json-server***: The application uses both Firebase and json-server for data storage. Favourites are stored in json-server, while Firebase is used for authentication and other data.
+  - ***Angular 19***: The application uses the latest version of Angular as of the date of the project creation.
+
+## Considerations
+
+As we are using Firebase for authentication, and onAuthStateChanged function provided by Firebase for authentication state, we are not in control of how the authentication state is managed.
+
+This translates to the fact that when loging in or registering, a cookie is created and the user is perceived as logged in ([Firebase v3 eliminated the ability to create users from the client side without logging out the current user](https://groups.google.com/g/firebase-talk/c/zYatdVy1QfU/m/b-qI7iWeAAAJ)).
+
+This is a limitation that affects the user creation process for an administrator, as registering a user means that the administrator will be automatically logged in as that user.
+
+For this reason, the administrator is logged out after registering a user, so that the administrator can log in as the administrator again.
+
+The solution to this problem is to use a custom authentication system, which is not in the scope of this project.
+
+#### References
+- [StackOverflow: Firebase Auth issue when registering users, automatic sign in when register?](https://stackoverflow.com/questions/68296369/firebase-auth-issue-when-registering-users-automatic-sign-in-when-register)
+
+- [StackOverflow: How to prevent automatic log in after creating a new user on Firebase without using signOut() method](https://stackoverflow.com/questions/76818228/how-to-prevent-automatic-log-in-after-creating-a-new-user-on-firebase-without-us)
+
+- [Firebase v3 eliminated the ability to create users from the client side without logging out the current user.](https://groups.google.com/g/firebase-talk/c/zYatdVy1QfU/m/b-qI7iWeAAAJ)
