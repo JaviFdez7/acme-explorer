@@ -104,10 +104,12 @@ export class Navbar implements OnInit {
                 {
                     label: 'ESP',
                     icon: 'pi pi-flag',
+                    command: () => this.themeService.changeLanguage('es')
                 },
                 {
                     label: 'ENG',
                     icon: 'pi pi-flag',
+                    command: () => this.themeService.changeLanguage('en')
                 },
             ];
 
