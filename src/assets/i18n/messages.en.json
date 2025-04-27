@@ -45,7 +45,13 @@
     "7122496560808603862": "Phone must be a valid number",
     "7541853859084507047": "Email is required",
     "9132547751630599796": "Password is required",
-    "2436771052425270894": "Password must be at least 6 characters long"
+    "2436771052425270894": "Password must be at least 6 characters long",
+    "2336550011721758066": "Log in",
+    "9181889580801594086": "Not registered yet?",
+    "3301086086650990787": "Register",
+    "8552587679160911578": "Email is required",
+    "205044832662301680": "Password is required",
+    "292299591305972105": "Username or password are incorrect."
     
   }
 }

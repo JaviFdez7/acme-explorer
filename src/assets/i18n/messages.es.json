@@ -45,6 +45,12 @@
     "7122496560808603862": "El teléfono debe ser un número válido",
     "7541853859084507047": "El correo electrónico es requerido",
     "9132547751630599796": "La contraseña es requerida",
-    "2436771052425270894": "La contraseña debe tener al menos 6 caracteres"
+    "2436771052425270894": "La contraseña debe tener al menos 6 caracteres",
+    "2336550011721758066": "Iniciar sesión",
+    "9181889580801594086": "¿Aún no estás registrado?",
+    "3301086086650990787": "Registrarse",
+    "8552587679160911578": "El correo electrónico es requerido",
+    "205044832662301680": "La contraseña es requerida",
+    "292299591305972105": "El nombre de usuario o la contraseña son incorrectos."
   }
 }
