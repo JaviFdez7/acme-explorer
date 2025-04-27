@@ -32,6 +32,19 @@
     "8894377483833272091": "Precio",
     "8224277155548697322": "{$START_ITALIC_TEXT}{$CLOSE_ITALIC_TEXT} Comienza pronto",
     "3672504354725367308": "Expiración de caché (horas):",
-    "7543197393905881956": "Resultados máximos:"
+    "7543197393905881956": "Resultados máximos:",
+    "7744292213705278878": "Perfil de usuario",
+    "5141773353492911855": "Nombre *",
+    "5457186091803877491": "Apellido *",
+    "2458848059908306406": "Teléfono",
+    "6304432362546770951": "Dirección",
+    "1585425644523299468": "Correo electrónico *",
+    "3835911414774235957": "Contraseña *",
+    "4042902315677630519": "El nombre es requerido",
+    "2622153018190993038": "El apellido es requerido",
+    "7122496560808603862": "El teléfono debe ser un número válido",
+    "7541853859084507047": "El correo electrónico es requerido",
+    "9132547751630599796": "La contraseña es requerida",
+    "2436771052425270894": "La contraseña debe tener al menos 6 caracteres"
   }
 }

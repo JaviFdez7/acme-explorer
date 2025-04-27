@@ -32,7 +32,20 @@
     "8894377483833272091": "Price",
     "8224277155548697322": "{$START_ITALIC_TEXT}{$CLOSE_ITALIC_TEXT} It starts soon",
     "3672504354725367308": "Cache Expiration (hours):",
-    "7543197393905881956": "Max Results:"
+    "7543197393905881956": "Max Results:",
+    "7744292213705278878": "User Profile",
+    "5141773353492911855": "Name *",
+    "5457186091803877491": "Surname *",
+    "2458848059908306406": "Telephone",
+    "6304432362546770951": "Address",
+    "1585425644523299468": "Email *",
+    "3835911414774235957": "Password *",
+    "4042902315677630519": "Name is required",
+    "2622153018190993038": "Surname is required",
+    "7122496560808603862": "Phone must be a valid number",
+    "7541853859084507047": "Email is required",
+    "9132547751630599796": "Password is required",
+    "2436771052425270894": "Password must be at least 6 characters long"
     
   }
 }
