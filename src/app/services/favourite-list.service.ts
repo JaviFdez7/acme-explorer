@@ -25,15 +25,19 @@ export class FavouriteListService {
 
   private getLocalData(): FavouriteList[] {
     const data = localStorage.getItem(LOCAL_STORAGE_KEY);
-    return data ? JSON.parse(data).map((list: any) => new FavouriteList(list.id, list.name, list.tripLinks, list.version, list.deleted)) : [];
+    return data
+      ? JSON.parse(data).map((list: any) => new FavouriteList(list.id, list.name, list.tripLinks, list.version, list.deleted))
+      : [];
   }
 
   private saveLocalData(data: FavouriteList[]): void {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
+    const plainData = data.map(list => list.object); // Convert instances to plain objects
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(plainData));
   }
 
   private async fetchRemoteLists(): Promise<FavouriteList[]> {
-    if (!this.authService.isLoggedIn()) return [];
+    if (!this.authService.getCurrentActor())
+      return []
     const userId = this.authService.getCurrentActor()?.id || 'anonymous';
     try {
       const response = await axios.get<{ favouriteList: any[] }>(`${backendURL}/${userId}`);
@@ -44,32 +48,29 @@ export class FavouriteListService {
   }
 
   private async syncToServer(lists: FavouriteList[]): Promise<void> {
-    if (!this.authService.isLoggedIn()) return;
+    if (!this.authService.getCurrentActor()) return;
     const userId = this.authService.getCurrentActor()?.id || 'anonymous';
     await axios.put(`${backendURL}/${userId}`, { favouriteList: lists.map(list => list.object) });
   }
 
   private async getUserLists(): Promise<FavouriteList[]> {
     const localLists = this.getLocalData();
-    console.log('Local lists:', localLists);
     const remoteLists = await this.fetchRemoteLists();
     const mergedLists = this.mergeLists(localLists, remoteLists);
     this.saveLocalData(mergedLists);
-    await this.syncToServer(mergedLists);
+    if (mergedLists.length !== remoteLists.length)
+      await this.syncToServer(mergedLists);
     return mergedLists.filter(list => !list.deleted);
   }
 
   private mergeLists(localLists: FavouriteList[], remoteLists: FavouriteList[]): FavouriteList[] {
-    const allLists = [...localLists, ...remoteLists];
-    const uniqueIds = Array.from(new Set(allLists.map(list => list.id)));
-    return uniqueIds.map(id => {
-      const local = localLists.find(list => list.id === id);
-      const remote = remoteLists.find(list => list.id === id);
-      return local && remote
-        ? new Date(local.object.editTime) > new Date(remote.object.editTime)
-          ? local
-          : remote
-        : local || remote!;
+    const mergedLists = [...localLists, ...remoteLists.filter(remoteList => !localLists.some(localList => localList.id === remoteList.id))];
+    return mergedLists.map(list => {
+      const localList = localLists.find(local => local.id === list.id);
+      if (localList) {
+        return new FavouriteList(list.id, list.name, list.tripLinks, Math.max(list.version || 0, localList.version || 0), list.deleted || localList.deleted);
+      }
+      return list;
     });
   }
 
