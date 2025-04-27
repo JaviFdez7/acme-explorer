@@ -19,7 +19,19 @@ export class FavouriteListService {
   }
 
   private async initializeFavouriteLists(): Promise<void> {
+    const userId = this.authService.getCurrentActor()?.id;
+    if (!userId) return;
+
     const userLists = await this.getUserLists();
+    if (!userLists.length) {
+      // Create a new entry for the user if it doesn't exist
+      const newUserEntry = {
+        id: userId,
+        favouriteList: []
+      };
+      await axios.post(backendURL, newUserEntry);
+    }
+
     this.favouriteListsSubject.next(userLists || []);
   }
 
