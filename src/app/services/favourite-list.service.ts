@@ -100,4 +100,9 @@ export class FavouriteListService {
     this.favouriteListsSubject.next(lists.filter(list => !list.deleted));
     await this.syncToServer(lists);
   }
+
+  async getListById(id: string): Promise<FavouriteList | undefined> {
+    const lists = this.getLocalData();
+    return lists.find(list => list.id === id);
+  }
 }

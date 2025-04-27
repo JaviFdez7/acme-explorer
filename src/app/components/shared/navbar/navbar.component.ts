@@ -170,9 +170,9 @@ export class Navbar implements OnInit {
                                     command: () => this.router.navigate([`/explorer/${this.currentActor?.id}/applications`])
                                 },
                                 {
-                                    label: 'My Favourites',
+                                    label: 'My Favourite Lists',
                                     icon: 'pi pi-heart',
-                                    command: () => this.router.navigate([`/explorer/${this.currentActor?.id}/favourites`])
+                                    command: () => this.router.navigate([`/explorer/${this.currentActor?.id}/favourite-lists`])
                                 }
                             ]
                         }

@@ -27,7 +27,7 @@ import { SponsorshipEditComponent } from './components/sponsor/sponsorship-edit/
 import { SponsorshipConfigComponent } from './components/admin/sponsorship-config/sponsorship-config.component';
 import { CubeComponent } from './components/admin/cube/cube.component';
 import { FavouriteListListComponent } from './components/explorer/favourite-list-list/favourite-list-list.component';
-
+import { FavouriteListDetailsComponent } from './components/explorer/favourite-list-details/favourite-list-details.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -43,7 +43,8 @@ export const routes: Routes = [
   { path: 'explorer/:id/applications', component: ApplicationListComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'explorer' } },
   { path: 'explorer/:id/applications/:applicationId', component: ApplicationDetailsComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'explorer' } },
   { path: 'explorer/:id/applications/:applicationId/edit', component: ApplicationDetailsComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'explorer' } },
-  { path: 'explorer/:id/favourites', component: FavouriteListListComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'explorer' } },
+  { path: 'explorer/:id/favourite-lists', component: FavouriteListListComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'explorer' } },
+  { path: 'favourite-list/:id', component: FavouriteListDetailsComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'explorer' } },
   { path: 'manager/:id/trips', component: ManagerTripListComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'manager' } },
   { path: 'manager/:id/trip/:tripId/edit', component: ManagerTripEditComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'manager' } },
   { path: 'manager/:id/trip/:tripId/cancel', component: ManagerTripCancelComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'manager' } },
