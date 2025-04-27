@@ -14,6 +14,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { DialogModule } from 'primeng/dialog';
 import { IftaLabelModule } from 'primeng/iftalabel';
 import { TextareaModule } from 'primeng/textarea';
+import { LocateService } from '../../../services/locate.service';
   
 @Component({
   selector: 'app-application-display',
@@ -27,7 +28,7 @@ export class ApplicationDisplayManagerComponent implements OnInit {
   protected cancelForm!: FormGroup;
   protected isVisibleCancelDialog = false;
 
-  constructor(private router: Router, private authService: AuthService, private actorService: ActorService, private applicationService: ApplicationService) {
+  constructor(private router: Router, private authService: AuthService, private actorService: ActorService, private applicationService: ApplicationService, private locateService: LocateService) {
     this.application = new Application("", "");
     this.user = new Actor();
     this.cancelForm = new FormGroup({
@@ -44,7 +45,8 @@ export class ApplicationDisplayManagerComponent implements OnInit {
   getApplicationDate(lan: string) {
     const rawDate: Date | { seconds: number } = this.application.date as Date | { seconds: number };
     const date = rawDate instanceof Date ? rawDate : new Date(rawDate.seconds * 1000);
-    const formatter = new Intl.DateTimeFormat(lan, { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric' });
+    const language = this.locateService.getCurrentLanguageValue();
+    const formatter = new Intl.DateTimeFormat(language, { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric' });
     return formatter.format(date);
   }
 

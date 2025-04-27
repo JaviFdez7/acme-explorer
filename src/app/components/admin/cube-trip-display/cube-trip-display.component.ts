@@ -42,7 +42,8 @@ export class CubeTripDisplayComponent implements OnInit {
     if (!this.applicationDate) return 'N/A';
 
     try {
-      const formatter = new Intl.DateTimeFormat(lan, { day: 'numeric', month: 'long', year: 'numeric' });
+      const language = this.locateService.getCurrentLanguageValue();
+      const formatter = new Intl.DateTimeFormat(language, { day: 'numeric', month: 'long', year: 'numeric' });
       return formatter.format(this.applicationDate);
     } catch (error) {
       console.error('Error formatting application date:', error);

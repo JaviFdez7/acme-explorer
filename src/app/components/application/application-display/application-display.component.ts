@@ -42,21 +42,24 @@ export class ApplicationDisplayComponent implements OnInit {
   getApplicationDate(lan: string) {
     const rawDate: Date | { seconds: number } = this.application.date as Date | { seconds: number };
     const date = rawDate instanceof Date ? rawDate : new Date(rawDate.seconds * 1000);
-    const formatter = new Intl.DateTimeFormat(lan, { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric' });
+    const language = this.locateService.getCurrentLanguageValue();
+    const formatter = new Intl.DateTimeFormat(language, { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric' });
     return formatter.format(date);
   }
 
   getTripStartDate(lan: string) {
     const rawDate: Date | { seconds: number } = this.trip?.startDate as Date | { seconds: number };
     const date = rawDate instanceof Date ? rawDate : new Date(rawDate.seconds * 1000);
-    const formatter = new Intl.DateTimeFormat(lan, { day: 'numeric', month: 'long', year: 'numeric' });
+    const language = this.locateService.getCurrentLanguageValue();
+    const formatter = new Intl.DateTimeFormat(language, { day: 'numeric', month: 'long', year: 'numeric' });
     return formatter.format(date);
   }
 
   getTripEndDate(lan: string) {
     const rawDate: Date | { seconds: number } = this.trip?.endDate as Date | { seconds: number };
     const date = rawDate instanceof Date ? rawDate : new Date(rawDate.seconds * 1000);
-    const formatter = new Intl.DateTimeFormat(lan, { day: 'numeric', month: 'long', year: 'numeric' });
+    const language = this.locateService.getCurrentLanguageValue();
+    const formatter = new Intl.DateTimeFormat(language, { day: 'numeric', month: 'long', year: 'numeric' });
     return formatter.format(date);
   }
 
