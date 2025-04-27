@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 import { TripService } from '../../../services/trip.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 // Mock del componente hijo
 @Component({
@@ -29,7 +30,7 @@ describe('ApplicationListComponent', () => {
   let authServiceSpy: jasmine.SpyObj<AuthService>;
 
   beforeEach(async () => {
-    const applicationServiceMock = jasmine.createSpyObj('ApplicationService', ['getApplicationsByActor']);
+    applicationServiceSpy = jasmine.createSpyObj('ApplicationService', ['getApplicationsByActorIdGroupedByStatusPerTrip']);
     const authServiceMock = jasmine.createSpyObj('AuthService', ['getCurrentId']);
     const tripServiceMock = {
       getTrip: jasmine.createSpy('getTrip').and.returnValue(of({ title: 'Mock Trip',
@@ -49,7 +50,8 @@ describe('ApplicationListComponent', () => {
         DataViewModule
       ],
       providers: [
-        { provide: ApplicationService, useValue: applicationServiceMock },
+        provideAnimations(),
+        { provide: ApplicationService, useValue: applicationServiceSpy },
         { provide: AuthService, useValue: authServiceMock },
         { provide: TripService, useValue: tripServiceMock },
         { provide: AngularFirestore, useValue: angularFirestoreMock },
@@ -59,7 +61,6 @@ describe('ApplicationListComponent', () => {
     
     fixture = TestBed.createComponent(ApplicationListComponent);
     component = fixture.componentInstance;
-    applicationServiceSpy = TestBed.inject(ApplicationService) as jasmine.SpyObj<ApplicationService>;
     authServiceSpy = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
   });
 
@@ -70,7 +71,7 @@ describe('ApplicationListComponent', () => {
     ];
 
     authServiceSpy.getCurrentId.and.returnValue('actor1');
-    applicationServiceSpy.getApplicationsByActor.and.returnValue(of(mockApplications));
+    applicationServiceSpy.getApplicationsByActorIdGroupedByStatusPerTrip.and.returnValue(of(mockApplications));
 
     fixture.detectChanges();
     tick();  
@@ -84,7 +85,7 @@ describe('ApplicationListComponent', () => {
     const mockApplications: Application[] = [];
 
     authServiceSpy.getCurrentId.and.returnValue('actor1');
-    applicationServiceSpy.getApplicationsByActor.and.returnValue(of(mockApplications));
+    applicationServiceSpy.getApplicationsByActorIdGroupedByStatusPerTrip.and.returnValue(of(mockApplications));
 
     fixture.detectChanges();
     tick();  
