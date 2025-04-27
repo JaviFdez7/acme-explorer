@@ -21,7 +21,7 @@ import { ActivatedRoute } from '@angular/router';
 export class FavouriteListAddComponent implements OnInit {
   protected favouriteList: any[] = [];
   protected searchQuery = ''; 
-  protected tripId: string | '' = ''; // Added tripId property
+  protected tripId: string | '' = '';
 
   constructor(private favouriteListService: FavouriteListService, private authService: AuthService, private router: Router, private route: ActivatedRoute) { }
 

@@ -109,7 +109,7 @@ export class ManagerTripCreateComponent {
         this.tripForm.reset();
         this.stages.clear();
         this.currentStep = 0;
-        this.route.navigate(['/manager/'+ managerId + '/trips']); // Navigate to the trip list page after successful addition
+        this.route.navigate(['/manager/'+ managerId + '/trips']); 
       }).catch((error) => {
         this.loading = false;
         this.error = 'Error adding trip: ' + error.message;

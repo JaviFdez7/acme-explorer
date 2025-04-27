@@ -3,11 +3,12 @@ import { RouterOutlet } from '@angular/router';
 import { Navbar } from './components/shared/navbar/navbar.component';
 import { PrimeNG } from 'primeng/config';
 import { ThemeService } from './services/theme.service';
+import { FooterComponent } from './components/shared/footer/footer.component';
 
 @Component({
   selector: 'app-root',
   imports: [
-    RouterOutlet, Navbar
+    RouterOutlet, Navbar, FooterComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

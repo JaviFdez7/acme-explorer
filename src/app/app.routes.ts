@@ -31,7 +31,7 @@ import { FavouriteListDetailsComponent } from './components/explorer/favourite-l
 import { FavouriteListCreateComponent } from './components/explorer/favourite-list-create/favourite-list-create.component';
 import { FavouriteListEditComponent } from './components/explorer/favourite-list-edit/favourite-list-edit.component';
 import { FavouriteListAddComponent } from './components/explorer/favourite-list-add/favourite-list-add.component';
-
+import { TermsAndConditionsComponent } from './components/shared/terms-and-conditions/terms-and-conditions.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -67,6 +67,7 @@ export const routes: Routes = [
   { path: 'sponsorship/:id/edit', component: SponsorshipEditComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'sponsor' } },
   { path: 'register', component: RegisterExplorerComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'anonymous' } },
   { path: 'login', component: LoginComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'anonymous' } },
+  { path: 'terms-and-conditions', component: TermsAndConditionsComponent },
   { path: 'denied-access', component: DeniedAccessComponent },
   { path: 'not-found', component: NotFoundComponent },
   { path: '**', component: NotFoundComponent }
