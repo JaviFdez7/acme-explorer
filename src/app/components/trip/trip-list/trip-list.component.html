@@ -34,9 +34,11 @@
   [rows]="6"
 >
   <ng-template #list let-trips>
-    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
-      <div *ngFor="let trip of trips">
-        <app-trip-display [trip]="trip"></app-trip-display>
+    <div class="flex justify-center">
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-20">
+        <div *ngFor="let trip of trips">
+          <app-trip-display [trip]="trip"></app-trip-display>
+        </div>
       </div>
     </div>
   </ng-template>
