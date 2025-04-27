@@ -105,4 +105,18 @@ export class FavouriteListService {
     const lists = this.getLocalData();
     return lists.find(list => list.id === id);
   }
+
+  async deleteTripFromList(listId: string, tripId: string): Promise<void> {
+    const lists = this.getLocalData().map(list => {
+      if (list.id === listId) {
+        const updatedTripLinks = (list.tripLinks ?? []).filter(tripLink => tripLink !== tripId);
+        return new FavouriteList(list.id, list.name, updatedTripLinks, list.version, list.deleted);
+      }
+      return list;
+    });
+    this.saveLocalData(lists);
+    this.favouriteListsSubject.next(lists.filter(list => !list.deleted));
+    await this.syncToServer(lists);
+  }
+  
 }

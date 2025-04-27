@@ -4,9 +4,11 @@
   [paginator]="true" 
   [rows]="9">
   <ng-template #list let-favouriteLists>
-    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
-      <div *ngFor="let favouriteList of favouriteLists">
-        <app-favourite-list-display [favouriteList]="favouriteList"></app-favourite-list-display>
+    <div class="flex  justify-center ">
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+        <div *ngFor="let favouriteList of favouriteLists">
+          <app-favourite-list-display [favouriteList]="favouriteList"></app-favourite-list-display>
+        </div>
       </div>
     </div>
   </ng-template>

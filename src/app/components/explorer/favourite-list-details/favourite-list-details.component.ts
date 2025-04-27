@@ -5,15 +5,16 @@ import { TripService } from '../../../services/trip.service';
 import { CommonModule } from '@angular/common';
 import { Button } from 'primeng/button';
 import { DataView } from 'primeng/dataview';
+import { FavouriteListTripDisplayComponent } from '../favourite-list-trip-display/favourite-list-trip-display.component';
 
 @Component({
   selector: 'app-favourite-list-details',
   templateUrl: './favourite-list-details.component.html',
-  imports: [CommonModule, Button, DataView],
+  imports: [CommonModule, Button, DataView, FavouriteListTripDisplayComponent],
   styleUrls: ['./favourite-list-details.component.css'],
 })
 export class FavouriteListDetailsComponent implements OnInit {
-  protected favouriteList: any;
+  protected favouriteList: any = null;
   protected trips: any[] = [];
 
   constructor(
@@ -28,17 +29,13 @@ export class FavouriteListDetailsComponent implements OnInit {
     if (listId) {
       this.favouriteListService.favouriteLists$.subscribe((favouriteLists: any[]) => {
         this.favouriteList = favouriteLists.find((list) => list.id === listId);
-        console.log(this.favouriteList);
         if (this.favouriteList?.tripLinks) {
           this.tripService.getTrips().subscribe((trips) => {
             this.trips = trips.filter((trip) => this.favouriteList?.tripLinks?.includes(trip.id));
-            console.log(this.trips);
           });
         }
       });
     }
-    
-    
   }
 
   editFavouriteList() {
