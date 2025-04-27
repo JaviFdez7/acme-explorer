@@ -19,7 +19,7 @@ import { Router } from '@angular/router';
 })
 export class FavouriteListListComponent implements OnInit {
   protected favouriteList: any[] = [];
-  protected searchQuery = ''; // Added search query property
+  protected searchQuery = '';
 
   constructor(private favouriteListService: FavouriteListService, private authService: AuthService, private router: Router) { }
 

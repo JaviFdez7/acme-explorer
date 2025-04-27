@@ -35,7 +35,7 @@ export class FavouriteList extends Entity {
 
   public get object(): any {
     return {
-      id: this.id, // Include the ID
+      id: this.id,
       version: this.version,
       deleted: this.deleted,
       name: this.name,

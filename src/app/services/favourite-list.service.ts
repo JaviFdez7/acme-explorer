@@ -55,7 +55,7 @@ export class FavouriteListService {
   }
 
   private saveLocalData(data: FavouriteList[]): void {
-    const plainData = data.map(list => list.object); // Convert instances to plain objects
+    const plainData = data.map(list => list.object); 
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(plainData));
   }
 
