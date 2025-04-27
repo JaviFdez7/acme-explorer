@@ -13,6 +13,10 @@ export class Entity {
     return this._id;
   }
 
+  public set id(value: string) {
+    this._id = value;
+  }
+
   public get version(): number {
     return this._version;
   }

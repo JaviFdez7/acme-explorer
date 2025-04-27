@@ -1,0 +1,61 @@
+{
+  "favourite-lists": [
+    {
+      "id": "lRSQMsxNliN52c0EDoGDQaJPS113",
+      "favouriteList": [
+        {
+          "id": "list-1745154749357",
+          "name": "My First List",
+          "tripLinks": ["250413-TONJ", "250414-ABCD"],
+          "version": 1,
+          "deleted": false
+        },
+        {
+          "id": "list-1745154795389",
+          "name": "Weekend Trips",
+          "tripLinks": ["250415-EFGH"],
+          "version": 1,
+          "deleted": false
+        },
+        {
+          "id": "list-1745155253626",
+          "name": "Archived List",
+          "tripLinks": [],
+          "version": 1,
+          "deleted": true
+        }
+      ]
+    },
+    {
+      "id": "manager@manager.com",
+      "favouriteList": [
+        {
+          "id": "list-1745171072040",
+          "name": "Manager's List",
+          "tripLinks": ["250418-JVQL", "250420-SDOV"],
+          "version": 1,
+          "deleted": false
+        },
+        {
+          "id": "list-1745177843503",
+          "name": "Important Trips",
+          "tripLinks": ["250420-ORUD", "250421-XYZ"],
+          "version": 1,
+          "deleted": false
+        }
+      ]
+    },
+    {
+      "id": "explorer@explorer.com",
+      "favouriteList": [
+        {
+          "id": "list-1745180000001",
+          "name": "Explorer's Adventures",
+          "tripLinks": ["250422-AAAA", "250423-BBBB"],
+          "version": 1,
+          "deleted": false
+        }
+      ]
+    }
+  ]
+}
