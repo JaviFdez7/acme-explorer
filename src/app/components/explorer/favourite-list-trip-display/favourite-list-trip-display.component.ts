@@ -4,6 +4,7 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { CommonModule } from '@angular/common';
 import { FavouriteListService } from '../../../services/favourite-list.service';
+import { LocateService } from '../../../services/locate.service';
 
 @Component({
   selector: 'app-favourite-list-trip-display',
@@ -11,13 +12,18 @@ import { FavouriteListService } from '../../../services/favourite-list.service';
   imports: [ButtonModule, CardModule, CommonModule],
   styleUrls: ['./favourite-list-trip-display.component.css']
 })
-export class FavouriteListTripDisplayComponent {
+export class FavouriteListTripDisplayComponent implements OnInit {
   @Input() trip: any;
   @Input() listId!: string;
   currentChange: string = '$';
 
+  constructor(private router: Router, private favouriteListService: FavouriteListService, private locateService: LocateService) {}
 
-  constructor(private router: Router, private favouriteListService: FavouriteListService) {}
+  ngOnInit() {
+    this.locateService.getCurrentLanguage().subscribe((lang) => {
+      this.currentChange = this.locateService.translate('€'); 
+    });
+  }
 
   getStartDate(lan: string) {
     const rawDate: Date | { seconds: number } = this.trip.startDate as Date | { seconds: number };
