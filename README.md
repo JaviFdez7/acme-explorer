@@ -100,6 +100,8 @@ The features of the application are those aligned with the `level A` of the guid
 
 ## Considerations
 
+#### Firebase authentication
+
 As we are using Firebase for authentication, and onAuthStateChanged function provided by Firebase for authentication state, we are not in control of how the authentication state is managed.
 
 This translates to the fact that when loging in or registering, a cookie is created and the user is perceived as logged in ([Firebase v3 eliminated the ability to create users from the client side without logging out the current user](https://groups.google.com/g/firebase-talk/c/zYatdVy1QfU/m/b-qI7iWeAAAJ)).
@@ -110,7 +112,13 @@ For this reason, the administrator is logged out after registering a user, so th
 
 The solution to this problem is to use a custom authentication system, which is not in the scope of this project.
 
-#### References
+#### Translation
+
+Some components are not fully translated to Spanish due to the use of primeNG components. These components require a specific manual configuration to be translated and as it was out of the scope of the project, we decided to leave them in English.
+
+This translates to the fact that if you change the language to Spanish, some especific components will show a few annotations in English.
+
+## References
 - [StackOverflow: Firebase Auth issue when registering users, automatic sign in when register?](https://stackoverflow.com/questions/68296369/firebase-auth-issue-when-registering-users-automatic-sign-in-when-register)
 
 - [StackOverflow: How to prevent automatic log in after creating a new user on Firebase without using signOut() method](https://stackoverflow.com/questions/76818228/how-to-prevent-automatic-log-in-after-creating-a-new-user-on-firebase-without-us)

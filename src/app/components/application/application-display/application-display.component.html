@@ -6,7 +6,7 @@
           {{getApplicationStatus()}}
         </span>
       </div>
-      <span class="ms-3 text-lg font-medium">{{getTripPrice()}} €</span>
+      <span class="ms-3 text-lg font-medium">{{getTripPrice()}} {{this.currentChange}}</span>
     </div>
     <div class="mt-4">
       <div class="flex items-center gap-2 mb-2">
@@ -17,11 +17,11 @@
       </div>
     </div>
     <hr class="border">
-    <p class="text-left text-[14px] font-normal">
+    <p class="text-left text-[14px] font-normal" i18n>
       From {{getTripStartDate('en')}} to {{getTripEndDate('en')}}
     </p>
     <hr class="border mt-4">
-    <p class="text-left text-[14px] font-normal">
+    <p class="text-left text-[14px] font-normal" i18n>
       Applied on {{getApplicationDate('en')}}
     </p>
     <p class="text-left text-[14px] font-normal">

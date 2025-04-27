@@ -14,15 +14,15 @@
         <h6 class="text-xl font-semibold m-0">
           {{ trip.title }}
         </h6>
-        <span *ngIf="trip?.cancelation !== ''" class="flex items-center gap-1 bg-primary-50 text-primary-600 px-2 py-1 rounded-full text-sm">
+        <span *ngIf="trip?.cancelation !== ''" class="flex items-center gap-1 bg-primary-50 text-primary-600 px-2 py-1 rounded-full text-sm" i18n>
           <i class="pi pi-times-circle text-base"></i> Cancelled
         </span>
-        <span *ngIf="trip?.cancelation === '' && startsInLessThanAWeek()" class="flex items-center gap-1 bg-yellow-200 text-yellow-700 px-2 py-1 rounded-full text-sm">
+        <span *ngIf="trip?.cancelation === '' && startsInLessThanAWeek()" class="flex items-center gap-1 bg-yellow-200 text-yellow-700 px-2 py-1 rounded-full text-sm" i18n>
           <i class="pi pi-exclamation-circle text-base"></i> It starts soon
         </span>
       </div>
       <div class="mb-2">
-        <span class="ms-3 text-lg font-medium">{{ trip.price }} €</span>
+        <span class="ms-3 text-lg font-medium">{{ trip.price }} {{this.currentChange}}</span>
       </div>
     </div>
     
@@ -32,7 +32,7 @@
     </p>
 
     <hr class="border mt-4">
-    <p class="text-left text-[14px] font-normal">
+    <p class="text-left text-[14px] font-normal" i18n>
       From {{getStartDate('en')}} to {{getEndDate('en')}}
     </p>
     <p class="text-left text-xs font-light">{{trip.ticker}}</p>

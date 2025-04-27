@@ -1,9 +1,9 @@
 <p-card styleClass="max-w-lg mx-auto p-6 card">
   <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
     <fieldset>
-      <legend class="text-xl font-semibold">Log in</legend>
+      <legend class="text-xl font-semibold" i18n>Log in</legend>
       <p-floatlabel variant="on" class="mt-4">
-        <label for="email">Email *</label>
+        <label for="email" i18n>Email *</label>
         <input
           pInputText
           id="email"
@@ -18,11 +18,11 @@
           loginForm.controls['email'].touched
         "
         class="text-red-500"
-        >Email is required</small
+        i18n>Email is required</small
       >
 
       <p-floatlabel variant="on" class="mt-4">
-        <label for="password">Password *</label>
+        <label for="password"i18n>Password *</label>
         <input
           pInputText
           id="password"
@@ -37,21 +37,21 @@
           loginForm.controls['password'].touched
         "
         class="text-red-500"
-        >Password is required</small
+        i18n>Password is required</small
       >
 
-      <small *ngIf="loginError" class="text-red-500">
+      <small *ngIf="loginError" class="text-red-500" i18n>
         Username or password are incorrect.
       </small>
 
-      <p-button type="submit" styleClass="w-full mt-4"> Log in </p-button>
+      <p-button type="submit" styleClass="w-full mt-4" i18n> Log in </p-button>
     </fieldset>
   </form>
 
   <div class="mt-4 text-center">
-    <p class="text-sm">
-      Not registered yet?
-      <a routerLink="/register" class="text-blue-500 hover:underline">Register</a>
-    </p>
+    <div class="text-sm">
+      <p i18n>Not registered yet?</p>
+      <a routerLink="/register" class="text-blue-500 hover:underline" i18n>Register</a>
+    </div>
   </div>
 </p-card>

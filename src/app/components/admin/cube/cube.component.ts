@@ -13,6 +13,7 @@ import { Trip } from '../../../models/trip.model';
 import { CubeTripDisplayComponent } from '../cube-trip-display/cube-trip-display.component';
 import { DataView } from 'primeng/dataview';
 import { CubeExplorerDisplayComponent } from '../cube-explorer-display/cube-explorer-display.component';
+import { LocateService } from '../../../services/locate.service';
 
 @Component({
   selector: 'app-cube',
@@ -30,8 +31,9 @@ export class CubeComponent implements OnInit {
   searchDetails: { startDate: Date; endDate: Date } | null = null;
   spendingSearchSubmitted = false;
   explorerSearchSubmitted = false;
+  currentChange: string = '$';
 
-  constructor(private fb: FormBuilder, private cubeService: CubeService) {}
+  constructor(private fb: FormBuilder, private cubeService: CubeService, private locateService: LocateService) {}
 
   ngOnInit(): void {
     this.spendingForm = this.fb.group({
@@ -43,6 +45,10 @@ export class CubeComponent implements OnInit {
       queryPeriod: ['', [Validators.required, Validators.pattern('^(M(0[1-9]|[1-2][0-9]|3[0-6])|Y(0[1-3]))$')]],
       queryOperator: ['', Validators.required],
       queryValue: ['', [Validators.required, Validators.min(0), this.validateTwoDecimalPlaces]],
+    });      
+
+    this.locateService.getCurrentLanguage().subscribe((lang) => {
+      this.currentChange = this.locateService.translate('€'); 
     });
   }
 

@@ -1,10 +1,10 @@
 <p-card styleClass="max-w-lg mx-auto p-6 card">
   <form [formGroup]="favouriteListForm" (ngSubmit)="onUpdateFavouriteList()">
     <fieldset>
-      <legend class="text-xl font-semibold">Edit Favourite List</legend>
+      <legend class="text-xl font-semibold" i18n>Edit Favourite List</legend>
 
       <p-floatlabel variant="on" class="mt-4">
-        <label for="name">Name *</label>
+        <label for="name" i18n>Name *</label>
         <input
           pInputText
           id="name"
@@ -13,11 +13,11 @@
           class="mt-1 block w-full"
         />
       </p-floatlabel>
-      <small *ngIf="favouriteListForm.controls['name'].invalid && favouriteListForm.controls['name'].touched" class="text-red-500">
+      <small *ngIf="favouriteListForm.controls['name'].invalid && favouriteListForm.controls['name'].touched" class="text-red-500" i18n>
         Name is required
       </small>
 
-      <p-button type="submit" styleClass="w-full mt-4"> Update </p-button>
+      <p-button type="submit" styleClass="w-full mt-4" i18n> Update </p-button>
     </fieldset>
   </form>
 </p-card>

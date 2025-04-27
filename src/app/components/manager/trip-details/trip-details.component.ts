@@ -16,6 +16,7 @@ import { ApplicationService } from '../../../services/application.service';
 import { Badge } from 'primeng/badge';
 import { CountdownConfig, CountdownModule } from 'ngx-countdown';
 import { SponsorshipBannerComponent } from '../../sponsor/sponsorship-banner/sponsorship-banner.component';
+import { LocateService } from '../../../services/locate.service';
 
 @Component({
   selector: 'app-manager-trip-details',
@@ -31,13 +32,15 @@ export class ManagerTripDetailsComponent implements OnInit{
   countdownTime = 0;
   countdownConfig: CountdownConfig | null = null;
   countdownCompleted = false;
+  currentChange: string = '$';
 
   constructor(
     private tripService: TripService,
     private actorService: ActorService,
     private route: ActivatedRoute,
     private router: Router,
-    private applicationService: ApplicationService
+    private applicationService: ApplicationService,
+    private locateService: LocateService
   ) {}
 
   ngOnInit() {
@@ -96,6 +99,10 @@ export class ManagerTripDetailsComponent implements OnInit{
         })
       });
     }
+
+    this.locateService.getCurrentLanguage().subscribe((lang) => {
+      this.currentChange = this.locateService.translate('€'); 
+    });
   }
   
   handleCountdownEvent(event: any) {
@@ -120,7 +127,8 @@ export class ManagerTripDetailsComponent implements OnInit{
             ? this.trip.startDate.toDate() 
             : new Date(this.trip.startDate); 
 
-        const formatter = new Intl.DateTimeFormat(lan, { day: 'numeric', month: 'long', year: 'numeric' });
+        const language = this.locateService.getCurrentLanguageValue();
+        const formatter = new Intl.DateTimeFormat(language, { day: 'numeric', month: 'long', year: 'numeric' });
         return formatter.format(date);
     } catch (error) {
         console.error('Error formatting start date:', error);
@@ -136,7 +144,8 @@ export class ManagerTripDetailsComponent implements OnInit{
             ? this.trip.endDate.toDate() 
             : new Date(this.trip.endDate); 
 
-        const formatter = new Intl.DateTimeFormat(lan, { day: 'numeric', month: 'long', year: 'numeric' });
+        const language = this.locateService.getCurrentLanguageValue();
+        const formatter = new Intl.DateTimeFormat(language, { day: 'numeric', month: 'long', year: 'numeric' });
         return formatter.format(date);
     }
     catch (error) {

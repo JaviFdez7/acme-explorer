@@ -1,9 +1,10 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { CommonModule } from '@angular/common';
 import { FavouriteListService } from '../../../services/favourite-list.service';
+import { LocateService } from '../../../services/locate.service';
 
 @Component({
   selector: 'app-favourite-list-trip-display',
@@ -11,23 +12,32 @@ import { FavouriteListService } from '../../../services/favourite-list.service';
   imports: [ButtonModule, CardModule, CommonModule],
   styleUrls: ['./favourite-list-trip-display.component.css']
 })
-export class FavouriteListTripDisplayComponent {
+export class FavouriteListTripDisplayComponent implements OnInit {
   @Input() trip: any;
   @Input() listId!: string;
+  currentChange: string = '$';
 
-  constructor(private router: Router, private favouriteListService: FavouriteListService) {}
+  constructor(private router: Router, private favouriteListService: FavouriteListService, private locateService: LocateService) {}
+
+  ngOnInit() {
+    this.locateService.getCurrentLanguage().subscribe((lang) => {
+      this.currentChange = this.locateService.translate('€'); 
+    });
+  }
 
   getStartDate(lan: string) {
     const rawDate: Date | { seconds: number } = this.trip.startDate as Date | { seconds: number };
     const date = rawDate instanceof Date ? rawDate : new Date(rawDate.seconds * 1000);
-    const formatter = new Intl.DateTimeFormat(lan, { day: 'numeric', month: 'long', year: 'numeric' });
+    const language = this.locateService.getCurrentLanguageValue();
+    const formatter = new Intl.DateTimeFormat(language, { day: 'numeric', month: 'long', year: 'numeric' });
     return formatter.format(date);
   }
 
   getEndDate(lan: string) {
     const rawDate: Date | { seconds: number } = this.trip.endDate as Date | { seconds: number };
     const date = rawDate instanceof Date ? rawDate : new Date(rawDate.seconds * 1000);
-    const formatter = new Intl.DateTimeFormat(lan, { day: 'numeric', month: 'long', year: 'numeric' });
+    const language = this.locateService.getCurrentLanguageValue();
+    const formatter = new Intl.DateTimeFormat(language, { day: 'numeric', month: 'long', year: 'numeric' });
     return formatter.format(date);
   }
 

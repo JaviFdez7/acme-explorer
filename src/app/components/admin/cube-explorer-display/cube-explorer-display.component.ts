@@ -3,6 +3,7 @@ import { CubeService } from '../../../services/cube.service';
 import { ActorService } from '../../../services/actor.service';
 import { Trip } from '../../../models/trip.model';
 import { Actor } from '../../../models/actor.model';
+import { LocateService } from '../../../services/locate.service';
 
 @Component({
   selector: 'app-cube-explorer-display',
@@ -15,8 +16,10 @@ export class CubeExplorerDisplayComponent implements OnInit {
 
   explorer: Actor | null = null;
   spending: number = 0;
+  currentChange: string = '$';
 
-  constructor(private cubeService: CubeService, private actorService: ActorService) {}
+
+  constructor(private cubeService: CubeService, private actorService: ActorService, private locateService: LocateService) {}
 
   ngOnInit() {
     this.actorService.getActor(this.explorerId).subscribe(actor => {
@@ -24,6 +27,10 @@ export class CubeExplorerDisplayComponent implements OnInit {
     });
 
     this.spending = this.moneySpent();
+
+    this.locateService.getCurrentLanguage().subscribe((lang) => {
+      this.currentChange = this.locateService.translate('€'); 
+    });
   }
 
   moneySpent() {

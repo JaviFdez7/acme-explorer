@@ -62,7 +62,7 @@ export class SponsorshipCreateComponent {
       this.sponsorshipService.createSponsorship(newSponsorship).then(() => {
         this.loading = false;
         this.success = 'Sponsorship created successfully!';
-        this.router.navigate(['/sponsorships']);
+        this.router.navigate(['/sponsor', this.authService.getCurrentActor()?.id, 'sponsorships']);
       }).catch((error) => {
         this.loading = false;
         this.error = 'Failed to create sponsorship. Please try again.';

@@ -1,9 +1,9 @@
 <p-card styleClass="max-w-lg mx-auto p-6 card">
   <form [formGroup]="registrationForm" (ngSubmit)="onRegister()">
     <fieldset>
-      <legend class="text-xl font-semibold">Register new user</legend>
+      <legend class="text-xl font-semibold" i18n>Register new user</legend>
       <p-floatlabel variant="on" class="mt-4">
-        <label for="email">Email *</label>
+        <label for="email" i18n>Email *</label>
         <input
           pInputText
           id="email"
@@ -13,17 +13,17 @@
         />
       </p-floatlabel>
       <small *ngIf="registrationForm.controls['email'].touched && registrationForm.controls['email'].errors" class="text-red-500 block mt-1">
-        <ng-container *ngIf="registrationForm.controls['email'].errors['required']">
+        <ng-container *ngIf="registrationForm.controls['email'].errors['required']" i18n>
           Email is required
         </ng-container>
-        <ng-container *ngIf="registrationForm.controls['email'].errors['email']">
+        <ng-container *ngIf="registrationForm.controls['email'].errors['email']" i18n>
           Invalid email format
         </ng-container>
       </small>
 
 
       <p-floatlabel variant="on" class="mt-4">
-        <label for="password">Password *</label>
+        <label for="password" i18n>Password *</label>
         <input
           pInputText
           id="password"
@@ -33,10 +33,10 @@
         />
       </p-floatlabel>
       <small *ngIf="registrationForm.controls['password'].touched && registrationForm.controls['password'].errors" class="text-red-500 block mt-1">
-        <ng-container *ngIf="registrationForm.controls['password'].errors['required']">
+        <ng-container *ngIf="registrationForm.controls['password'].errors['required']" i18n>
           Password is required
         </ng-container>
-        <ng-container *ngIf="registrationForm.controls['password'].errors['minlength']">
+        <ng-container *ngIf="registrationForm.controls['password'].errors['minlength']" i18n>
           Password must be at least 6 characters
         </ng-container>
       </small>
@@ -51,15 +51,15 @@
           placeholder="Select a Role"
         >
         </p-select>
-        <label for="role">Role *</label>
+        <label for="role" i18n>Role *</label>
       </p-floatlabel>
       <small
-        *ngIf="registrationForm.controls['role'].invalid && registrationForm.controls['role'].touched" class="text-red-500">
+        *ngIf="registrationForm.controls['role'].invalid && registrationForm.controls['role'].touched" class="text-red-500" i18n>
         Select a role
       </small>
 
       <p-floatlabel variant="on" class="mt-4">
-        <label for="name">Name *</label>
+        <label for="name" i18n>Name *</label>
         <input
           class="ng-invalid ng-dirty"
           pInputText
@@ -69,12 +69,12 @@
           class="mt-1 block w-full"
         />
       </p-floatlabel>
-      <small *ngIf="registrationForm.controls['name'].invalid && registrationForm.controls['name'].touched" class="text-red-500">
+      <small *ngIf="registrationForm.controls['name'].invalid && registrationForm.controls['name'].touched" class="text-red-500" i18n>
         Name is required
       </small>
 
       <p-floatlabel variant="on" class="mt-4">
-        <label for="surname">Surname *</label>
+        <label for="surname" i18n>Surname *</label>
         <input
           pInputText
           id="surname"
@@ -83,12 +83,12 @@
           class="mt-1 block w-full"
         />
       </p-floatlabel>
-      <small *ngIf="registrationForm.controls['surname'].invalid && registrationForm.controls['surname'].touched" class="text-red-500">
+      <small *ngIf="registrationForm.controls['surname'].invalid && registrationForm.controls['surname'].touched" class="text-red-500" i18n>
         Surname is required
       </small>
 
       <p-floatlabel variant="on" class="mt-4">
-        <label for="phone">Phone</label>
+        <label for="phone" i18n>Phone</label>
         <input
           pInputText
           id="phone"
@@ -97,12 +97,12 @@
           class="mt-1 block w-full"
         />
       </p-floatlabel>
-      <small *ngIf="registrationForm.controls['phone'].invalid" class="text-red-500">
+      <small *ngIf="registrationForm.controls['phone'].invalid" class="text-red-500" i18n>
         Phone must be valid
       </small>
 
       <p-floatlabel variant="on" class="mt-4">
-        <label for="address">Address</label>
+        <label for="address" i18n>Address</label>
         <input
           pInputText
           id="address"
@@ -112,7 +112,7 @@
         />
       </p-floatlabel>
 
-      <p-button type="submit" styleClass="w-full mt-4"> Create </p-button>
+      <p-button type="submit" styleClass="w-full mt-4" i18n> Create </p-button>
     </fieldset>
   </form>
 </p-card>

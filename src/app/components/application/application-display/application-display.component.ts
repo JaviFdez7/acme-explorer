@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { TripService } from '../../../services/trip.service';
 import { Trip } from '../../../models/trip.model';
+import { LocateService } from '../../../services/locate.service';
 
 @Component({
   selector: 'app-application-display',
@@ -17,8 +18,9 @@ import { Trip } from '../../../models/trip.model';
 export class ApplicationDisplayComponent implements OnInit {
   @Input() application: Application;
   protected trip: Trip | undefined;
+  protected currentChange: string = '$';
 
-  constructor(private router: Router, private authService: AuthService, private tripService: TripService) {
+  constructor(private router: Router, private authService: AuthService, private tripService: TripService, private locateService: LocateService) {
     this.application = new Application("", "");
     this.trip = new Trip("", "", "", "", 0, new Date(), new Date(), [], []);
   }
@@ -26,6 +28,10 @@ export class ApplicationDisplayComponent implements OnInit {
   ngOnInit() {
     this.tripService.getTrip(this.application.trip).subscribe((trip: Trip | undefined) => {
       this.trip = trip;
+    });
+
+    this.locateService.getCurrentLanguage().subscribe((lang) => {
+      this.currentChange = this.locateService.translate('€'); 
     });
   }
 
