@@ -75,7 +75,7 @@ export class FavouriteListService {
   }
 
   async createList(name: string): Promise<FavouriteList> {
-    const newList = new FavouriteList(`list-${Date.now()}`, name);
+    const newList = new FavouriteList(`list-${Date.now()}`, name, [], 0, false);
     const lists = [...this.getLocalData(), newList];
     this.saveLocalData(lists);
     this.favouriteListsSubject.next(lists.filter(list => !list.deleted));

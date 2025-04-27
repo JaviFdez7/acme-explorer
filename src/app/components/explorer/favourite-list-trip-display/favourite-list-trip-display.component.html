@@ -12,9 +12,9 @@
         <i class="pi pi-clock text-base"></i> Expired
       </span>
     </div>
-    <p class="text-sm text-gray-600">Ticker: {{ trip.ticker }}</p>
-    <p class="text-sm text-gray-600">From {{ getStartDate('en') }} to {{ getEndDate('en') }}</p>
-    <p class="text-sm text-gray-600">Price: {{ trip.price }} €</p>
+    <p class="text-sm">Ticker: {{ trip.ticker }}</p>
+    <p class="text-sm">From {{ getStartDate('en') }} to {{ getEndDate('en') }}</p>
+    <p class="text-sm">Price: {{ trip.price }} €</p>
     <div class="flex flex-wrap justify-end items-center gap-2">
       <p-button label="Details" icon="pi pi-info-circle" class="p-button-secondary" (click)="goDetails()" [disabled]="trip?.cancelation !== '' || isExpired()"></p-button>
       <p-button label="Delete" icon="pi pi-trash" (click)="deleteTrip()"></p-button>
