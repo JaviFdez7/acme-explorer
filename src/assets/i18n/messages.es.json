@@ -30,6 +30,8 @@
     "5701618810648052610": "Título",
     "4902817035128594900": "Descripción",
     "8894377483833272091": "Precio",
-    "8224277155548697322": "{$START_ITALIC_TEXT}{$CLOSE_ITALIC_TEXT} Comienza pronto"
+    "8224277155548697322": "{$START_ITALIC_TEXT}{$CLOSE_ITALIC_TEXT} Comienza pronto",
+    "3672504354725367308": "Expiración de caché (horas):",
+    "7543197393905881956": "Resultados máximos:"
   }
 }
