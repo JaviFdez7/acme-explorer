@@ -6,7 +6,7 @@
             {{user.name}} {{user.surname}}
           </h6>
       </div>
-      <p class="text-left text-[14px] font-normal">
+      <p class="text-left text-[14px] font-normal" i18n>
         Applied on {{getApplicationDate('en')}}
       </p>
       <hr *ngIf="application.status !== 'REJECTED' && application.status !== 'ACCEPTED' " class="border mt-4 mb-4">
@@ -16,19 +16,19 @@
       </div>
       <hr class="border mt-4 mb-4">
       <div *ngIf="application.status === 'REJECTED'" class="p-2 border rounded shadow-sm bg-red-100 border-red-700 mb-4">
-        <p class="bold text-red-700">Reason<p>
+        <p class="bold text-red-700" i18n>Reason<p>
         <p>{{ application.reason }}</p>
       </div>
       <p class="text-left text-[14px] font-normal" *ngIf="this.application.messages.length === 0">
         <p-badge value="{{application.messages.length}}" class="!bg-surface-500 mr-2 !text-surface-50"/>
-        <span class="font-bold whitespace-nowrap">Messages</span>
+        <span class="font-bold whitespace-nowrap" i18n>Messages</span>
       </p>
       <p-accordion multiple="true" class="w-full" collapseIcon="pi pi-minus" expandIcon="pi pi-plus" *ngIf="this.application.messages.length > 0">
         <p-accordion-panel value="0">
           <p-accordion-header>
             <span class="flex items-center gap-2 w-full">
               <p-badge value="{{application.messages.length}}" class="!bg-surface-500 mr-2 !text-surface-50"/>
-              <span class="font-bold whitespace-nowrap">Messages</span>
+              <span class="font-bold whitespace-nowrap" i18n>Messages</span>
             </span>
           </p-accordion-header>
           <p-accordion-content>
@@ -48,7 +48,7 @@
   <form [formGroup]="cancelForm" (ngSubmit)="cancel()">
     <div class="flex items-center w-full mb-4">
       <p-ifta-label variant="on" class="w-full">
-          <label for="reason" class="font-semibold w-24">Reason</label>
+          <label for="reason" class="font-semibold w-24" i18n>Reason</label>
           <textarea pTextarea id="reason" class="w-full" formControlName="reason" 
             placeholder="Enter the reason for cancellation"></textarea>
       </p-ifta-label>

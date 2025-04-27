@@ -1,8 +1,8 @@
 <p-card styleClass="max-w-xl mx-auto p-6 card" ngSkipHydration>
   <p-stepper [(value)]="currentStep" [linear]="true" *ngIf="formReady">
     <p-step-list>
-      <p-step [value]="1">Trip Details</p-step>
-      <p-step [value]="2">Stages</p-step>
+      <p-step [value]="1" i18n>Trip Details</p-step>
+      <p-step [value]="2" i18n>Stages</p-step>
     </p-step-list>
 
     <p-step-panels>
@@ -10,70 +10,70 @@
       <p-step-panel [value]="1">
         <ng-template #content let-activateCallback="activateCallback">
             <!-- Formulario del primer paso -->
-            <h3 class="text-2xl font-semibold mb-2">Edit trip</h3>
+            <h3 class="text-2xl font-semibold mb-2" i18n>Edit trip</h3>
             <form [formGroup]="tripForm" (ngSubmit)="onSubmit()">
               <p-iftalabel variant="on" class="mb-2">
                 <label for="title">Title *</label>
                 <input pInputText id="title" type="text" formControlName="title" class="w-full" maxlength="75" />
               </p-iftalabel>
-              <small *ngIf="tripForm.controls['title'].invalid && tripForm.controls['title'].touched" class="text-red-500">
+              <small *ngIf="tripForm.controls['title'].invalid && tripForm.controls['title'].touched" class="text-red-500" i18n>
                 Title is required
               </small>
 
               <p-iftalabel variant="on">
-                <label for="description">Description *</label>
+                <label for="description" i18n>Description *</label>
                 <textarea pTextarea id="description" formControlName="description" rows="3" class="w-full" maxlength="600"></textarea>
               </p-iftalabel>
-              <small *ngIf="tripForm.controls['description'].invalid && tripForm.controls['description'].touched" class="text-red-500">
+              <small *ngIf="tripForm.controls['description'].invalid && tripForm.controls['description'].touched" class="text-red-500" i18n>
                 Description is required
               </small>
 
               <div class="grid grid-cols-2 gap-4">
                 <p-iftalabel variant="on">
-                  <label for="startDate">Start Date *</label>
+                  <label for="startDate" i18n>Start Date *</label>
                   <input pInputText id="startDate" type="date" formControlName="startDate" class="w-full" />
                 </p-iftalabel>
                 <p-iftalabel variant="on">
-                  <label for="endDate">End Date *</label>
+                  <label for="endDate" i18n>End Date *</label>
                   <input pInputText id="endDate" type="date" formControlName="endDate" class="w-full" />
                 </p-iftalabel>
               </div>
               <small *ngIf="tripForm.get('startDate')?.touched && tripForm.get('startDate')?.errors" class="text-red-500">
-                <span *ngIf="tripForm.get('startDate')?.errors?.['required']">Start date is required <br></span>
-                <span *ngIf="tripForm.get('startDate')?.errors?.['dateInvalid']">Start date must be valid <br></span>
-                <span *ngIf="tripForm.get('startDate')?.errors?.['dateInThePast']">Start date can not be in the past <br></span>
-                <span *ngIf="tripForm.get('startDate')?.errors?.['endDateBeforeStartDate']">Start date must be before end date </span>
+                <span *ngIf="tripForm.get('startDate')?.errors?.['required']" i18n>Start date is required <br></span>
+                <span *ngIf="tripForm.get('startDate')?.errors?.['dateInvalid']" i18n>Start date must be valid <br></span>
+                <span *ngIf="tripForm.get('startDate')?.errors?.['dateInThePast']" i18n>Start date can not be in the past <br></span>
+                <span *ngIf="tripForm.get('startDate')?.errors?.['endDateBeforeStartDate']" i18n>Start date must be before end date </span>
               </small>
               <small *ngIf="tripForm.get('endDate')?.touched && tripForm.get('endDate')?.errors" class="text-red-500">
-                <span *ngIf="tripForm.get('endDate')?.errors?.['required']">End date is required <br></span>
-                <span *ngIf="tripForm.get('endDate')?.errors?.['dateInvalid']">End date must be valid <br></span>
-                <span *ngIf="tripForm.get('endDate')?.errors?.['dateInThePast']">End date can not be in the past <br></span>
-                <span *ngIf="tripForm.get('endDate')?.errors?.['endDateBeforeStartDate']">End date must be after start date </span>
+                <span *ngIf="tripForm.get('endDate')?.errors?.['required']" i18n>End date is required <br></span>
+                <span *ngIf="tripForm.get('endDate')?.errors?.['dateInvalid']" i18n>End date must be valid <br></span>
+                <span *ngIf="tripForm.get('endDate')?.errors?.['dateInThePast']" i18n>End date can not be in the past <br></span>
+                <span *ngIf="tripForm.get('endDate')?.errors?.['endDateBeforeStartDate']" i18n>End date must be after start date </span>
               </small>
 
               <div class="p-field mt-2">
-                <p-iftaLabel>Requirements *</p-iftaLabel>
+                <p-iftaLabel i18n>Requirements *</p-iftaLabel>
                 <div formArrayName="requirements">
                   <div *ngFor="let req of requirements.controls; let i = index" class="p-inputgroup flex items-start space-x-2 mt-1">
                     <input [formControlName]="i" pInputText  class="flex-grow" maxlength="65"/>
                     <button pButton type="button" icon="pi pi-trash" class="p-button-danger" (click)="removeRequirement(i)"></button>
                   </div>
                 </div>
-                <button pButton type="button" icon="pi pi-plus" class="p-button-success mt-1" (click)="addRequirement()">Add Requirement</button>
+                <button pButton type="button" icon="pi pi-plus" class="p-button-success mt-1" (click)="addRequirement()" i18n>Add Requirement</button>
               </div>
-              <small *ngIf="tripForm.controls['requirements'].invalid && tripForm.controls['requirements'].touched" class="text-red-500">
+              <small *ngIf="tripForm.controls['requirements'].invalid && tripForm.controls['requirements'].touched" class="text-red-500" i18n>
                 At least one requirement is required
               </small>
 
               <div class="p-field mt-2">
-                <p-iftalabel>Pictures</p-iftalabel>
+                <p-iftalabel i18n>Pictures</p-iftalabel>
                 <div formArrayName="pictures">
                   <div *ngFor="let pic of pictures.controls; let i = index" class="p-inputgroup flex items-start space-x-2 mt-1">
                     <input [formControlName]="i" pInputText placeholder="Image URL" class="flex-grow"/>
                     <button pButton type="button" icon="pi pi-trash" class="p-button-danger" (click)="removePicture(i)"></button>
                   </div>
                 </div>
-                <button pButton type="button" icon="pi pi-plus" class="p-button-success mt-1" (click)="addPicture()">Add Picture</button>
+                <button pButton type="button" icon="pi pi-plus" class="p-button-success mt-1" (click)="addPicture()" i18n>Add Picture</button>
               </div>
 
               <div class="flex justify-end pt-6">
@@ -86,7 +86,7 @@
       <!-- PANEL 2: Stages -->
       <p-step-panel [value]="2">
         <ng-template #content let-activateCallback="activateCallback">
-          <h3 class="text-2xl font-semibold mb-2">Edit stages</h3>
+          <h3 class="text-2xl font-semibold mb-2" i18n>Edit stages</h3>
           <p-accordion [value]="0">
             <div *ngFor="let stage of stagesForms; let i = index">
               <p-accordion-panel [value]="i">
@@ -96,26 +96,26 @@
                   <form [formGroup]="stage">
                     <div class="space-y-4">
                       <p-iftalabel variant="on">
-                        <label for="title">Title *</label>
+                        <label for="title" i18n>Title *</label>
                         <input pInputText id="title" formControlName="title" class="w-full" maxlength="75" />
                       </p-iftalabel>
-                      <small *ngIf="stage.controls['title'].invalid && stage.controls['title'].touched" class="text-red-500">
+                      <small *ngIf="stage.controls['title'].invalid && stage.controls['title'].touched" class="text-red-500" i18n>
                         Title is required
                       </small>
           
                       <p-iftalabel variant="on">
-                        <label for="description">Description *</label>
+                        <label for="description" i18n>Description *</label>
                         <textarea pTextarea id="description" formControlName="description" rows="3" class="w-full" maxlength="600"></textarea>
                       </p-iftalabel>
-                      <small *ngIf="stage.controls['description'].invalid && stage.controls['description'].touched" class="text-red-500">
+                      <small *ngIf="stage.controls['description'].invalid && stage.controls['description'].touched" class="text-red-500" i18n>
                         Description is required
                       </small>
           
                       <p-iftalabel variant="on">
-                        <label for="price">Price *</label>
+                        <label for="price" i18n>Price *</label>
                         <input pInputText id="price" formControlName="price" type="number" class="w-full" />
                       </p-iftalabel>
-                      <small *ngIf="stage.controls['price'].invalid && stage.controls['price'].touched" class="text-red-500">
+                      <small *ngIf="stage.controls['price'].invalid && stage.controls['price'].touched" class="text-red-500" i18n>
                         Price must be a positive number
                       </small>
                     </div>
@@ -135,7 +135,7 @@
 
           <!-- Precio total -->
           <div class="pt-6">
-            <p class="font-semibold">Total Price: ${{ calculateTotalPrice() }}</p>
+            <p class="font-semibold" i18n>Total Price: ${{ calculateTotalPrice() }}</p>
           </div>
 
           <div class="flex justify-between pt-6">

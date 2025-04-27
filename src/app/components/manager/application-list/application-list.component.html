@@ -4,7 +4,7 @@
           <p-accordion-header>
               <span class="flex items-center gap-2 w-full">
                   <p-badge value="{{applicationList[0]?.applications?.length || 0}}" class="!bg-yellow-500 mr-2"/>
-                  <span class="font-bold whitespace-nowrap">PENDING</span>
+                  <span class="font-bold whitespace-nowrap" i18n>PENDING</span>
               </span>
           </p-accordion-header>
           <p-accordion-content>
@@ -26,7 +26,7 @@
           <p-accordion-header>
               <span class="flex items-center gap-2 w-full">
                 <p-badge value="{{applicationList[1]?.applications?.length}}" class="mr-2" severity="info"/>
-                <span class="font-bold whitespace-nowrap">DUE</span>
+                <span class="font-bold whitespace-nowrap" i18n>DUE</span>
               </span>
           </p-accordion-header>
           <p-accordion-content>
@@ -48,7 +48,7 @@
           <p-accordion-header>
               <span class="flex items-center gap-2 w-full">
                 <p-badge value="{{applicationList[2]?.applications?.length}}" class="mr-2" severity="success"/>
-                <span class="font-bold whitespace-nowrap">ACCEPTED</span>
+                <span class="font-bold whitespace-nowrap" i18n>ACCEPTED</span>
               </span>
           </p-accordion-header>
           <p-accordion-content>
@@ -70,7 +70,7 @@
         <p-accordion-header>
             <span class="flex items-center gap-2 w-full">
               <p-badge value="{{applicationList[3]?.applications?.length}}" class="mr-2" severity="danger"/>
-              <span class="font-bold whitespace-nowrap">REJECTED</span>
+              <span class="font-bold whitespace-nowrap" i18n>REJECTED</span>
             </span>
         </p-accordion-header>
         <p-accordion-content>
