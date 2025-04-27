@@ -19,10 +19,7 @@ export class AppComponent implements OnInit {
   constructor(private primeng: PrimeNG, private themeService: ThemeService) {}
 
   ngOnInit() {
-    const cachedColor = (typeof window !== 'undefined' && typeof localStorage !== 'undefined') 
-      ? localStorage.getItem('currentColor') || 'initial' 
-      : 'initial';
-    this.themeService.setPreset(cachedColor); 
-    this.themeService.initializeDarkMode(); 
+    this.themeService.initializeTheme(); // Initialize theme based on cached color
+    this.themeService.initializeDarkMode(); // Initialize dark mode state
   } 
 }
