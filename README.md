@@ -95,6 +95,9 @@ The features of the application are those aligned with the `level A` of the guid
   - ***Firebase & json-server***: The application uses both Firebase and json-server for data storage. Favourites are stored in json-server, while Firebase is used for authentication and other data.
   - ***Angular 19***: The application uses the latest version of Angular as of the date of the project creation.
 
+## Diagram
+![Diagram](./diagram.png)
+
 ## Considerations
 
 As we are using Firebase for authentication, and onAuthStateChanged function provided by Firebase for authentication state, we are not in control of how the authentication state is managed.
