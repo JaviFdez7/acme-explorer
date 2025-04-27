@@ -1,13 +1,13 @@
 <p-card styleClass="max-w-lg mx-auto p-6 card" *ngIf="sponsorshipConfigForm">
   <div class="mb-4">
-    <p class="text-lg font-semibold">Current Price: {{ sponsorshipConfig.price.toFixed(2) }} {{this.currentChange}}</p>
+    <p class="text-lg font-semibold" i18n>Current Price: {{ sponsorshipConfig.price.toFixed(2) }} {{this.currentChange}}</p>
   </div>
   <form [formGroup]="sponsorshipConfigForm" (ngSubmit)="onUpdateSponsorshipConfig()">
     <fieldset>
-      <legend class="text-xl font-semibold">Edit Sponsorship Configuration</legend>
+      <legend class="text-xl font-semibold" i18n>Edit Sponsorship Configuration</legend>
 
       <p-floatlabel variant="on" class="mt-4">
-        <label for="price">Price *</label>
+        <label for="price" i18n>Price *</label>
         <input
           pInputText
           id="price"
@@ -16,14 +16,14 @@
           class="mt-1 block w-full"
         />
       </p-floatlabel>
-      <small *ngIf="sponsorshipConfigForm.controls['price'].hasError('maxTwoDecimals') && sponsorshipConfigForm.controls['price'].touched" class="text-red-500">
+      <small *ngIf="sponsorshipConfigForm.controls['price'].hasError('maxTwoDecimals') && sponsorshipConfigForm.controls['price'].touched" class="text-red-500" i18n>
         Price must have at most two decimal places.
       </small>
-      <small *ngIf="sponsorshipConfigForm.controls['price'].invalid && sponsorshipConfigForm.controls['price'].touched && !sponsorshipConfigForm.controls['price'].hasError('maxTwoDecimals')" class="text-red-500">
+      <small *ngIf="sponsorshipConfigForm.controls['price'].invalid && sponsorshipConfigForm.controls['price'].touched && !sponsorshipConfigForm.controls['price'].hasError('maxTwoDecimals')" class="text-red-500" i18n>
         Price is required and must be a non-negative number.
       </small>
 
-      <p-button type="submit" styleClass="w-full mt-4"> Update </p-button>
+      <p-button type="submit" styleClass="w-full mt-4" i18n> Update </p-button>
     </fieldset>
   </form>
 </p-card>

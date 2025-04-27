@@ -1,10 +1,10 @@
 <p-card styleClass="max-w-lg mx-auto p-6 card">
   <form [formGroup]="spendingForm" (ngSubmit)="getAmountSpent()">
     <fieldset>
-      <legend class="text-xl font-semibold">Explorer Spending Cube</legend>
+      <legend class="text-xl font-semibold" i18n>Explorer Spending Cube</legend>
 
       <p-floatlabel variant="on" class="mt-4">
-        <label for="selectedExplorer">Explorer ID</label>
+        <label for="selectedExplorer" i18n>Explorer ID</label>
         <input
           pInputText
           id="selectedExplorer"
@@ -13,12 +13,12 @@
           class="mt-1 block w-full"
         />
       </p-floatlabel>
-      <small *ngIf="spendingForm.controls['selectedExplorer'].invalid && spendingForm.controls['selectedExplorer'].touched" class="text-red-500">
+      <small *ngIf="spendingForm.controls['selectedExplorer'].invalid && spendingForm.controls['selectedExplorer'].touched" class="text-red-500" i18n>
         Explorer ID is required.
       </small>
 
       <p-floatlabel variant="on" class="mt-4">
-        <label for="selectedPeriod">Period (M01 - M36, Y01 - Y03)</label>
+        <label for="selectedPeriod" i18n>Period (M01 - M36, Y01 - Y03)</label>
         <input
           pInputText
           id="selectedPeriod"
@@ -27,35 +27,35 @@
           class="mt-1 block w-full"
         />
       </p-floatlabel>
-      <small *ngIf="spendingForm.controls['selectedPeriod'].invalid && spendingForm.controls['selectedPeriod'].touched" class="text-red-500">
+      <small *ngIf="spendingForm.controls['selectedPeriod'].invalid && spendingForm.controls['selectedPeriod'].touched" class="text-red-500" i18n>
         Invalid format. Use M01–M36 or Y01–Y03.
       </small>
 
       <p-button 
         *ngIf="!spendingSearchSubmitted" 
         type="submit" 
-        styleClass="w-full mt-4">
+        styleClass="w-full mt-4" i18n>
         Search
       </p-button>
       <p-button 
         *ngIf="spendingSearchSubmitted" 
         type="button" 
         styleClass="w-full mt-4" 
-        (click)="resetSpendingSearch()">
+        (click)="resetSpendingSearch()" i18n>
         Reset
       </p-button>
     </fieldset>
   </form>
 
   <div *ngIf="spendingSearchSubmitted && amountResult !== null" class="mt-4">
-    <h5>Search Details:</h5>
-    <p><strong>Explorer ID:</strong> {{ spendingForm.value.selectedExplorer }}</p>
-    <p><strong>Period:</strong> {{ spendingForm.value.selectedPeriod }}</p>
-    <p><strong>Initial Date:</strong> {{ searchDetails?.startDate | date: 'longDate' }}</p>
-    <p><strong>End Date:</strong> {{ searchDetails?.endDate | date: 'longDate' }}</p>
+    <h5 i18n>Search Details:</h5>
+    <p><strong i18n>Explorer ID:</strong> {{ spendingForm.value.selectedExplorer }}</p>
+    <p><strong i18n>Period:</strong> {{ spendingForm.value.selectedPeriod }}</p>
+    <p><strong i18n>Initial Date:</strong> {{ searchDetails?.startDate | date: 'longDate' }}</p>
+    <p><strong i18n>End Date:</strong> {{ searchDetails?.endDate | date: 'longDate' }}</p>
     <hr class="mt-2 mb-2" />
 
-    <h5>Total Amount:</h5>
+    <h5 i18n>Total Amount:</h5>
     <p class="font-bold">{{ amountResult.toFixed(2) }} {{this.currentChange}}</p>
     <hr class="mt-2 mb-2" />
     <p-accordion multiple="true" class="w-full" collapseIcon="pi pi-minus" expandIcon="pi pi-plus">
@@ -63,7 +63,7 @@
           <p-accordion-header>
             <span class="flex items-center gap-2 w-full">
               <p-badge value="{{ tripsResult.length }}" class="!bg-primary-400 mr-2"></p-badge>
-              <span class="font-bold whitespace-nowrap">Trips</span>
+              <span class="font-bold whitespace-nowrap" i18n>Trips</span>
             </span>
           </p-accordion-header>
           <p-accordion-content>
@@ -86,7 +86,7 @@
                 </ng-template>
               </p-dataView>
             </div>
-            <div *ngIf="tripsResult.length === 0" class="text-center text-muted">
+            <div *ngIf="tripsResult.length === 0" class="text-center text-muted" i18n>
               No spending found for this explorer in the selected period.
             </div>
           </p-accordion-content>
@@ -98,10 +98,10 @@
 <p-card styleClass="max-w-lg mx-auto p-6 card mt-4">
   <form [formGroup]="explorerQueryForm" (ngSubmit)="getExplorersByCondition()">
     <fieldset>
-      <legend class="text-xl font-semibold">Explorers Matching Spending Criteria</legend>
+      <legend class="text-xl font-semibold" i18n>Explorers Matching Spending Criteria</legend>
 
       <p-floatlabel variant="on" class="mt-4">
-        <label for="queryPeriod">Period (M01 - M36, Y01 - Y03):</label>
+        <label for="queryPeriod" i18n>Period (M01 - M36, Y01 - Y03):</label>
         <input
           pInputText
           id="queryPeriod"
@@ -110,7 +110,7 @@
           class="mt-1 block w-full"
         />
       </p-floatlabel>
-      <small *ngIf="explorerQueryForm.controls['queryPeriod'].invalid && explorerQueryForm.controls['queryPeriod'].touched" class="text-red-500">
+      <small *ngIf="explorerQueryForm.controls['queryPeriod'].invalid && explorerQueryForm.controls['queryPeriod'].touched" class="text-red-500" i18n>
         Invalid format. Use M01–M36 or Y01–Y03.
       </small>
 
@@ -127,12 +127,12 @@
         placeholder="Select Operator"
         class="mt-4 block w-full"
       ></p-dropdown>
-      <small *ngIf="explorerQueryForm.controls['queryOperator'].invalid && explorerQueryForm.controls['queryOperator'].touched" class="text-red-500">
+      <small *ngIf="explorerQueryForm.controls['queryOperator'].invalid && explorerQueryForm.controls['queryOperator'].touched" class="text-red-500" i18n>
         Operator is required.
       </small>
 
       <p-floatlabel variant="on" class="mt-4">
-        <label for="queryValue">Value ({{this.currentChange}}):</label>
+        <label for="queryValue" i18n>Value ({{this.currentChange}}):</label>
         <input
           pInputText
           id="queryValue"
@@ -141,38 +141,38 @@
           class="mt-1 block w-full"
         />
       </p-floatlabel>
-      <small *ngIf="explorerQueryForm.controls['queryValue'].invalid && explorerQueryForm.controls['queryValue'].touched" class="text-red-500">
+      <small *ngIf="explorerQueryForm.controls['queryValue'].invalid && explorerQueryForm.controls['queryValue'].touched" class="text-red-500" i18n>
         Value is required, must be greater than 0, and can have at most 2 decimal places.
       </small>
 
       <p-button 
         *ngIf="!explorerSearchSubmitted" 
         type="submit" 
-        styleClass="w-full mt-4">
+        styleClass="w-full mt-4" i18n>
         Search
       </p-button>
       <p-button 
         *ngIf="explorerSearchSubmitted" 
         type="button" 
         styleClass="w-full mt-4" 
-        (click)="resetExplorerSearch()">
+        (click)="resetExplorerSearch()" i18n>
         Reset
       </p-button>
     </fieldset>
   </form>
 
   <div *ngIf="explorerSearchSubmitted" class="mt-4">
-    <h5>Search Details:</h5>
-    <p><strong>Period:</strong> {{ explorerQueryForm.value.queryPeriod }}</p>
-    <p><strong>Operator:</strong> {{ explorerQueryForm.value.queryOperator }}</p>
-    <p><strong>Value:</strong> {{ explorerQueryForm.value.queryValue }} {{this.currentChange}}</p>
+    <h5 i18n>Search Details:</h5>
+    <p><strong i18n>Period:</strong> {{ explorerQueryForm.value.queryPeriod }}</p>
+    <p><strong i18n>Operator:</strong> {{ explorerQueryForm.value.queryOperator }}</p>
+    <p><strong i18n>Value:</strong> {{ explorerQueryForm.value.queryValue }} {{this.currentChange}}</p>
     <hr class="mt-2 mb-2" />
     <p-accordion multiple="true" class="w-full" collapseIcon="pi pi-minus" expandIcon="pi pi-plus">
       <p-accordion-panel value="0">
         <p-accordion-header>
           <span class="flex items-center gap-2 w-full">
             <p-badge [value]="explorersWithTrips.length" class="!bg-primary-400 mr-2"></p-badge>
-            <span class="font-bold whitespace-nowrap">Explorers</span>
+            <span class="font-bold whitespace-nowrap" i18n>Explorers</span>
           </span>
         </p-accordion-header>
         <p-accordion-content>
@@ -195,7 +195,7 @@
               </ng-template>
             </p-dataView>
           </div>
-          <div *ngIf="explorersWithTrips.length === 0" class="text-center text-muted">
+          <div *ngIf="explorersWithTrips.length === 0" class="text-center text-muted" i18n>
             No explorers found matching the spending criteria in the selected period.
           </div>
         </p-accordion-content>

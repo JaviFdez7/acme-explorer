@@ -1,18 +1,18 @@
 <div class="p-4 pt-0">
     <div class="flex flex-row justify-between mb-4">
-        <h5 class="text-xl font-semibold">Admin Dashboard</h5>
+        <h5 class="text-xl font-semibold" i18n>Admin Dashboard</h5>
     </div>
 
     <div>
         <p-fieldset legend="Trips Per Manager Stats" [toggleable]="true">
-            <p class="text-surface-400 text-md mb-4">
+            <p class="text-surface-400 text-md mb-4" i18n>
                 The following statistics are based on the number of trips created by each manager.
             </p>
             <div class="flex flex-wrap gap-4">
                 <p-card class="flex-1" styleClass="border border-surface shadow-none">
                     <div class="flex justify-between gap-8">
                         <div class="flex flex-col gap-1">
-                            <span class="text-surface-400 text-sm">Average</span>
+                            <span class="text-surface-400 text-sm" i18n>Average</span>
                             <span class="font-bold text-lg">{{tripsByEachManagerStats.average}}</span>
                         </div>
                     </div>
@@ -20,7 +20,7 @@
                 <p-card class="flex-1" styleClass="border border-surface shadow-none">
                     <div class="flex justify-between gap-8">
                         <div class="flex flex-col gap-1">
-                            <span class="text-surface-400 text-sm">Maximum</span>
+                            <span class="text-surface-400 text-sm" i18n>Maximum</span>
                             <span class="font-bold text-lg">{{tripsByEachManagerStats.max}}</span>
                         </div>
                     </div>
@@ -28,7 +28,7 @@
                 <p-card class="flex-1" styleClass="border border-surface shadow-none">
                     <div class="flex justify-between gap-8">
                         <div class="flex flex-col gap-1">
-                            <span class="text-surface-400 text-sm">Minimum</span>
+                            <span class="text-surface-400 text-sm" i18n>Minimum</span>
                             <span class="font-bold text-lg">{{tripsByEachManagerStats.min}}</span>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                 <p-card class="flex-1" styleClass="border border-surface shadow-none">
                     <div class="flex justify-between gap-8">
                         <div class="flex flex-col gap-1">
-                            <span class="text-surface-400 text-sm">Standard Deviation</span>
+                            <span class="text-surface-400 text-sm" i18n>Standard Deviation</span>
                             <span class="font-bold text-lg">{{tripsByEachManagerStats.stdDev}}</span>
                         </div>
                     </div>
@@ -47,14 +47,14 @@
 
     <div class="mt-4">
         <p-fieldset legend="Applications Per Trip Stats" [toggleable]="true">
-            <p class="text-surface-400 text-md mb-4">
+            <p class="text-surface-400 text-md mb-4" i18n>
                 The following statistics are based on the number of applications created per trip.
             </p>
             <div class="flex flex-wrap gap-4">
                 <p-card class="flex-1" styleClass="border border-surface shadow-none">
                     <div class="flex justify-between gap-8">
                         <div class="flex flex-col gap-1">
-                            <span class="text-surface-400 text-sm">Average</span>
+                            <span class="text-surface-400 text-sm" i18n>Average</span>
                             <span class="font-bold text-lg">{{applicationsByEachTripStats.average}}</span>
                         </div>
                     </div>
@@ -62,7 +62,7 @@
                 <p-card class="flex-1" styleClass="border border-surface shadow-none">
                     <div class="flex justify-between gap-8">
                         <div class="flex flex-col gap-1">
-                            <span class="text-surface-400 text-sm">Maximum</span>
+                            <span class="text-surface-400 text-sm" i18n>Maximum</span>
                             <span class="font-bold text-lg">{{applicationsByEachTripStats.max}}</span>
                         </div>
                     </div>
@@ -70,7 +70,7 @@
                 <p-card class="flex-1" styleClass="border border-surface shadow-none">
                     <div class="flex justify-between gap-8">
                         <div class="flex flex-col gap-1">
-                            <span class="text-surface-400 text-sm">Minimum</span>
+                            <span class="text-surface-400 text-sm" i18n>Minimum</span>
                             <span class="font-bold text-lg">{{applicationsByEachTripStats.min}}</span>
                         </div>
                     </div>
@@ -78,7 +78,7 @@
                 <p-card class="flex-1" styleClass="border border-surface shadow-none">
                     <div class="flex justify-between gap-8">
                         <div class="flex flex-col gap-1">
-                            <span class="text-surface-400 text-sm">Standard Deviation</span>
+                            <span class="text-surface-400 text-sm" i18n>Standard Deviation</span>
                             <span class="font-bold text-lg">{{applicationsByEachTripStats.stdDev}}</span>
                         </div>
                     </div>
@@ -89,14 +89,14 @@
 
     <div class="mt-4">
         <p-fieldset legend="Price of the Trips Stats" [toggleable]="true">
-            <p class="text-surface-400 text-md mb-4">
+            <p class="text-surface-400 text-md mb-4" i18n>
                 The following statistics are based on the price of the trips created.
             </p>
             <div class="flex flex-wrap gap-4">
                 <p-card class="flex-1" styleClass="border border-surface shadow-none">
                     <div class="flex justify-between gap-8">
                         <div class="flex flex-col gap-1">
-                            <span class="text-surface-400 text-sm">Average</span>
+                            <span class="text-surface-400 text-sm" i18n>Average</span>
                             <span class="font-bold text-lg">{{tripsPriceStats.average}}</span>
                         </div>
                     </div>
@@ -104,7 +104,7 @@
                 <p-card class="flex-1" styleClass="border border-surface shadow-none">
                     <div class="flex justify-between gap-8">
                         <div class="flex flex-col gap-1">
-                            <span class="text-surface-400 text-sm">Maximum</span>
+                            <span class="text-surface-400 text-sm" i18n>Maximum</span>
                             <span class="font-bold text-lg">{{tripsPriceStats.max}}</span>
                         </div>
                     </div>
@@ -112,7 +112,7 @@
                 <p-card class="flex-1" styleClass="border border-surface shadow-none">
                     <div class="flex justify-between gap-8">
                         <div class="flex flex-col gap-1">
-                            <span class="text-surface-400 text-sm">Minimum</span>
+                            <span class="text-surface-400 text-sm" i18n>Minimum</span>
                             <span class="font-bold text-lg">{{tripsPriceStats.min}}</span>
                         </div>
                     </div>
@@ -120,7 +120,7 @@
                 <p-card class="flex-1" styleClass="border border-surface shadow-none">
                     <div class="flex justify-between gap-8">
                         <div class="flex flex-col gap-1">
-                            <span class="text-surface-400 text-sm">Standard Deviation</span>
+                            <span class="text-surface-400 text-sm" i18n>Standard Deviation</span>
                             <span class="font-bold text-lg">{{tripsPriceStats.stdDev}}</span>
                         </div>
                     </div>
@@ -131,7 +131,7 @@
 
     <div class="mt-4">
         <p-fieldset legend="Applications Status" [toggleable]="true">
-            <p class="text-surface-400 text-md mb-4">
+            <p class="text-surface-400 text-md mb-4" i18n>
                 The following statistics are based on the number of applications created.
             </p>
             <p-metergroup [value]="value" labelPosition="start" >
@@ -157,7 +157,7 @@
                 </ng-template>
                 <ng-template #start let-totalPercent="totalPercent">
                     <div class="flex justify-between mt-4 mb-2 relative">
-                        <span class="text-surface-400 text-sm font-semibold">Total</span>
+                        <span class="text-surface-400 text-sm font-semibold" i18n>Total</span>
                         <span class="font-medium">{{totalApplications}}</span>
                     </div>
                 </ng-template>
@@ -167,14 +167,14 @@
 
     <div class="mt-4">
         <p-fieldset legend="Finder Stats" [toggleable]="true">
-            <p class="text-surface-400 text-md mb-4">
+            <p class="text-surface-400 text-md mb-4" i18n>
                 The following statistics are based on findings made by explorers.
             </p>
             <div class="flex flex-wrap gap-4">
                 <p-card class="flex-1" styleClass="border border-surface shadow-none">
                     <div class="flex justify-between gap-8">
                         <div class="flex flex-col gap-1">
-                            <span class="text-surface-400 text-sm">Minimum Price Average</span>
+                            <span class="text-surface-400 text-sm" i18n>Minimum Price Average</span>
                             <span class="font-bold text-lg">{{findersStats.averageMinPrice}}</span>
                         </div>
                     </div>
@@ -182,7 +182,7 @@
                 <p-card class="flex-1" styleClass="border border-surface shadow-none">
                     <div class="flex justify-between gap-8">
                         <div class="flex flex-col gap-1">
-                            <span class="text-surface-400 text-sm">Maximum Price Average</span>
+                            <span class="text-surface-400 text-sm" i18n>Maximum Price Average</span>
                             <span class="font-bold text-lg">{{findersStats.averageMaxPrice}}</span>
                         </div>
                     </div>
@@ -192,12 +192,12 @@
                 <p-card class="flex-1" styleClass="border border-surface shadow-none">
                     <div class="flex justify-between gap-8">
                         <div class="flex flex-col gap-1 w-full">
-                            <span class="text-surface-400 text-sm">Top 10 Keywords</span>
+                            <span class="text-surface-400 text-sm" i18n>Top 10 Keywords</span>
                             <p-table [value]="findersStats.topKeyWords" class="w-full">
                                 <ng-template #header>
                                     <tr>
-                                        <th>Keyword</th>
-                                        <th>Count</th>
+                                        <th i18n>Keyword</th>
+                                        <th i18n>Count</th>
                                     </tr>
                                 </ng-template>
                                 <ng-template #body let-keyword>
