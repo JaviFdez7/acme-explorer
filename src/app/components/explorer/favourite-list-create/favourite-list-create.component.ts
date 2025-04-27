@@ -9,6 +9,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-favourite-list-create',
@@ -34,7 +35,8 @@ export class FavouriteListCreateComponent {
   constructor(
     private fb: FormBuilder,
     private favouriteListService: FavouriteListService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
     this.createForm();
   }
@@ -53,7 +55,7 @@ export class FavouriteListCreateComponent {
       this.favouriteListService.createList(name).then(() => {
         this.loading = false;
         this.success = 'Favourite list created successfully!';
-        this.router.navigate(['/favourite-lists']);
+        this.router.navigate(['/explorer/' + this.authService.getCurrentActor()?.id + '/favourite-lists']);
       }).catch((error) => {
         this.loading = false;
         this.error = 'Failed to create favourite list. Please try again.';

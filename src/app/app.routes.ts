@@ -29,6 +29,7 @@ import { CubeComponent } from './components/admin/cube/cube.component';
 import { FavouriteListListComponent } from './components/explorer/favourite-list-list/favourite-list-list.component';
 import { FavouriteListDetailsComponent } from './components/explorer/favourite-list-details/favourite-list-details.component';
 import { FavouriteListCreateComponent } from './components/explorer/favourite-list-create/favourite-list-create.component';
+import { FavouriteListEditComponent } from './components/explorer/favourite-list-edit/favourite-list-edit.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -47,6 +48,7 @@ export const routes: Routes = [
   { path: 'explorer/:id/favourite-lists', component: FavouriteListListComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'explorer' } },
   { path: 'favourite-list/create', component: FavouriteListCreateComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'explorer' } },
   { path: 'favourite-list/:id', component: FavouriteListDetailsComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'explorer' } },
+  { path: 'favourite-list/:id/edit', component: FavouriteListEditComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'explorer' } },
   { path: 'manager/:id/trips', component: ManagerTripListComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'manager' } },
   { path: 'manager/:id/trip/:tripId/edit', component: ManagerTripEditComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'manager' } },
   { path: 'manager/:id/trip/:tripId/cancel', component: ManagerTripCancelComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'manager' } },
