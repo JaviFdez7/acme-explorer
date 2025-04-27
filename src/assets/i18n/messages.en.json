@@ -51,7 +51,15 @@
     "3301086086650990787": "Register",
     "8552587679160911578": "Email is required",
     "205044832662301680": "Password is required",
-    "292299591305972105": "Username or password are incorrect."
+    "292299591305972105": "Username or password are incorrect.",
+    "8429113519272907960": "Register as explorer",
+    "3262236020277300799": "Phone",
+    "2907733796351584017": "Register",
+    "4960241331715335287": "Already registered?",
+    "2454050363478003966": "Login",
+    "3213614981179627552": "Invalid email format",
+    "8699512499166571818": "Password must be at least 6 characters",
+    "3700884572855750983": "Phone must be valid"
     
   }
 }
