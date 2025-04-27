@@ -35,7 +35,9 @@ export class TripListComponent implements OnInit {
   constructor(private tripService: TripService, private authService: AuthService, private finderService: FinderService) {}
 
   ngOnInit() {
-    this.loadCache();
+    if (typeof window !== 'undefined') {
+      this.loadCache();
+    }
     this.tripService.getTrips().subscribe((trips: Trip[]) => {
       this.tripList = trips;
       if (!this.filteredTripList.length) {
@@ -130,37 +132,41 @@ export class TripListComponent implements OnInit {
   }
 
   private saveCache() {
-    const cacheData = {
-      filteredTripList: this.filteredTripList,
-      cachedCriteria: this.cachedCriteria,
-      timestamp: new Date().getTime(),
-      cacheExpirationHours: this.cacheExpirationHours
-    };
-    localStorage.setItem('tripCache', JSON.stringify(cacheData));
+    if (typeof window !== 'undefined' && localStorage) {
+      const cacheData = {
+        filteredTripList: this.filteredTripList,
+        cachedCriteria: this.cachedCriteria,
+        timestamp: new Date().getTime(),
+        cacheExpirationHours: this.cacheExpirationHours
+      };
+      localStorage.setItem('tripCache', JSON.stringify(cacheData));
+    }
   }
 
   private loadCache() {
-    const cache = localStorage.getItem('tripCache');
-    if (cache) {
-      const cacheData = JSON.parse(cache);
-      const now = new Date().getTime();
-      const cacheAge = (now - cacheData.timestamp) / (1000 * 60 * 60);
+    if (typeof window !== 'undefined' && localStorage) {
+      const cache = localStorage.getItem('tripCache');
+      if (cache) {
+        const cacheData = JSON.parse(cache);
+        const now = new Date().getTime();
+        const cacheAge = (now - cacheData.timestamp) / (1000 * 60 * 60);
 
-      if (cacheAge <= cacheData.cacheExpirationHours) {
-        this.filteredTripList = cacheData.filteredTripList;
-        this.cachedCriteria = cacheData.cachedCriteria;
-        this.cacheExpirationHours = cacheData.cacheExpirationHours;
+        if (cacheAge <= cacheData.cacheExpirationHours) {
+          this.filteredTripList = cacheData.filteredTripList;
+          this.cachedCriteria = cacheData.cachedCriteria;
+          this.cacheExpirationHours = cacheData.cacheExpirationHours;
 
-        if (this.cachedCriteria) {
-          this.searchQuery = this.cachedCriteria.searchQuery || '';
-          this.minPrice = this.cachedCriteria.minPrice || null;
-          this.maxPrice = this.cachedCriteria.maxPrice || null;
-          this.startDate = this.cachedCriteria.startDate || null;
-          this.endDate = this.cachedCriteria.endDate || null;
-          this.maxResults = this.cachedCriteria.maxResults || 10;
+          if (this.cachedCriteria) {
+            this.searchQuery = this.cachedCriteria.searchQuery || '';
+            this.minPrice = this.cachedCriteria.minPrice || null;
+            this.maxPrice = this.cachedCriteria.maxPrice || null;
+            this.startDate = this.cachedCriteria.startDate || null;
+            this.endDate = this.cachedCriteria.endDate || null;
+            this.maxResults = this.cachedCriteria.maxResults || 10;
+          }
+        } else {
+          localStorage.removeItem('tripCache'); // Clear expired cache
         }
-      } else {
-        localStorage.removeItem('tripCache'); // Clear expired cache
       }
     }
   }
