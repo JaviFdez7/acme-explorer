@@ -182,6 +182,11 @@ export class Navbar implements OnInit {
                                 label: this.locateService.translate('My Favourite Lists'),
                                 icon: 'pi pi-heart',
                                 command: () => this.router.navigate([`/explorer/${this.currentActor?.id}/favourite-lists`])
+                            },
+                            {
+                                label: this.locateService.translate('My Watchlists'),
+                                icon: 'pi pi-bookmark',
+                                command: () => this.router.navigate([`/explorer/${this.currentActor?.id}/watchlists`])
                             }
                         ]
                     }

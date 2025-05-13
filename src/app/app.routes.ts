@@ -32,6 +32,7 @@ import { FavouriteListCreateComponent } from './components/explorer/favourite-li
 import { FavouriteListEditComponent } from './components/explorer/favourite-list-edit/favourite-list-edit.component';
 import { FavouriteListAddComponent } from './components/explorer/favourite-list-add/favourite-list-add.component';
 import { TermsAndConditionsComponent } from './components/shared/terms-and-conditions/terms-and-conditions.component';
+import { WatchlistListComponent } from './components/watchlist/watchlist-list/watchlist-list.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -48,6 +49,7 @@ export const routes: Routes = [
   { path: 'explorer/:id/applications/:applicationId', component: ApplicationDetailsComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'explorer' } },
   { path: 'explorer/:id/applications/:applicationId/edit', component: ApplicationDetailsComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'explorer' } },
   { path: 'explorer/:id/favourite-lists', component: FavouriteListListComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'explorer' } },
+  { path: 'explorer/:id/watchlists', component: WatchlistListComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'explorer' } },
   { path: 'favourite-list/add/:id', component: FavouriteListAddComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'explorer' } },
   { path: 'favourite-list/create', component: FavouriteListCreateComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'explorer' } },
   { path: 'favourite-list/:id', component: FavouriteListDetailsComponent, canActivate: [ActorRoleGuard], data: { expectedRole: 'explorer' } },

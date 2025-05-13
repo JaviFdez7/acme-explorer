@@ -37,7 +37,7 @@ export class TripDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private authService: AuthService,
     private router: Router,
-    private locateService: LocateService
+    private locateService: LocateService,
   ) { }
 
   ngOnInit() {
@@ -148,6 +148,30 @@ export class TripDetailsComponent implements OnInit {
     if (this.trip && this.trip.id) {
       this.router.navigate(['/favourite-list', 'add', this.trip.id]);
     }
+  }
+
+  tripExistsInWatchlist(): boolean {
+    const watchlist = localStorage.getItem('watchlist');
+    if (watchlist) {
+      const watchlistData = JSON.parse(watchlist);
+      return this.trip?.id ? watchlistData.tripIds.includes(this.trip.id) : false;
+    }
+    return false;
+  }
+
+  addTripIdToWatchlistInLocalStorage() {
+    const watchlist = localStorage.getItem('watchlist');
+    if (watchlist) {
+      const watchlistData = JSON.parse(watchlist);
+      if (this.trip && this.trip.id) {
+        watchlistData.tripIds.push(this.trip.id);
+        localStorage.setItem('watchlist', JSON.stringify(watchlistData));
+      }
+    } else {
+      if (this.trip && this.trip.id) {
+        localStorage.setItem('watchlist', JSON.stringify({ tripIds: [this.trip.id] }));
+      }
+    } 
   }
 
   getEndDate(lan: string) {

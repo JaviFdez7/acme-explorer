@@ -59,6 +59,7 @@
     <div class="flex flex-row gap-2">
       <p-button *ngIf="isExplorer() && isTripApplicable()" label="Apply now" icon="pi pi-check" class="mt-6 max-w-xs" (onClick)="goApply()" [disabled]="!!trip?.cancelation"></p-button>
       <p-button *ngIf="isExplorer() && isTripApplicable()" label="Add to List" icon="pi pi-book" class="mt-6 max-w-xs" (onClick)="goAddToList()" [disabled]="!!trip?.cancelation"></p-button>
+      <p-button *ngIf="isExplorer() && isTripApplicable()" label="Add to Watchlist" icon="pi pi-book" class="mt-6 max-w-xs" (onClick)="addTripIdToWatchlistInLocalStorage()" [disabled]="!!trip?.cancelation || tripExistsInWatchlist()"></p-button>
     </div>
   </div>
 </div>
